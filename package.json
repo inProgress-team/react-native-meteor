@@ -1,0 +1,29 @@
+{
+  "name": "react-native-meteor",
+  "version": "0.0.1",
+  "description": "DDP React-native Client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inProgress-team/react-native-meteor.git"
+  },
+  "keywords": [
+    "ddp",
+    "meteor",
+    "asteroid",
+    "react",
+    "react-native"
+  ],
+  "author": "Théo Mathieu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inProgress-team/react-native-meteor/issues"
+  },
+  "homepage": "https://github.com/inProgress-team/react-native-meteor#readme",
+  "dependencies": {
+    "ddp.js": "^1.1.0"
+  }
+}
