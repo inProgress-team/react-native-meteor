@@ -30,13 +30,13 @@ var Example = React.createClass({
   componentDidMount: function() {
     var self = this;
 
-    meteor.connect('http://inprogresstest.meteor.com/websocket');
+    meteor.connect('http://YOURIP:3000/websocket');
 
     meteor.on('connected', function () {
       console.log('connected');
     });
 
-    meteor.suscribe('tasks', function (tasks) {
+    this.tasksSub = meteor.suscribe('tasks', function (tasks) {
       self.setState({
         dataSource: self.state.dataSource.cloneWithRows(tasks),
         loaded: true
@@ -44,7 +44,7 @@ var Example = React.createClass({
     });
  },
  componentWillUnmount: function () {
-   meteor.unsuscribe('tasks');
+   meteor.unsuscribe(this.tasksSub);
  }
 });
 ```
@@ -59,23 +59,39 @@ Connect to a ddp server. You have to this only once in your app.
 - `url` **string** *required*
 
 
-
-### suscribe(name, params, callback)
+### suscribe(name, collectionName, params, callback)
 
 Subscribes to a server publication.
 
 #### Arguments
 
-- `name` **string** *required* : name of the server publication
+- `name` **string** *required* : name of the server subscription
+
+- `collectionName` **string** *optional* : name of the collection you suscribe (in case  the subscription name is different than collection name)
 
 - `params` **array** *optional* : parameters to pass to the server publish function.
 
 - `callback` **function** *required* : callback called when there is a change in the publication. Returns all elements.
 
-### unsuscribe(name)
+### unsuscribe(id)
 
 Unsubscribes to a server publication.
 
 #### Arguments
 
-- `name` **string** *required* : name of the server publication
+- `id` **string** *required* : id of the server publication
+
+### on(eventName, callback)
+
+Callback when an event is triggered
+
+#### Arguments
+
+- `eventName` **string** *required* : 'connected' only for the moment
+
+- `callback` **function** *required*
+
+
+#### Warning
+
+You can only do one subscription on a same collection at one time
