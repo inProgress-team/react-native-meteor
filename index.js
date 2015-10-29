@@ -1,14 +1,37 @@
 var DDP = require("ddp.js");
 
-var ddp = new DDP({
-  endpoint: 'http://inprogresstest.meteor.com/websocket',
-  SocketConstructor: WebSocket
-});
-ddp.on("connected", function () {
-    console.log("Connected");
-});
+var ddp;
+
+var onCallbacks = [];
+var callCallbacksOn = function (eventName) {
+  ddp.on(eventName, function (message) {
+    var callbacks = onCallbacks.filter(function (callback) {
+      if(callback.eventName == eventName) return true;
+      return false;
+    }).map(function (callback) {
+      return callback.callback;
+    });
+    callbacks.forEach(function (callback) {
+      callback(message);
+    });
+  });
+}
 
 module.exports = {
+  connect: function (endpoint) {
+    ddp = new DDP({
+      endpoint: endpoint,
+      SocketConstructor: WebSocket
+    });
+
+    callCallbacksOn("connected");
+  },
+  on: function (event, callback) {
+    onCallbacks.push({
+      eventName: event,
+      callback: callback
+    });
+  },
   unsuscribe: function (id) {
     ddp.unsub(id);
   },
