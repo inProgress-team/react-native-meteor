@@ -9,14 +9,20 @@ ddp.on("connected", function () {
 });
 
 module.exports = {
-  suscribe: function (collection, change) {
-    var collection = "tasks";
-    var subId = ddp.sub(collection, [{sort: {createdAt: -1}}]);
+  unsuscribe: function (id) {
+    ddp.unsub(id);
+  },
+  suscribe: function (id, params, change) {
+    if(change===undefined) {
+      change = params;
+      params = [];
+    }
+    var subId = ddp.sub(id, params);
     var doneLoading = false;
     var items = [];
 
     ddp.on("added", function (message) {
-      if(message.collection == collection) {
+      if(message.collection == id) {
         message.fields.id = message.id;
         items.push(message.fields);
         if(doneLoading) {
@@ -26,7 +32,7 @@ module.exports = {
     });
 
     ddp.on("changed", function (message) {
-      if(message.collection == collection) {
+      if(message.collection == id) {
         items = items.map(function (item) {
           if(item.id==message.id) return {
             ...item,
@@ -38,7 +44,7 @@ module.exports = {
       }
     });
     ddp.on("removed", function (message) {
-      if(message.collection == collection) {
+      if(message.collection == id) {
         items = items.filter(function (item) {
           if(item.id==message.id) return false;
           return true;
