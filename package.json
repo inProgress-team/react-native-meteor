@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/inProgress-team/react-native-meteor#readme",
   "dependencies": {
-    "ddp.js": "^1.1.0"
+    "ddp.js": "1.1.0"
   },
   "peerDependencies": {
     "react-native": ">=0.5 || 0.14.0-rc || 0.15.0-rc || 0.15.0-rc"

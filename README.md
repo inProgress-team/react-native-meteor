@@ -11,7 +11,7 @@
 [bithound-badge]: https://www.bithound.io/github/inProgress-Team/react-native-meteor/badges/score.svg
 [bithound]: https://www.bithound.io/github/inProgress-Team/react-native-meteor
 [license-badge]: https://img.shields.io/dub/l/vibe-d.svg
-[license]: https://raw.githubusercontent.com/inProgress-Team/react-native-meteor/master/LICENSE.md
+[license]: https://github.com/inProgress-team/react-native-meteor/blob/master/LICENSE
 
 # react-native-meteor
 
