@@ -8,10 +8,10 @@
 
 [rn-badge]: https://img.shields.io/badge/react--native-v0.13.x-05A5D1.svg
 [rn]: https://facebook.github.io/react-native
-[bithound-badge]: https://www.bithound.io/github/xinthink/react-native-material-kit/badges/score.svg
-[bithound]: https://www.bithound.io/github/xinthink/react-native-material-kit
+[bithound-badge]: https://www.bithound.io/github/inProgress-Team/react-native-meteor/badges/score.svg
+[bithound]: https://www.bithound.io/github/inProgress-Team/react-native-meteor
 [license-badge]: https://img.shields.io/dub/l/vibe-d.svg
-[license]: https://raw.githubusercontent.com/xinthink/react-native-material-kit/master/LICENSE.md
+[license]: https://raw.githubusercontent.com/inProgress-Team/react-native-meteor/master/LICENSE.md
 
 # react-native-meteor
 
