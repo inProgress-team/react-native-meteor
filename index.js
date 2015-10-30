@@ -8,7 +8,6 @@ var subscriptions = [];
 module.exports = {
   on: queue.on,
   unsuscribe: function (id) {
-    //unsubs.push(id);
     ddp.unsub(id);
     subscriptions = subscriptions.map(function (sub) {
       if(sub.id == id) {

@@ -2,6 +2,16 @@
 [![npm version](https://badge.fury.io/js/react-native-meteor.svg)](http://badge.fury.io/js/react-native-meteor)
 [![Dependency Status](https://david-dm.org/inProgress-team/react-native-meteor.svg)](https://david-dm.org/inProgress-team/react-native-meteor)
 [![devDependency Status](https://david-dm.org/inProgress-team/react-native-meteor/dev-status.svg)](https://david-dm.org/inProgress-team/react-native-meteor#info=devDependencies)
+[![react-native][rn-badge]][rn]
+[![MIT][license-badge]][license]
+[![bitHound Score][bithound-badge]][bithound]
+
+[rn-badge]: https://img.shields.io/badge/react--native-v0.13.x-05A5D1.svg
+[rn]: https://facebook.github.io/react-native
+[bithound-badge]: https://www.bithound.io/github/xinthink/react-native-material-kit/badges/score.svg
+[bithound]: https://www.bithound.io/github/xinthink/react-native-material-kit
+[license-badge]: https://img.shields.io/dub/l/vibe-d.svg
+[license]: https://raw.githubusercontent.com/xinthink/react-native-material-kit/master/LICENSE.md
 
 # react-native-meteor
 
