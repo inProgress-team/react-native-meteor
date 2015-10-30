@@ -89,7 +89,7 @@ Callback when an event is triggered
 
 #### Arguments
 
-- `eventName` **string** *required* : 'connected' only for the moment
+- `eventName` **string** *required* : 'connected' and 'disconnected' only for the moment
 
 - `callback` **function** *required*
 

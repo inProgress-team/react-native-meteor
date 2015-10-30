@@ -4,31 +4,16 @@ var ddp;
 
 var onCallbacks = [];
 var callCallbacksOn = function (eventName) {
-  ddp.on(eventName, function (message) {
-    var callbacks = onCallbacks.filter(function (callback) {
-      if(callback.eventName == eventName) return true;
-      return false;
-    }).map(function (callback) {
-      return callback.callback;
-    });
-    callbacks.forEach(function (callback) {
-      callback(message);
-    });
-  });
-};
 
+};
+var queue = require('./queue');
 
 
 var subscriptions = [];
 
 
 module.exports = {
-  on: function (event, callback) {
-    onCallbacks.push({
-      eventName: event,
-      callback: callback
-    });
-  },
+  on: queue.on,
   unsuscribe: function (id) {
     //unsubs.push(id);
     ddp.unsub(id);
@@ -68,10 +53,15 @@ module.exports = {
       endpoint: endpoint,
       SocketConstructor: WebSocket
     });
-    callCallbacksOn("connected");
+    ddp.on('connected', function () {
+      queue.emit('connected');
+    });
+    ddp.on('disconnected', function () {
+      queue.emit('disconnected');
+    });
+
 
     ddp.on("added", function (message) {
-
       subscriptions = subscriptions.map(function (sub) {
         if(sub.collectionName == message.collection) {
           message.fields.id = message.id;
@@ -85,6 +75,7 @@ module.exports = {
     });
 
     ddp.on("ready", function (message) {
+      console.log('ready');
       subscriptions = subscriptions.map(function (sub) {
         if(sub.id == message.subs[0]) {
           sub.ready = true;
