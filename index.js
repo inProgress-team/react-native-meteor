@@ -1,16 +1,9 @@
 var DDP = require("ddp.js");
 
-var ddp;
-
-var onCallbacks = [];
-var callCallbacksOn = function (eventName) {
-
-};
 var queue = require('./queue');
 
-
+var ddp;
 var subscriptions = [];
-
 
 module.exports = {
   on: queue.on,
