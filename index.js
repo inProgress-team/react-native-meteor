@@ -13,7 +13,7 @@ module.exports = {
       if(sub.id == id) {
         sub.removed = true;
       }
-      return sub
+      return sub;
     });
   },
   suscribe: function (name, collectionName, params, callback) {
@@ -63,7 +63,7 @@ module.exports = {
           }
         }
         return sub;
-      })
+      });
     });
 
     ddp.on("ready", function (message) {
@@ -102,9 +102,11 @@ module.exports = {
       subscriptions = subscriptions.map(function (sub) {
         if(sub.collectionName == message.collection) {
           sub.items = sub.items.map(function (item) {
-            if(item.id==message.id) return {
-              ...item,
-              ...message.fields
+            if(item.id==message.id) {
+              return {
+                ...item,
+                ...message.fields
+              };
             }
             return item;
           });
