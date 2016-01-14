@@ -5,8 +5,35 @@ var queue = require('./queue');
 var ddp;
 var subscriptions = [];
 
+var loginWithEmailId,
+    loginWithEmailCb;
+var loginWithTokenId,
+    loginWithTokenCb;
+
+var methods = [];
+
 module.exports = {
   on: queue.on,
+  loginWithToken: function (token, callback) {
+    loginWithTokenCb = callback;
+    loginWithTokenId = ddp.method("login", [{ resume: token }]);
+  },
+  loginWithEmail: function (email, password, callback) {
+    loginWithEmailCb = callback;
+    loginWithEmailId = ddp.method("login", [{
+        user: {
+          email: email
+        },
+        password: password
+    }]);
+  },
+  method: function (event, param, callback) {
+    var id = ddp.method(event, param);
+    methods.push({
+      id: id,
+      callback: callback
+    });
+  },
   unsuscribe: function (id) {
     ddp.unsub(id);
     subscriptions = subscriptions.map(function (sub) {
@@ -52,6 +79,40 @@ module.exports = {
       queue.emit('disconnected');
     });
 
+    ddp.on("result", function (message) {
+      if (message.id === loginWithEmailId && typeof loginWithEmailCb == 'function') {
+        if(message.error) {
+          return loginWithEmailCb(message.error);
+        }
+        loginWithEmailCb(null, message.result);
+        return;
+      }
+      if (message.id === loginWithTokenId && typeof loginWithTokenCb == 'function') {
+        if(message.error) {
+          return loginWithTokenCb(message.error);
+        }
+        loginWithTokenCb(null, message.result);
+        return;
+      }
+      var index;
+      for(var i in methods) {
+        var method = methods[i];
+        if(message.id === method.id) {
+          if(typeof method.callback == 'function') {
+            if(message.error) {
+              return method.callback(message.error);
+            }
+            method.callback(null, message.result);
+          }
+          //DELETE
+          index = i;
+        }
+      }
+      if(index) {
+        methods.splice(index, 1);
+      }
+    });
+
 
     ddp.on("added", function (message) {
       subscriptions = subscriptions.map(function (sub) {
@@ -67,7 +128,6 @@ module.exports = {
     });
 
     ddp.on("ready", function (message) {
-      console.log('ready');
       subscriptions = subscriptions.map(function (sub) {
         if(sub.id == message.subs[0]) {
           sub.ready = true;

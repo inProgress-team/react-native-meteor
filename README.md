@@ -104,6 +104,36 @@ Callback when an event is triggered
 - `callback` **function** *required*
 
 
+### method(name, [args], callback)
+
+Call a method on the server
+
+#### Arguments
+
+- `name` **string** *required*
+- `args` **array** *required*
+- `callback` **method**
+
+
+### loginWithEmail(email, password, callback)
+
+Login to meteor server
+
+#### Arguments
+
+- `email` **string** *required*
+- `password` **string** *required*
+- `callback(err, result)` **method**
+
+### loginWithToken(token, callback)
+
+Login to meteor server via a token
+
+#### Arguments
+
+- `token` **string** *required*
+- `callback(err, result)` **method**
+
 #### Warning
 
 You can only do one subscription on a same collection at one time
