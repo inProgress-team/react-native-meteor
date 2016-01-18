@@ -93,6 +93,32 @@ Unsubscribes to a server publication.
 
 - `id` **string** *required* : id of the server publication
 
+### itemSuscribe(name, collectionName, id, callback)
+
+Subscribes to an item in a collection (the collection need to be suscribed with same name and collection name parameter). Returns the subscriptionId.
+
+#### Arguments
+
+- `name` **string** *required* : name of the server subscription
+
+- `collectionName` **string** *optional* : name of the collection you suscribe (in case  the subscription name is different than collection name)
+
+- `id` **array** *required* : id of the item to suscribe to
+
+- `callback` **function** *required* : callback called when there is a change to the item. Returns the element.
+
+### itemUnsubscribe(name, collectionName, subId)
+
+Unsubscribes to a item subscription.
+
+#### Arguments
+
+- `name` **string** *required* : name of the server subscription
+
+- `collectionName` **string** *optional* : name of the collection you suscribe (in case  the subscription name is different than collection name)
+
+- `subId` **string** *required* : id of the subscription
+
 ### on(eventName, callback)
 
 Callback when an event is triggered

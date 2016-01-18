@@ -45,8 +45,8 @@ module.exports = {
   },
   suscribe: function (name, collectionName, params, callback) {
     if(typeof collectionName != 'string') {
-      params = collectionName;
       callback = params;
+      params = collectionName;
       collectionName = name;
     }
     if(callback===undefined) {
@@ -61,10 +61,43 @@ module.exports = {
       name: name,
       callback: callback,
       ready: false,
-      items: []
+      items: [],
+      itemsSubs: []
     });
 
     return subId;
+  },
+  itemSuscribe: function (name, collectionName, id, callback) {
+    if(typeof callback == 'undefined') {
+      callback = id;
+      id = collectionName;
+      collectionName = name;
+    }
+    var sub = subscriptions.find((subscription)=>{return name==subscription.name && collectionName == subscription.collectionName});
+    if(sub) {
+      var subId = parseInt(Math.random()*100000000000, 10);
+      sub.itemsSubs.push({
+        subId: subId,
+        id: id,
+        callback: callback
+      });
+
+      return subId;
+    }
+    return false;
+  },
+  itemUnsuscribe: function (name, collectionName, subId) {
+    if(typeof subId == 'undefined') {
+      subId = collectionName;
+      collectionName = name;
+    }
+    var sub = subscriptions.find((subscription)=>{return name==subscription.name && collectionName == subscription.collectionName});
+    for(var i in sub.itemsSubs) {
+      if(sub.itemsSubs[i].subId == subId) {
+        sub.itemsSubs.splice(i, 1);
+      }
+    }
+
   },
 
   connect: function (endpoint) {
@@ -163,10 +196,17 @@ module.exports = {
         if(sub.collectionName == message.collection) {
           sub.items = sub.items.map(function (item) {
             if(item.id==message.id) {
-              return {
+              var res = {
                 ...item,
                 ...message.fields
-              };
+              }
+              //NOTIFY ITEMS subs
+              sub.itemsSubs.map(subItem=>{
+                if(subItem.id == res.id) {
+                  subItem.callback(res);
+                }
+              });
+              return res;
             }
             return item;
           });
