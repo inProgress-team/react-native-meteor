@@ -7,6 +7,8 @@ var subscriptions = [];
 
 var loginWithEmailId,
     loginWithEmailCb;
+  var loginWithUsernameId,
+      loginWithUsernameCb;
 var loginWithTokenId,
     loginWithTokenCb;
 
@@ -17,6 +19,15 @@ module.exports = {
   loginWithToken: function (token, callback) {
     loginWithTokenCb = callback;
     loginWithTokenId = ddp.method("login", [{ resume: token }]);
+  },
+  loginWithUsername: function (username, password, callback) {
+    loginWithUsernameCb = callback;
+    loginWithUsernameId = ddp.method("login", [{
+        user: {
+          username: username
+        },
+        password: password
+    }]);
   },
   loginWithEmail: function (email, password, callback) {
     loginWithEmailCb = callback;
@@ -118,6 +129,13 @@ module.exports = {
           return loginWithEmailCb(message.error);
         }
         loginWithEmailCb(null, message.result);
+        return;
+      }
+      if (message.id === loginWithUsernameId && typeof loginWithUsernameCb == 'function') {
+        if(message.error) {
+          return loginWithUsernameCb(message.error);
+        }
+        loginWithUsernameCb(null, message.result);
         return;
       }
       if (message.id === loginWithTokenId && typeof loginWithTokenCb == 'function') {

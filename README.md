@@ -151,6 +151,16 @@ Login to meteor server
 - `password` **string** *required*
 - `callback(err, result)` **method**
 
+### loginWithUsername(username, password, callback)
+
+Login to meteor server
+
+#### Arguments
+
+- `username` **string** *required*
+- `password` **string** *required*
+- `callback(err, result)` **method**
+
 ### loginWithToken(token, callback)
 
 Login to meteor server via a token
