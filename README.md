@@ -170,6 +170,10 @@ Login to meteor server via a token
 - `token` **string** *required*
 - `callback(err, result)` **method**
 
+### logout(callback)
+
+Logout from meteor server
+
 #### Warning
 
 You can only do one subscription on a same collection at one time

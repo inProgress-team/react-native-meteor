@@ -1,6 +1,6 @@
 {
   "name": "react-native-meteor",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "DDP React-native Client",
   "main": "index.js",
   "scripts": {

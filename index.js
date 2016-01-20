@@ -5,6 +5,8 @@ var queue = require('./queue');
 var ddp;
 var subscriptions = [];
 
+var logoutId,
+    logoutCb;
 var loginWithEmailId,
     loginWithEmailCb;
   var loginWithUsernameId,
@@ -16,6 +18,10 @@ var methods = [];
 
 module.exports = {
   on: queue.on,
+  logout: function (callback) {
+    logoutCb = callback;
+    logoutId = ddp.method("logout");
+  },
   loginWithToken: function (token, callback) {
     loginWithTokenCb = callback;
     loginWithTokenId = ddp.method("login", [{ resume: token }]);
@@ -39,6 +45,11 @@ module.exports = {
     }]);
   },
   method: function (event, param, callback) {
+    if(callback===undefined) {
+      callback = param;
+      param = [];
+    }
+
     var id = ddp.method(event, param);
     methods.push({
       id: id,
@@ -110,7 +121,15 @@ module.exports = {
     }
 
   },
-
+  disconnect: function () {
+    //ddp.disconnect();
+  },
+  reconnect: function () {
+    ddp = new DDP({
+      endpoint: endpoint,
+      SocketConstructor: WebSocket
+    });
+  },
   connect: function (endpoint) {
     ddp = new DDP({
       endpoint: endpoint,
@@ -123,7 +142,17 @@ module.exports = {
       queue.emit('disconnected');
     });
 
-    ddp.on("result", function (message) {
+    ddp.on("result", (message) => {
+
+      if (message.id === logoutId && typeof logoutCb == 'function') {
+        if(message.error) {
+          return logoutCb(message.error);
+        }
+        logoutCb();
+        this.connect(endpoint);
+        return;
+      }
+
       if (message.id === loginWithEmailId && typeof loginWithEmailCb == 'function') {
         if(message.error) {
           return loginWithEmailCb(message.error);
@@ -145,6 +174,7 @@ module.exports = {
         loginWithTokenCb(null, message.result);
         return;
       }
+      //console.log('RESULT FROM METEOR METHOD');
       var index;
       for(var i in methods) {
         var method = methods[i];
