@@ -2,6 +2,8 @@ var DDP = require("ddp.js");
 
 var queue = require('./queue');
 
+var endpointSaved = null;
+
 var ddp;
 var subscriptions = [];
 
@@ -18,6 +20,9 @@ var methods = [];
 
 module.exports = {
   on: queue.on,
+  getUrl: function () {
+    return endpointSaved.substring(0, endpointSaved.indexOf('/websocket'));
+  },
   logout: function (callback) {
     logoutCb = callback;
     logoutId = ddp.method("logout");
@@ -131,10 +136,12 @@ module.exports = {
     });
   },
   connect: function (endpoint) {
+    endpointSaved = endpoint;
     ddp = new DDP({
       endpoint: endpoint,
       SocketConstructor: WebSocket
     });
+
     ddp.on('connected', function () {
       queue.emit('connected');
     });
