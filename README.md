@@ -71,6 +71,11 @@ Connect to a ddp server. You have to this only once in your app.
 - `url` **string** *required*
 
 
+### disconnect()
+
+Disconnect from the ddp server.
+
+
 ### subscribe(name, collectionName, params, callback)
 
 Subscribes to a server publication.
