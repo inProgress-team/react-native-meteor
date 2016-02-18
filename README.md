@@ -48,7 +48,7 @@ var Example = React.createClass({
       console.log('connected');
     });
 
-    this.tasksSub = meteor.suscribe('tasks', function (tasks) {
+    this.tasksSub = meteor.subscribe('tasks', function (tasks) {
       self.setState({
         dataSource: self.state.dataSource.cloneWithRows(tasks),
         loaded: true
@@ -56,7 +56,7 @@ var Example = React.createClass({
     });
  },
  componentWillUnmount: function () {
-   meteor.unsuscribe(this.tasksSub);
+   meteor.unsubscribe(this.tasksSub);
  }
 });
 ```
@@ -71,7 +71,7 @@ Connect to a ddp server. You have to this only once in your app.
 - `url` **string** *required*
 
 
-### suscribe(name, collectionName, params, callback)
+### subscribe(name, collectionName, params, callback)
 
 Subscribes to a server publication.
 
@@ -79,13 +79,13 @@ Subscribes to a server publication.
 
 - `name` **string** *required* : name of the server subscription
 
-- `collectionName` **string** *optional* : name of the collection you suscribe (in case  the subscription name is different than collection name)
+- `collectionName` **string** *optional* : name of the collection you subscribe (in case  the subscription name is different than collection name)
 
 - `params` **array** *optional* : parameters to pass to the server publish function.
 
 - `callback` **function** *required* : callback called when there is a change in the publication. Returns all elements.
 
-### unsuscribe(id)
+### unsubscribe(id)
 
 Unsubscribes to a server publication.
 
@@ -93,17 +93,17 @@ Unsubscribes to a server publication.
 
 - `id` **string** *required* : id of the server publication
 
-### itemSuscribe(name, collectionName, id, callback)
+### itemSubscribe(name, collectionName, id, callback)
 
-Subscribes to an item in a collection (the collection need to be suscribed with same name and collection name parameter). Returns the subscriptionId.
+Subscribes to an item in a collection (the collection need to be subscribed with same name and collection name parameter). Returns the subscriptionId.
 
 #### Arguments
 
 - `name` **string** *required* : name of the server subscription
 
-- `collectionName` **string** *optional* : name of the collection you suscribe (in case  the subscription name is different than collection name)
+- `collectionName` **string** *optional* : name of the collection you subscribe (in case  the subscription name is different than collection name)
 
-- `id` **array** *required* : id of the item to suscribe to
+- `id` **array** *required* : id of the item to subscribe to
 
 - `callback` **function** *required* : callback called when there is a change to the item. Returns the element.
 
@@ -115,7 +115,7 @@ Unsubscribes to a item subscription.
 
 - `name` **string** *required* : name of the server subscription
 
-- `collectionName` **string** *optional* : name of the collection you suscribe (in case  the subscription name is different than collection name)
+- `collectionName` **string** *optional* : name of the collection you subscribe (in case  the subscription name is different than collection name)
 
 - `subId` **string** *required* : id of the subscription
 

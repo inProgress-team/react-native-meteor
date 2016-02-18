@@ -56,7 +56,7 @@ module.exports = {
       callback: callback
     });
   },
-  unsuscribe: function (id) {
+  unsubscribe: function (id) {
     ddp.unsub(id);
     subscriptions = subscriptions.map(function (sub) {
       if(sub.id == id) {
@@ -65,7 +65,7 @@ module.exports = {
       return sub;
     });
   },
-  suscribe: function (name, collectionName, params, callback) {
+  subscribe: function (name, collectionName, params, callback) {
     if(typeof collectionName != 'string') {
       callback = params;
       params = collectionName;
@@ -89,7 +89,7 @@ module.exports = {
 
     return subId;
   },
-  itemSuscribe: function (name, collectionName, id, callback) {
+  itemSubscribe: function (name, collectionName, id, callback) {
     if(typeof callback == 'undefined') {
       callback = id;
       id = collectionName;
@@ -108,7 +108,7 @@ module.exports = {
     }
     return false;
   },
-  itemUnsuscribe: function (name, collectionName, subId) {
+  itemUnsubscribe: function (name, collectionName, subId) {
     if(typeof subId == 'undefined') {
       subId = collectionName;
       collectionName = name;
