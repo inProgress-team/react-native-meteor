@@ -98,6 +98,18 @@ Unsubscribes to a server publication.
 
 - `id` **string** *required* : id of the server publication
 
+### on(eventName, collectionName, callback)
+
+Subscribe to DDP events.
+
+#### Arguments
+
+- `eventName` **string** *required* : Name of the event (`connected`, `disconnected`, `added`, `changed`, `removed`)
+
+- `collectionName` **string** *optional* : collection name to specify when event name = added, changed or removed.
+
+- `callback` **function** *required* : callback called when event is emitted. Returns : element (added), element (changed), id (removed)
+
 ### itemSubscribe(name, collectionName, id, callback)
 
 Subscribes to an item in a collection (the collection need to be subscribed with same name and collection name parameter). Returns the subscriptionId.
@@ -123,16 +135,6 @@ Unsubscribes to a item subscription.
 - `collectionName` **string** *optional* : name of the collection you subscribe (in case  the subscription name is different than collection name)
 
 - `subId` **string** *required* : id of the subscription
-
-### on(eventName, callback)
-
-Callback when an event is triggered
-
-#### Arguments
-
-- `eventName` **string** *required* : 'connected' and 'disconnected' only for the moment
-
-- `callback` **function** *required*
 
 
 ### method(name, [args], callback)
@@ -178,7 +180,3 @@ Login to meteor server via a token
 ### logout(callback)
 
 Logout from meteor server
-
-#### Warning
-
-You can only do one subscription on a same collection at one time

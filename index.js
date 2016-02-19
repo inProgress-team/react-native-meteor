@@ -205,6 +205,9 @@ module.exports = {
     ddp.on("added", function (message) {
       subscriptions = subscriptions.map(function (sub) {
         if(sub.collectionName == message.collection) {
+
+          queue.emit('added', sub.collectionName, message.fields);
+
           message.fields.id = message.id;
           sub.items.push(message.fields);
           if(sub.ready) {
@@ -236,6 +239,9 @@ module.exports = {
     ddp.on("removed", function (message) {
       subscriptions = subscriptions.map(function (sub) {
         if(sub.collectionName == message.collection && !sub.removed) {
+
+          queue.emit('removed', sub.collectionName, message.id);
+
           sub.items = sub.items.filter(function (item) {
             if(item.id == message.id) return false;
             return true;
@@ -249,6 +255,11 @@ module.exports = {
     ddp.on("changed", function (message) {
       subscriptions = subscriptions.map(function (sub) {
         if(sub.collectionName == message.collection) {
+
+          var item = Object.assign({}, message.fields);
+          item.id = message.id;
+          queue.emit('changed', sub.collectionName, item);
+
           sub.items = sub.items.map(function (item) {
             if(item.id==message.id) {
               var res = {
