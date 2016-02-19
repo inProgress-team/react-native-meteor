@@ -1,4 +1,4 @@
-var DDP = require("ddp.js");
+var DDP = require('ddp.js').default;
 
 var queue = require('./queue');
 
