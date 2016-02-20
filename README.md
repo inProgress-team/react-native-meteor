@@ -54,6 +54,18 @@ var Example = React.createClass({
         loaded: true
       });
     });
+    
+    meteor.on('added', 'tasks', function(task) {
+        console.log('task added', task);
+    });
+    
+    meteor.on('changed', 'tasks', function(task) {
+        console.log('task changed', task);
+    });
+    
+    meteor.on('removed', 'tasks', function(taskId) {
+        console.log('task removed', taskId);
+    });
  },
  componentWillUnmount: function () {
    meteor.unsubscribe(this.tasksSub);
