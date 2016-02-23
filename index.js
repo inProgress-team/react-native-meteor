@@ -131,7 +131,7 @@ module.exports = {
   },
   reconnect: function () {
     ddp = new DDP({
-      endpoint: endpoint,
+      endpoint: endpointSaved,
       SocketConstructor: WebSocket
     });
   },
