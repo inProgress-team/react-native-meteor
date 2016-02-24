@@ -30,6 +30,10 @@ The purpose of this library is :
 ## Example usage
 
 ```javascript
+
+import meteor from 'react-native-meteor';
+//const meteor = require('react-native-meteor');
+
 var Example = React.createClass({
   getInitialState: function() {
     return {
