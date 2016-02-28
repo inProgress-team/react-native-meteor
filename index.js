@@ -127,7 +127,7 @@ module.exports = {
 
   },
   disconnect: function () {
-    ddp.disconnect();
+    //ddp.disconnect();
   },
   reconnect: function () {
     ddp = new DDP({
