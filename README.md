@@ -32,8 +32,7 @@ The purpose of this library is :
 ```javascript
 
 import { View, Text, Component } from 'react-native';
-import Meteor, { MeteorMixin } from 'react-native-meteor';
-import reactMixin from 'react-mixin';
+import Meteor, { connectMeteor } from 'react-native-meteor';
 
 /*
 * Uses decorators (see detailed installation to activate it)
@@ -42,12 +41,12 @@ import reactMixin from 'react-mixin';
   class Todos extends Component {
     ...
   }
-  reactMixin(Todos.prototype, MeteorMixin);
+  connectMeteor(Todos);
   export default Todos;
 
 */
 
-@reactMixin.decorate(MeteorMixin)
+@connectMeteor
 export default class App extends Component {
   componentWillMount() {
     const url = 'http://192.168.X.X:3000/websocket';

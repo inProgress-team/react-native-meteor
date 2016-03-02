@@ -13,12 +13,10 @@ import React, {
   TabBarIOS
 } from 'react-native';
 
-import Meteor, { MeteorMixin } from 'react-native-meteor';
-import reactMixin from 'react-mixin';
+import Meteor, { connectMeteor } from 'react-native-meteor';
 
 
-@reactMixin.decorate(MeteorMixin)
-export default class Todos extends Component {
+class Todos extends Component {
   constructor(props) {
     super(props);
 
@@ -61,6 +59,8 @@ export default class Todos extends Component {
     );
   }
 }
+connectMeteor(Todos)
+export default Todos;
 
 const styles = StyleSheet.create({
   container: {

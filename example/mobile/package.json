@@ -6,7 +6,6 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "react-mixin": "^3.0.3",
     "react-native": "^0.20.0",
     "react-native-button": "^1.4.2",
     "react-native-meteor": "^1.0.0-beta1",

@@ -11,13 +11,12 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import Meteor, { MeteorMixin } from 'react-native-meteor';
-import reactMixin from 'react-mixin';
+import Meteor, { connectMeteor } from 'react-native-meteor';
 
 import Button from 'react-native-button';
 
 
-@reactMixin.decorate(MeteorMixin)
+@connectMeteor
 export default class Status extends Component {
   getMeteorData() {
     return {

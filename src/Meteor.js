@@ -7,7 +7,9 @@ import Mixin from './Mixin';
 import User from './User';
 
 module.exports = {
-  MeteorMixin: Mixin,
+  connectMeteor(reactClass) {
+    return reactMixin.onClass(reactClass, Mixin);
+  },
   collection(name) {
     return {
       find(selector, options) {
