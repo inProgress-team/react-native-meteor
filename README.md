@@ -80,14 +80,14 @@ export default class App extends Component {
 
 ## startMeteorSubscriptions
 
-Subscribe to subscriptions when component is mounted. It automatically unsubscribes if the component is unmounted.
+Inside this method, you can create subscriptions (see below) when component is mounted. It will automatically unsubscribe if the component is unmounted.
 
 #### [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe)
 
 
 ## getMeteorData
 
-Inside getMeteorData, you can access any Meteor reactive data source, that means :
+Inside getMeteorData, you can access any Meteor reactive data source, which means :
 
 * Meteor.collection(collectionName)
   * [.find(selector, options)](http://docs.meteor.com/#/full/find)
@@ -102,7 +102,7 @@ Inside getMeteorData, you can access any Meteor reactive data source, that means
 
 ## Meteor.connect(endpoint)
 
-Connect to a ddp server. You have to this only once in your app.
+Connect to a DDP server. You only have to do this once in your app.
 
 #### Arguments
 
@@ -111,5 +111,5 @@ Connect to a ddp server. You have to this only once in your app.
 ## Meteor methods
 
 * [Meteor.call](http://docs.meteor.com/#/full/meteor_call)
-* [Meteor.loginWithPassword](http://docs.meteor.com/#/full/meteor_loginwithpassword)
+* [Meteor.loginWithPassword](http://docs.meteor.com/#/full/meteor_loginwithpassword) (Please note that user signin is persisted - like in Meteor Web applications - thanks to React Native AsyncStorage.)
 * [Meteor.logout](http://docs.meteor.com/#/full/meteor_logout)
