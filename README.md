@@ -12,7 +12,7 @@
 
 # react-native-meteor
 
-Meteor-like methods for React Native. **Currently in v1.0.0-beta1** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
+Meteor-like methods for React Native. **Currently in v1.0.0-beta2** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
 
 ## What is it for ?
 
@@ -75,7 +75,7 @@ export default class App extends Component {
 }
 ```
 
-# MeteorMixin
+# connectMeteor
 
 ## startMeteorSubscriptions
 
