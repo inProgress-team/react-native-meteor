@@ -1,0 +1,10 @@
+<head>
+  <script type="text/javascript">
+    // unfortunately it's not possible to make a URL relative to the current host with a different port,
+    // so the URL must be created by script like this if we want to test on devices besides localhost.
+    var scriptElem = document.createElement('script');
+    scriptElem.type = 'text/javascript';
+    scriptElem.src = /https?:\/\/[^:\/]+/.exec(window.location.href)[0] + ':9090/client.bundle.js';
+    document.head.appendChild(scriptElem);
+  </script>
+</head>

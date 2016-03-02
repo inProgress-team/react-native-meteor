@@ -1,0 +1,7 @@
+{
+  "public": {
+    "env": "STAGE",
+    "foo": "bar"
+  },
+  "secret": "golf1234"
+}

@@ -1,0 +1,8 @@
+{
+  "public": {
+    "env": "PROD",
+    "foo": "bar"
+  },
+  "secret": "golf1234"
+}
+
