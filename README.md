@@ -19,7 +19,7 @@ Meteor-like methods for React Native. **Currently in v1.0.0-beta1** ! For old do
 The purpose of this library is :
 * to set up and maintain a ddp connection with a ddp server, freeing the developer from having to do it on their own.
 * be fully compatible with react-native and help react-native developers.
-* **Use the EXACT SAME METHODS as [Meteor documentation](http://docs.meteor.com/) used with React.**
+* **to match with [Meteor documentation](http://docs.meteor.com/) used with React.**
 
 ## Install
 
@@ -111,5 +111,5 @@ Connect to a DDP server. You only have to do this once in your app.
 ## Meteor methods
 
 * [Meteor.call](http://docs.meteor.com/#/full/meteor_call)
-* [Meteor.loginWithPassword](http://docs.meteor.com/#/full/meteor_loginwithpassword) (Please note that user signin is persisted - like in Meteor Web applications - thanks to React Native AsyncStorage.)
+* [Meteor.loginWithPassword](http://docs.meteor.com/#/full/meteor_loginwithpassword) (Please note that user is auto-resigned in - like in Meteor Web applications - thanks to React Native AsyncStorage.)
 * [Meteor.logout](http://docs.meteor.com/#/full/meteor_logout)
