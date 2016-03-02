@@ -13,7 +13,7 @@ import React, {
   TabBarIOS
 } from 'react-native';
 
-import Meteor, { MeteorMixin } from '../meteor/Meteor';
+import Meteor, { MeteorMixin } from 'react-native-meteor';
 import reactMixin from 'react-mixin';
 
 

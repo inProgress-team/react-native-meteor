@@ -12,7 +12,7 @@ import React, {
   TabBarIOS
 } from 'react-native';
 
-import Meteor from './meteor/Meteor';
+import Meteor from 'react-native-meteor';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 

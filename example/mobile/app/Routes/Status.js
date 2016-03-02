@@ -11,7 +11,7 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import Meteor, { MeteorMixin } from '../meteor/Meteor';
+import Meteor, { MeteorMixin } from 'react-native-meteor';
 import reactMixin from 'react-mixin';
 
 import Button from 'react-native-button';
@@ -36,7 +36,6 @@ export default class Status extends Component {
   render() {
     const { status, user, userId, loggingIn } = this.data;
 
-    console.log(loggingIn);
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
