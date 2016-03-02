@@ -15,11 +15,11 @@
 
 ## With RN >= 0.16.0 && <= 0.19.0 (Babel 6)
 
-Looking for your help. The RN 0.20.0 might be working, please let me know ;)
+Looking for your help. The RN 0.20.0 solution might be working, please let me know ;)
 
 ## With RN <0.16.0 (Babel 5)
 
-Use a .babecrc file at the root of your projet that contains :
+Use a .babelrc file at the root of your projet that contains :
 
 ```json
 {
