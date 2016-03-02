@@ -17,7 +17,7 @@ module.exports = {
     return this._isLoggingIn;
   },
   logout(callback) {
-    this.call("logout", [], function(err) {
+    this.call("logout", function(err) {
       AsyncStorage.removeItem(TOKEN_KEY);
       if(typeof callback == 'function') {
         callback(err);
@@ -33,10 +33,10 @@ module.exports = {
     }
 
     this._startLoggingIn();
-    this.call("login", [{
+    this.call("login", {
         user: selector,
         password: password
-    }], (err, result)=>{
+    }, (err, result)=>{
       this._endLoggingIn();
 
       this._handleLoginCallback(err, result);
@@ -65,7 +65,7 @@ module.exports = {
       var value = await AsyncStorage.getItem(TOKEN_KEY);
       if (value !== null){
         this._startLoggingIn();
-        this.call('login', [{ resume: value }], (err, result) => {
+        this.call('login', { resume: value }, (err, result) => {
           this._endLoggingIn();
           this._handleLoginCallback(err, result);
         });

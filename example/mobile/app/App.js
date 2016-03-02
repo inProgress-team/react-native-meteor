@@ -19,7 +19,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Todos from './Routes/Todos';
 import Status from './Routes/Status';
 
-
 export default class App extends Component {
   constructor(props) {
     super(props);
