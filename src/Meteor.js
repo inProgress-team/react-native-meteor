@@ -14,6 +14,7 @@ module.exports = {
     return {
       find(selector, options) {
         if(!Data.db || !Data.db[name]) return [];
+        if(typeof selector == 'string') return this.find({_id: selector}, options);
         return Data.db[name].find(selector, options)
 
       },
