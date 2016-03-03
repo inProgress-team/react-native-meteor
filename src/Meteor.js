@@ -96,7 +96,16 @@ module.exports = {
     });
   },
   subscribe(name) {
-    const params = Array.prototype.slice.call(arguments, 1);
+    var params = Array.prototype.slice.call(arguments, 1);
+    var callbacks = {};
+    if (params.length) {
+      var lastParam = params[params.length - 1];
+      if (typeof lastParam == 'function') {
+        callbacks.onReady = params.pop();
+      } else if (lastParam && (typeof lastParam.onReady == 'function' || typeof lastParam.onError == 'function' || typeof lastParam.onStop == 'function')) {
+        callbacks = params.pop();
+      }
+    }
 
     const stringKey = name+JSON.stringify(params);
 
