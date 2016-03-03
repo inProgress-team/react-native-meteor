@@ -82,6 +82,26 @@ export default class App extends Component {
 Inside this method, you can create subscriptions (see below) when component is mounted. It will automatically unsubscribe if the component is unmounted.
 
 #### [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe)
+##### Example usage
+
+your server side:
+```javascript
+Meteor.publish('todos', function(selector, options){
+    var selector = selector || {};
+    var options = options || {};
+    return Todos.find(selector, options);
+});
+```
+
+your react-native client code:
+```javascript
+//Meteor subscribe can be used like on meteor official site
+Meteor.subscribe('todos', {status: 'done'}, {limit: 10, sort: {createdAt: -1}});
+```
+
+##### NOTE
+- Meteor subscribe parameter still not supporting EJSON, so you can't pass param value like date, boolean etc. For now it's only support object of string (JSON)
+- Meteor subscribe parameter already support Publish Composite. If you are using this package, related published collections will be available too in subscriptions.
 
 
 ## getMeteorData
@@ -110,5 +130,9 @@ Connect to a DDP server. You only have to do this once in your app.
 ## Meteor methods
 
 * [Meteor.call](http://docs.meteor.com/#/full/meteor_call)
+    
+##### NOTE
+Meteor call parameter still not supporting EJSON, so you can't pass param value like date, boolean etc. For now it's only support object of string (JSON)
+
 * [Meteor.loginWithPassword](http://docs.meteor.com/#/full/meteor_loginwithpassword) (Please note that user is auto-resigned in - like in Meteor Web applications - thanks to React Native AsyncStorage.)
 * [Meteor.logout](http://docs.meteor.com/#/full/meteor_logout)
