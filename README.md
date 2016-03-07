@@ -142,3 +142,7 @@ Once connected to the ddp server, you can access every method available in [ddp.
 * Meteor.ddp.on('added')
 * Meteor.ddp.on('changed')
 * ...
+
+# TODO
+
+- [ ] [EJSON parameter support](https://github.com/inProgress-team/react-native-meteor/issues/7)
