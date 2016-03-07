@@ -60,9 +60,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center'
-  },
-  header: {
-    backgroundColor: 'blue',
-    height: 50
   }
 });
