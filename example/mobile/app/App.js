@@ -17,18 +17,23 @@ import Meteor from 'react-native-meteor';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Todos from './Routes/Todos';
+import TodosListView from './Routes/TodosListView';
 import Status from './Routes/Status';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 1
+      selectedTab: 0
     };
   }
   componentWillMount() {
     const url = 'http://'+this.props.serverUrl+':3000/websocket';
     Meteor.connect(url);
+
+    Meteor.ddp.on('added', function(message) {
+      console.log(message);
+    });
   }
   render() {
     //https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/Bars.html
@@ -43,17 +48,24 @@ export default class App extends Component {
           <Todos />
         </Icon.TabBarItem>
         <Icon.TabBarItem
-          title="Status"
-          iconName="security"
+          iconName="list"
+          title="Todos ListView"
           selected={this.state.selectedTab === 1}
           onPress={() => {this.setState({selectedTab: 1});}}>
+          <TodosListView />
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
+          title="Status"
+          iconName="security"
+          selected={this.state.selectedTab === 2}
+          onPress={() => {this.setState({selectedTab: 2});}}>
           <Status />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="More"
             iconName="list"
-          selected={this.state.selectedTab === 2}
-          onPress={() => {this.setState({selectedTab: 2});}}>
+          selected={this.state.selectedTab === 3}
+          onPress={() => {this.setState({selectedTab: 3});}}>
 <View></View>
         </Icon.TabBarItem>
       </TabBarIOS>

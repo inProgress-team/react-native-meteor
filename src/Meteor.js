@@ -50,7 +50,7 @@ module.exports = {
     });
   },
   connect(endpoint) {
-    Data.ddp = new DDP({
+    this.ddp = Data.ddp = new DDP({
       endpoint: endpoint,
       SocketConstructor: WebSocket
     });
@@ -68,8 +68,7 @@ module.exports = {
     });
 
     Data.ddp.on("ready", message => {
-      console.info('READY', message.subs);
-      //console.log('READY', Data.db.todos && Data.db.todos.find().length);
+      //console.info('READY', message.subs);
     });
 
     Data.ddp.on("changed", message => {

@@ -12,7 +12,7 @@
 
 # react-native-meteor
 
-Meteor-like methods for React Native. **Currently in v1.0.0-beta2** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
+Meteor-like methods for React Native. **Currently in v1.0.0-beta3** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
 
 ## What is it for ?
 
@@ -129,10 +129,16 @@ Connect to a DDP server. You only have to do this once in your app.
 
 ## Meteor methods
 
+* [Meteor.loginWithPassword](http://docs.meteor.com/#/full/meteor_loginwithpassword) (Please note that user is auto-resigned in - like in Meteor Web applications - thanks to React Native AsyncStorage.)
+* [Meteor.logout](http://docs.meteor.com/#/full/meteor_logout)
 * [Meteor.call](http://docs.meteor.com/#/full/meteor_call)
-    
+
 ##### NOTE
 Meteor call parameter still not supporting EJSON, so you can't pass param value like date, boolean etc. For now it's only support object of string (JSON)
 
-* [Meteor.loginWithPassword](http://docs.meteor.com/#/full/meteor_loginwithpassword) (Please note that user is auto-resigned in - like in Meteor Web applications - thanks to React Native AsyncStorage.)
-* [Meteor.logout](http://docs.meteor.com/#/full/meteor_logout)
+## Meteor.ddp
+
+Once connected to the ddp server, you can access every method available in [ddp.js](https://github.com/mondora/ddp.js/).
+* Meteor.ddp.on('added')
+* Meteor.ddp.on('changed')
+* ...
