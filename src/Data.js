@@ -2,6 +2,8 @@ import minimongo from 'minimongo-cache';
 process.nextTick = setImmediate;
 
 export default {
+  endpoint: null,
+  options: null,
   ddp: null,
   subscriptions: {},
   db: new minimongo(),

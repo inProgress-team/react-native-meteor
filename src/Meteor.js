@@ -1,3 +1,5 @@
+import { NetInfo } from 'react-native';
+
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
 import DDP from '../lib/ddp.js';
@@ -54,7 +56,17 @@ module.exports = {
       Data.ddp.disconnect();
     }
   },
+  _reconnect() {
+    if(Data._endpoint) {
+      this.connect(Data._endpoint, Data._options);
+    }
+  },
   connect(endpoint, options) {
+    Data._endpoint = endpoint;
+    Data._options = options;
+
+
+
     this.ddp = Data.ddp = new DDP({
       endpoint: endpoint,
       SocketConstructor: WebSocket,
@@ -64,6 +76,16 @@ module.exports = {
     Data.ddp.on("connected", ()=>{
       console.info("Connected to DDP server.");
       this._loadInitialUser();
+
+
+      if(!this._netInfoListener) {
+        this._netInfoListener = isConnected=>{
+          if(isConnected) {
+            this._reconnect();
+          }
+        };
+        NetInfo.isConnected.addEventListener('change', this._netInfoListener);
+      }
     });
 
     Data.ddp.on("disconnected", ()=>{
@@ -103,6 +125,7 @@ module.exports = {
         }
       }
     });
+
   },
   subscribe(name) {
     var params = Array.prototype.slice.call(arguments, 1);
