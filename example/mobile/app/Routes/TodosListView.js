@@ -31,7 +31,9 @@ export default class TodosListView extends Component {
     };
   }
   startMeteorSubscriptions() {
-    Meteor.subscribe('todos');
+    Meteor.subscribe('todos', {
+       createdAt: {$gt: new Date()}
+    });
   }
   renderItem(todo) {
     return (
@@ -43,7 +45,7 @@ export default class TodosListView extends Component {
   render() {
     const { todos } = this.data;
     const { ds } = this.state;
-
+    console.log(todos);
     return (
       <View style={styles.container}>
         <View style={styles.header} />

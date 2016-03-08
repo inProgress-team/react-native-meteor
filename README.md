@@ -23,7 +23,7 @@ The purpose of this library is :
 
 ## Install
 
-    npm i --save react-native-meteor
+    npm i --save react-native-meteor@latest
 
 [!! See detailed installation guide](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/Install.md)
 
@@ -146,6 +146,6 @@ Once connected to the ddp server, you can access every method available in [ddp.
 
 # TODO
 
-- [ ] [EJSON parameters support in subscribe and call](https://github.com/inProgress-team/react-native-meteor/issues/7)
+- [ ] [Connection status unreliable](https://github.com/inProgress-team/react-native-meteor/issues/16)
 
 Pull Requests are welcome ! :)

@@ -7,9 +7,13 @@ export default function() {
 
   if (Meteor.isServer) {
     Meteor.publish('todos', function(done) {
+      if(typeof done == 'boolean') return Todos.find({done: done});
       if(done===undefined) return Todos.find({});
-      
-      return Todos.find({done: done});
+
+      //done is an object, just check that EJSON is working ;) => type == 'object' (date)
+      console.log(done.createdAt && typeof done.createdAt.$gt);
+      return Todos.find({});
+
     });
   }
 };
