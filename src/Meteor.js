@@ -1,6 +1,6 @@
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
-import DDP from 'ddp.js';
+import DDP from '../lib/ddp.js';
 
 import Data from './Data';
 import Mixin from './Mixin';
@@ -49,6 +49,11 @@ module.exports = {
       callback: callback
     });
   },
+  disconnect() {
+    if(Data.ddp) {
+      Data.ddp.disconnect();
+    }
+  },
   connect(endpoint) {
     this.ddp = Data.ddp = new DDP({
       endpoint: endpoint,
@@ -58,6 +63,10 @@ module.exports = {
     Data.ddp.on("connected", ()=>{
       console.info("Connected to DDP server.");
       this._loadInitialUser();
+    });
+
+    Data.ddp.on("disconnected", ()=>{
+      console.info("Disconnected from DDP server.");
     });
 
     Data.ddp.on("added", message => {

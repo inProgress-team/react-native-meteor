@@ -12,7 +12,6 @@ export default {
       this._meteorFirstRun = true;
 
       Trackr.autorun((computation)=>{
-        console.info('TRACKER UPDATE');
         this._meteorComputation = computation;
         this._meteorDataDep.depend();
 

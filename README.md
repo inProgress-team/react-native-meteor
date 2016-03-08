@@ -12,7 +12,7 @@
 
 # react-native-meteor
 
-Meteor-like methods for React Native. **Currently in v1.0.0-beta4** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
+Meteor-like methods for React Native. **Currently in v1.0.0-beta5** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
 
 ## What is it for ?
 
@@ -120,6 +120,10 @@ Connect to a DDP server. You only have to do this once in your app.
 #### Arguments
 
 - `url` **string** *required*
+
+## Meteor.disconnect()
+
+Disconnect from the DDP server.
 
 ## Meteor methods
 
