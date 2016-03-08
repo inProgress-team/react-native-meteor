@@ -56,7 +56,7 @@ module.exports = {
     });
 
     Data.ddp.on("connected", ()=>{
-      console.info("connected");
+      console.info("Connected to DDP server.");
       this._loadInitialUser();
     });
 

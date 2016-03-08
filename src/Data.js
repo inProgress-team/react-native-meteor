@@ -17,16 +17,21 @@ export default {
     }
   },
 
-  _cbsLoggingIn: [],
-  _subscribeLoggingIn(cb) {
-    this._cbsLoggingIn.push(cb);
+  _cbs: [],
+  on(eventName, cb) {
+    this._cbs.push({
+      eventName: eventName,
+      callback: cb
+    });
   },
-  _unsubscribeLoggingIn(cb) {
-    this._cbsLoggingIn.splice(this._cbsLoggingIn.indexOf(cb));
+  off(eventName, cb) {
+    this._cbs.splice(this._cbs.findIndex(_cb=>_cb.callback == cb && _cb.eventName == eventName));
   },
   _notifyLoggingIn() {
-    for(var i in this._cbsLoggingIn) {
-      this._cbsLoggingIn[i]();
-    }
+    this._cbs.map(cb=>{
+      if(cb.eventName=='loggingIn' && typeof cb.callback=='function') {
+        cb.callback();
+      }
+    });
   }
 }

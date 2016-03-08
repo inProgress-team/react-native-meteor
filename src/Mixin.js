@@ -12,6 +12,7 @@ export default {
       this._meteorFirstRun = true;
 
       Trackr.autorun((computation)=>{
+        console.info('TRACKER UPDATE');
         this._meteorComputation = computation;
         this._meteorDataDep.depend();
 
@@ -43,8 +44,11 @@ export default {
       this._meteorComputation.stop();
       this._meteorComputation = null;
     }
-    if(this._loggingInCallback) {
-      Data._unsubscribeLoggingIn(this._loggingInCallback);
+    if(this._meteorChangeCallback) {
+      Data.db.off('change', this._meteorChangeCallback);
+      Data.ddp.off('connected', this._meteorChangeCallback);
+      Data.ddp.off('disconnected', this._meteorChangeCallback);
+      Data.off('loggingIn', this._meteorChangeCallback);
     }
 
   }
@@ -76,37 +80,15 @@ const enqueueMeteorDataUpdate = function(component) {
     // If it's the first time we've called enqueueMeteorDataUpdate since
     // the component was mounted, set the state synchronously.
     component._meteorFirstRun = false;
+    component._meteorChangeCallback = () => { updateData(component); };
+
     updateData(component);
 
-    Data.db.on('change', (records)=>{
-      updateData(component);
-    });
 
-    Data.ddp.on('connected', ()=> {
-      updateData(component);
-    });
-    Data.ddp.on('disconnected', ()=> {
-      updateData(component);
-    });
+    Data.db.on('change', component._meteorChangeCallback);
+    Data.ddp.on('connected', component._meteorChangeCallback);
+    Data.ddp.on('disconnected', component._meteorChangeCallback);
+    Data.on('loggingIn', component._meteorChangeCallback);
 
-    component._loggingInCallback = ()=> {
-      updateData(component);
-    };
-    Data._subscribeLoggingIn(component._loggingInCallback);
   }
-
-  //console.log('WATCH');
-
-  /*
-  Trackr.autorun(() => {
-    console.log('AUTORUN');
-  });
-
-  Trackr.afterFlush(() => {
-    console.log('AFTER FLUSH');
-    console.log(component.getMeteorData().todos.length);
-    component._meteorCalledSetState = true;
-    component.setState(partialData);
-  });
-  */
 }
