@@ -113,13 +113,17 @@ Inside getMeteorData, you can access any Meteor reactive data source, which mean
 
 # API
 
-## Meteor.connect(endpoint)
+## Meteor.connect(endpoint, options)
 
 Connect to a DDP server. You only have to do this once in your app.
 
 #### Arguments
 
 - `url` **string** *required*
+- `options` **object** Available options are :
+  - autoConnect **boolean** [true] whether to establish the connection to the server upon instantiation. When false, one can manually establish the connection with the Meteor.ddp.connect method.
+  - autoReconnect **boolean** [true] whether to try to reconnect to the server when the socket connection closes, unless the closing was initiated by a call to the disconnect method.
+  - reconnectInterval **number** [10000] the interval in ms between reconnection attempts.
 
 ## Meteor.disconnect()
 

@@ -54,10 +54,11 @@ module.exports = {
       Data.ddp.disconnect();
     }
   },
-  connect(endpoint) {
+  connect(endpoint, options) {
     this.ddp = Data.ddp = new DDP({
       endpoint: endpoint,
-      SocketConstructor: WebSocket
+      SocketConstructor: WebSocket,
+      ...options
     });
 
     Data.ddp.on("connected", ()=>{
