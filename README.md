@@ -12,7 +12,7 @@
 
 # react-native-meteor
 
-Meteor-like methods for React Native. **Currently in v1.0.0-beta7** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
+Meteor-like methods for React Native. **Currently in v1.0.0-beta8** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
 
 ## What is it for ?
 
@@ -32,7 +32,7 @@ The purpose of this library is :
 ```javascript
 
 import { View, Text, Component } from 'react-native';
-import Meteor, { connectMeteor } from 'react-native-meteor';
+import Meteor, { connectMeteor, MeteorListView } from 'react-native-meteor';
 
 /*
 * Uses decorators (see detailed installation to activate it)
@@ -54,22 +54,30 @@ export default class App extends Component {
   }
   startMeteorSubscriptions() {
     Meteor.subscribe('todos');
+    Meteor.subscribe('settings');
   }
   getMeteorData() {
     return {
-      todos: Meteor.collection('todos').find()
+      settings: Meteor.collection('settings').findOne()
     };
   }
+  renderRow(todo) {
+    return (
+      <Text>{todo.title}</Text>
+    );
+  }
   render() {
-    const { todos } = this.data;
+    const { settings } = this.data;
 
-    {todos.map(todo=>{
-      return (
-        <View key={todo._id}>
-          <Text>{todo.title}</Text>
-        </View>
-      )
-    })}
+    <View>
+      <Text>{settings.title}</Text>
+        <MeteorListView
+          collection="todos"
+          selector={{done: true}}
+          options={{sort: {createdAt: -1}}}
+          renderItem={this.renderItem}
+        />
+    </View>
 
   }
 }
@@ -110,6 +118,25 @@ Inside getMeteorData, you can access any Meteor reactive data source, which mean
 * [Meteor.userId()](http://docs.meteor.com/#/full/meteor_userid)
 * [Meteor.status()](http://docs.meteor.com/#/full/meteor_status)
 * [Meteor.loggingIn()](http://docs.meteor.com/#/full/meteor_loggingin)
+
+# MeteorListView Component
+
+Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) Component but does not need dataSource and accepts three arguments :
+
+- `collection` **string** *required*
+- `selector` [**string** / **object**]
+- `url` **object**
+
+### Example usage
+
+```javascript
+<MeteorListView
+  collection="todos"
+  selector={{done: true}}
+  options={{sort: {createdAt: -1}}}
+  renderItem={this.renderItem}
+/>
+```
 
 # API
 

@@ -7,8 +7,10 @@ import DDP from '../lib/ddp.js';
 import Data from './Data';
 import Mixin from './Mixin';
 import User from './User';
+import ListView from './ListView';
 
 module.exports = {
+  MeteorListView: ListView,
   connectMeteor(reactClass) {
     return reactMixin.onClass(reactClass, Mixin);
   },
