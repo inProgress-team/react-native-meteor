@@ -25,9 +25,7 @@ export default class App extends Component {
     Meteor.ddp.on('connected', function() {
       console.log('CONNECTED');
     });
-    Meteor.ddp.on('added', function(message) {
-      console.log(message);
-    });
+
   }
   render() {
     return (
