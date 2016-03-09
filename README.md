@@ -75,7 +75,7 @@ export default class App extends Component {
           collection="todos"
           selector={{done: true}}
           options={{sort: {createdAt: -1}}}
-          renderItem={this.renderItem}
+          renderItem={this.renderRow}
         />
     </View>
 
