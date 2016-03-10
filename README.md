@@ -173,6 +173,6 @@ Once connected to the ddp server, you can access every method available in [ddp.
 
 # TODO
 
-[] [Helper for Meteor-CollectionFS](https://github.com/inProgress-team/react-native-meteor/issues/18)
+- [ ] [Helper for Meteor-CollectionFS](https://github.com/inProgress-team/react-native-meteor/issues/18)
 
 Pull Requests are welcome ! :)
