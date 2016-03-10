@@ -37,7 +37,7 @@ export default class MeteorListView extends Component {
     }
 
     const items = Data.db.observe(() => {
-      return Data.db.todos.find(selector, options);
+      return Data.db[collection].find(selector, options);
     });
 
     items.subscribe(results=>{
