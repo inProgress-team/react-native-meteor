@@ -75,7 +75,7 @@ export default class App extends Component {
           collection="todos"
           selector={{done: true}}
           options={{sort: {createdAt: -1}}}
-          renderItem={this.renderRow}
+          renderRow={this.renderRow}
         />
     </View>
 
@@ -173,6 +173,6 @@ Once connected to the ddp server, you can access every method available in [ddp.
 
 # TODO
 
-- [ ] [Connection status unreliable](https://github.com/inProgress-team/react-native-meteor/issues/16)
+- [] [Connection status unreliable](https://github.com/inProgress-team/react-native-meteor/issues/16)
 
 Pull Requests are welcome ! :)
