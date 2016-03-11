@@ -1,5 +1,7 @@
 import { AsyncStorage } from 'react-native';
+import SHA256 from 'crypto-js/sha256';
 
+import { trimString } from '../lib/utils';
 import Data from './Data';
 
 const TOKEN_KEY = 'reactnativemeteor_usertoken';
@@ -27,15 +29,15 @@ module.exports = {
   loginWithPassword(selector, password, callback) {
     if (typeof selector === 'string') {
       if (selector.indexOf('@') === -1)
-        selector = {username: selector};
+        selector = {username: trimString(selector)};
       else
-        selector = {email: selector};
+        selector = {email: trimString(selector)};
     }
 
     this._startLoggingIn();
     this.call("login", {
         user: selector,
-        password: password
+        password: SHA256(password).toString()
     }, (err, result)=>{
       this._endLoggingIn();
 

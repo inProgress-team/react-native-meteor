@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/inProgress-team/react-native-meteor#readme",
   "dependencies": {
+    "crypto-js": "^3.1.6",
     "ejson": "^2.1.2",
     "minimongo-cache": "0.0.48",
     "react-mixin": "^3.0.3",
