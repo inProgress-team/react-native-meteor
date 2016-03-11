@@ -48,6 +48,24 @@ module.exports = {
       }
     });
   },
+  createUser(options, callback) {
+    if (options.username) options.username = trimString(options.username);
+    if (options.email) options.email = trimString(options.email);
+
+    // Replace password with the hashed password.
+    options.password = SHA256(options.password).toString();
+
+    this._startLoggingIn();
+    this.call("createUser", options, (err, result)=>{
+      this._endLoggingIn();
+
+      this._handleLoginCallback(err, result);
+
+      if(typeof callback == 'function') {
+        callback(err)
+      }
+    });
+  },
   _startLoggingIn() {
     this._isLoggingIn = true;
     Data._notifyLoggingIn();
