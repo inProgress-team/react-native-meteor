@@ -3,6 +3,7 @@ import { NetInfo } from 'react-native';
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
 import DDP from '../lib/ddp.js';
+import Random from '../lib/Random';
 
 import Data from './Data';
 import Mixin from './Mixin';
@@ -32,20 +33,31 @@ module.exports = {
 
       },
       insert(item, callback) {
-        return;
         if(!Data.db[name]) { Data.db.addCollection(name) }
 
-        const itemSaved = Data.db[name].upsert({...item});
+        const id = Random.id();
+        const itemSaved = Data.db[name].upsert({...item, _id: id});
 
-        console.log('/'+name+'/insert');
-        Meteor.call('/'+name+'/insert', itemSaved, (err, res) => {
+        Meteor.call('/'+name+'/insert', itemSaved, err => {
+          if(err) {
+            Data.db[name].remove(id);
+            typeof callback == 'function' && callback(err);
+            return console.log("Error inserting item in "+name, err);
+          }
 
-          if(err) return console.log(err);
-
-          console.log(res);
+          typeof callback == 'function' && callback(null, id);
         });
 
-        return ;
+        return id;
+      },
+      update(selector, modifier, options, callback) {
+        console.info('Update not impletemented yet');
+      },
+      upsert(selector, modifier, options, callback) {
+        console.info('Upsert not impletemented yet');
+      },
+      remove(selector, callback) {
+        console.info('Remove not impletemented yet');
       }
     };
   },
