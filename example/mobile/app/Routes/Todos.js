@@ -8,11 +8,12 @@ import React, {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  TouchableOpacity
 } from 'react-native';
 
 import Meteor, { connectMeteor, MeteorListView } from 'react-native-meteor';
 import Button from 'react-native-button';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class Todos extends Component {
   constructor(props) {
@@ -35,10 +36,24 @@ class Todos extends Component {
     console.log('plouf');
     this.setState({done: !this.state.done});
   }
+  edit(todo) {
+    console.log('edit', todo);
+  }
+  remove(todo) {
+    Meteor.collection('todos').remove(todo._id, err=>{
+      console.log(err);
+    });
+  }
   renderItem(todo) {
     return (
-      <View key={todo._id}>
-        <Text>{todo.title}</Text>
+      <View key={todo._id} style={styles.item}>
+        <Text style={{flex: 1}}>{todo.title}</Text>
+        <TouchableOpacity onPress={this.edit.bind(this, todo)}>
+          <Icon name="mode-edit" size={30} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.remove.bind(this, todo)}>
+          <Icon name="delete" size={30} />
+        </TouchableOpacity>
       </View>
     )
   }
@@ -58,7 +73,7 @@ class Todos extends Component {
         </View>
         <MeteorListView
           collection="todos"
-          renderRow={this.renderItem}
+          renderRow={this.renderItem.bind(this)}
         />
       </View>
     );
@@ -69,7 +84,10 @@ export default Todos;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  item: {
     flex: 1,
-    alignItems: 'center'
+    flexDirection: 'row'
   }
 });

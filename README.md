@@ -12,7 +12,7 @@
 
 # react-native-meteor
 
-Meteor-like methods for React Native. **Currently in v1.0.0-beta9** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
+Meteor-like methods for React Native. **Currently in v1.0.0-beta11** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
 
 ## What is it for ?
 
@@ -113,11 +113,18 @@ Inside getMeteorData, you can access any Meteor reactive data source, which mean
 * Meteor.collection(collectionName)
   * [.find(selector, options)](http://docs.meteor.com/#/full/find)
   * [.findOne(selector, options)](http://docs.meteor.com/#/full/findone)
-  * [.findOne(id)](http://docs.meteor.com/#/full/findone)
 * [Meteor.user()](http://docs.meteor.com/#/full/meteor_user)
 * [Meteor.userId()](http://docs.meteor.com/#/full/meteor_userid)
 * [Meteor.status()](http://docs.meteor.com/#/full/meteor_status)
 * [Meteor.loggingIn()](http://docs.meteor.com/#/full/meteor_loggingin)
+
+# Additionals collection methods
+
+* Meteor.collection(collectionName)
+  * [.insert(doc, callback)](http://docs.meteor.com/#/full/insert)
+  * [.update(selector, modifier, [options], [callback])](http://docs.meteor.com/#/full/update)
+  * [.upsert(selector, modifier, [options], [callback])](http://docs.meteor.com/#/full/upsert)
+  * [.remove(id, callback(err, countRemoved))](http://docs.meteor.com/#/full/remove)
 
 # MeteorListView Component
 
@@ -174,5 +181,6 @@ Once connected to the ddp server, you can access every method available in [ddp.
 # TODO
 
 - [ ] [Helper for Meteor-CollectionFS](https://github.com/inProgress-team/react-native-meteor/issues/18)
+- [ ] [Connection status unreliable](https://github.com/inProgress-team/react-native-meteor/issues/16)
 
 Pull Requests are welcome ! :)

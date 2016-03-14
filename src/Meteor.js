@@ -3,63 +3,19 @@ import { NetInfo } from 'react-native';
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
 import DDP from '../lib/ddp.js';
-import Random from '../lib/Random';
 
 import Data from './Data';
 import Mixin from './Mixin';
 import User from './User';
 import ListView from './ListView';
+import collection from './Collection';
 
 
 module.exports = {
   MeteorListView: ListView,
+  collection: collection,
   connectMeteor(reactClass) {
     return reactMixin.onClass(reactClass, Mixin);
-  },
-  collection(name) {
-    const Meteor = this;
-
-    return {
-      find(selector, options) {
-        if(!Data.db || !Data.db[name]) return [];
-        if(typeof selector == 'string') return this.find({_id: selector}, options);
-        return Data.db[name].find(selector, options)
-
-      },
-      findOne(selector, options) {
-        if(!Data.db || !Data.db[name]) return null;
-        if(typeof selector == 'string') return this.findOne({_id: selector}, options);
-        return Data.db[name] && Data.db[name].findOne(selector, options)
-
-      },
-      insert(item, callback) {
-        if(!Data.db[name]) { Data.db.addCollection(name) }
-
-        const id = Random.id();
-        const itemSaved = Data.db[name].upsert({...item, _id: id});
-
-        Meteor.call('/'+name+'/insert', itemSaved, err => {
-          if(err) {
-            Data.db[name].remove(id);
-            typeof callback == 'function' && callback(err);
-            return console.log("Error inserting item in "+name, err);
-          }
-
-          typeof callback == 'function' && callback(null, id);
-        });
-
-        return id;
-      },
-      update(selector, modifier, options, callback) {
-        console.info('Update not impletemented yet');
-      },
-      upsert(selector, modifier, options, callback) {
-        console.info('Upsert not impletemented yet');
-      },
-      remove(selector, callback) {
-        console.info('Remove not impletemented yet');
-      }
-    };
   },
   ...User,
   status() {
