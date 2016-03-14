@@ -34,18 +34,20 @@ export default function(name) {
 
       return id;
     },
-    update(selector, modifier, options={}, callback=()=>{}) {
+    update(id, modifier, options={}, callback=()=>{}) {
       if(typeof options == 'function') {
         callback = options;
         options = {};
       }
+
       console.info('Update not impletemented yet');
     },
-    upsert(selector, modifier, options={}, callback=()=>{}) {
+    upsert(id, modifier, options={}, callback=()=>{}) {
       if(typeof options == 'function') {
         callback = options;
         options = {};
       }
+
       console.info('Upsert not impletemented yet');
     },
     remove(id, callback = ()=>{}) {

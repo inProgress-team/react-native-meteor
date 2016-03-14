@@ -122,8 +122,8 @@ Inside getMeteorData, you can access any Meteor reactive data source, which mean
 
 * Meteor.collection(collectionName)
   * [.insert(doc, callback)](http://docs.meteor.com/#/full/insert)
-  * [.update(selector, modifier, [options], [callback])](http://docs.meteor.com/#/full/update)
-  * [.upsert(selector, modifier, [options], [callback])](http://docs.meteor.com/#/full/upsert)
+  * [.update(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/update) (not implemented yet)
+  * [.upsert(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/upsert) (not implemented yet)
   * [.remove(id, callback(err, countRemoved))](http://docs.meteor.com/#/full/remove)
 
 # MeteorListView Component
