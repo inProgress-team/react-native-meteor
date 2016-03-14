@@ -1,6 +1,6 @@
 {
   "name": "react-native-meteor",
-  "version": "1.0.0-beta9",
+  "version": "1.0.0-beta10",
   "description": "DDP React-native Client",
   "main": "src/Meteor.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "ejson": "^2.1.2",
     "minimongo-cache": "0.0.48",
     "react-mixin": "^3.0.3",
+    "meteor-random": "0.0.3",
     "trackr": "^2.0.2",
     "wolfy87-eventemitter": "^4.3.0"
   }

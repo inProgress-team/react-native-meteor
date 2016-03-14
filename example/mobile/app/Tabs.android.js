@@ -11,14 +11,13 @@ import React, {
 import { Tab, TabLayout } from 'react-native-android-tablayout';
 
 import Todos from './Routes/Todos';
-import TodosListView from './Routes/TodosListView';
 import Status from './Routes/Status';
 
 export default class Tabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 0
+      selectedTab: 1
     };
   }
   selectTab(e) {
@@ -34,7 +33,7 @@ export default class Tabs extends Component {
         </TabLayout>
         <View style={{flex: 1}}>
           {selectedTab === 0 &&
-            <TodosListView />
+            <Todos />
           }
           {selectedTab == 1 &&
             <Status />

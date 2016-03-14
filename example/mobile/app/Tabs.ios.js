@@ -11,14 +11,15 @@ import React, {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Todos from './Routes/Todos';
-import TodosListView from './Routes/TodosListView';
+import AddTodo from './Routes/AddTodo';
 import Status from './Routes/Status';
+import Settings from './Routes/Settings';
 
 export default class Tabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 0
+      selectedTab: 1
     };
   }
   selectTab(index) {
@@ -38,11 +39,11 @@ export default class Tabs extends Component {
           <Todos />
         </Icon.TabBarItem>
         <Icon.TabBarItem
-          iconName="list"
-          title="Todos ListView"
+          iconName="plus-one"
+          title="Add todo"
           selected={selectedTab === 1}
           onPress={this.selectTab.bind(this, 1)}>
-          <TodosListView />
+          <AddTodo />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Status"
@@ -50,6 +51,13 @@ export default class Tabs extends Component {
           selected={selectedTab === 2}
           onPress={this.selectTab.bind(this, 2)}>
           <Status />
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
+          title="Settings"
+          iconName="settings"
+          selected={selectedTab === 3}
+          onPress={this.selectTab.bind(this, 3)}>
+          <Settings />
         </Icon.TabBarItem>
       </TabBarIOS>
     );

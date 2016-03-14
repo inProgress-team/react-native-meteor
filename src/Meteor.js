@@ -9,12 +9,15 @@ import Mixin from './Mixin';
 import User from './User';
 import ListView from './ListView';
 
+
 module.exports = {
   MeteorListView: ListView,
   connectMeteor(reactClass) {
     return reactMixin.onClass(reactClass, Mixin);
   },
   collection(name) {
+    const Meteor = this;
+
     return {
       find(selector, options) {
         if(!Data.db || !Data.db[name]) return [];
@@ -27,6 +30,22 @@ module.exports = {
         if(typeof selector == 'string') return this.findOne({_id: selector}, options);
         return Data.db[name] && Data.db[name].findOne(selector, options)
 
+      },
+      insert(item, callback) {
+        return;
+        if(!Data.db[name]) { Data.db.addCollection(name) }
+
+        const itemSaved = Data.db[name].upsert({...item});
+
+        console.log('/'+name+'/insert');
+        Meteor.call('/'+name+'/insert', itemSaved, (err, res) => {
+
+          if(err) return console.log(err);
+
+          console.log(res);
+        });
+
+        return ;
       }
     };
   },

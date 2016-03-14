@@ -10,3 +10,11 @@ export function createUsers() {
     });
   });
 }
+
+import { Settings } from 'collections';
+
+export function createSettings() {
+  Settings.insert({
+    param1: 'react-native-meteor'
+  });
+}

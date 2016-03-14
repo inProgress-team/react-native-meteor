@@ -8,13 +8,11 @@ import React, {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  SegmentedControlIOS,
-  TabBarIOS
+  ScrollView
 } from 'react-native';
 
-import Meteor, { connectMeteor } from 'react-native-meteor';
-
+import Meteor, { connectMeteor, MeteorListView } from 'react-native-meteor';
+import Button from 'react-native-button';
 
 class Todos extends Component {
   constructor(props) {
@@ -30,31 +28,38 @@ class Todos extends Component {
     };
   }
   startMeteorSubscriptions() {
+    console.log(this.state.done);
     Meteor.subscribe('todos', this.state.done);
   }
-  changeDone(state) {
-    if(state=='Done') {
-      this.setState({done: true});
-    } else {
-      this.setState({done: false});
-    }
+  changeDone() {
+    console.log('plouf');
+    this.setState({done: !this.state.done});
+  }
+  renderItem(todo) {
+    return (
+      <View key={todo._id}>
+        <Text>{todo.title}</Text>
+      </View>
+    )
   }
   render() {
     const { todos } = this.data;
+    const { done } = this.state;
+    console.log(todos);
     return (
       <View style={styles.container}>
-        <View style={{marginBottom: 10, marginTop: 25}}>
-          <SegmentedControlIOS selectedIndex={0} onValueChange={this.changeDone.bind(this)} style={{width: 150}} values={['Undone', 'Done']} />
+        <View style={{marginTop: 25}}>
+        <Button containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'green'}}
+                 style={{fontSize: 20, color: 'white'}} onPress={this.changeDone.bind(this)}
+          >
+            {done && 'Done'}
+            {!done && 'Undone'}
+          </Button>
         </View>
-        <ScrollView style={{flex: 1}}>
-          {todos.map(todo=>{
-            return (
-              <View key={todo._id}>
-                <Text>{todo.title}</Text>
-              </View>
-            )
-          })}
-        </ScrollView>
+        <MeteorListView
+          collection="todos"
+          renderRow={this.renderItem}
+        />
       </View>
     );
   }
