@@ -9,7 +9,7 @@
     "react-native": "^0.21.0",
     "react-native-android-tablayout": "^0.2.0",
     "react-native-button": "^1.4.2",
-    "react-native-meteor": "^1.0.0-beta10",
+    "react-native-meteor": "^1.0.0-beta11",
     "react-native-vector-icons": "^1.2.1"
   },
   "devDependencies": {

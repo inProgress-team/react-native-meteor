@@ -27,7 +27,7 @@ export default class Settings extends Component {
   render() {
     const { show } = this.state;
     const { settings } = this.data;
-
+    console.log(settings);
     return (
       <View style={styles.container}>
         <View style={{marginTop: 25}}>
