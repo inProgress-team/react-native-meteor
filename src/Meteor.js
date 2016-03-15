@@ -50,6 +50,12 @@ module.exports = {
       this.connect(Data._endpoint, Data._options);
     }
   },
+  _subscriptionsRestart() {
+    for(var i in Data.subscriptions) {
+      const sub = Data.subscriptions[i];
+      sub.references = Data.ddp.sub(sub.name, sub.params);
+    }
+  },
   connect(endpoint, options) {
     Data._endpoint = endpoint;
     Data._options = options;
@@ -65,6 +71,7 @@ module.exports = {
     Data.ddp.on("connected", ()=>{
       console.info("Connected to DDP server.");
       this._loadInitialUser();
+      this._subscriptionsRestart();
 
 
       if(!this._netInfoListener) {
