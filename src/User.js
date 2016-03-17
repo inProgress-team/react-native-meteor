@@ -37,7 +37,7 @@ module.exports = {
     this._startLoggingIn();
     this.call("login", {
         user: selector,
-        password: SHA256(password).toString()
+        password: SHA256(trimString(password)).toString()
     }, (err, result)=>{
       this._endLoggingIn();
 
@@ -53,7 +53,7 @@ module.exports = {
     if (options.email) options.email = trimString(options.email);
 
     // Replace password with the hashed password.
-    options.password = SHA256(options.password).toString();
+    options.password = SHA256(trimString(options.password)).toString();
 
     this._startLoggingIn();
     this.call("createUser", options, (err, result)=>{
