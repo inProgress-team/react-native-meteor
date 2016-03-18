@@ -1,10 +1,16 @@
 import { AsyncStorage } from 'react-native';
 import SHA256 from 'crypto-js/sha256';
 
-import { trimString } from '../lib/utils';
 import Data from './Data';
 
 const TOKEN_KEY = 'reactnativemeteor_usertoken';
+
+const hashPassword = (password) => {
+  return {
+    digest: SHA256(password).toString(),
+    algorithm: "sha-256"
+  }
+}
 
 module.exports = {
   user() {
@@ -21,39 +27,35 @@ module.exports = {
   logout(callback) {
     this.call("logout", function(err) {
       AsyncStorage.removeItem(TOKEN_KEY);
-      if(typeof callback == 'function') {
-        callback(err);
-      }
+      typeof callback == 'function' && callback(err);
     });
   },
   loginWithPassword(selector, password, callback) {
     if (typeof selector === 'string') {
       if (selector.indexOf('@') === -1)
-        selector = {username: trimString(selector)};
+        selector = {username: selector};
       else
-        selector = {email: trimString(selector)};
+        selector = {email: selector};
     }
 
     this._startLoggingIn();
     this.call("login", {
         user: selector,
-        password: SHA256(trimString(password)).toString()
+        password: hashPassword(password)
     }, (err, result)=>{
       this._endLoggingIn();
 
       this._handleLoginCallback(err, result);
 
-      if(typeof callback == 'function') {
-        callback(err)
-      }
+      typeof callback == 'function' && callback(err);
     });
   },
   createUser(options, callback) {
-    if (options.username) options.username = trimString(options.username);
-    if (options.email) options.email = trimString(options.email);
+    if (options.username) options.username = options.username;
+    if (options.email) options.email = options.email;
 
     // Replace password with the hashed password.
-    options.password = SHA256(trimString(options.password)).toString();
+    options.password = hashPassword(options.password);
 
     this._startLoggingIn();
     this.call("createUser", options, (err, result)=>{
