@@ -12,7 +12,7 @@ Add this to your AndroidManifest.xml file to autoreconnect fastly to DDP server 
 
 ## With RN >= 0.20.0 (Babel 6)
 
-- `npm i --save-dev babel-plugin-transform-decorators-legacy babel-preset-react-native` in your projet
+- `npm i --save-dev babel-plugin-transform-decorators-legacy babel-preset-react-native` in your project
 - Create a .babelrc file at the root of your project :
 
 ```json
@@ -29,7 +29,7 @@ Looking for your help. The RN 0.20.0 solution might be working, please let me kn
 
 ## With RN <0.16.0 (Babel 5)
 
-Use a .babelrc file at the root of your projet that contains :
+Use a .babelrc file at the root of your project that contains :
 
 ```json
 {
