@@ -9,7 +9,9 @@ import Mixin from './Mixin';
 import User from './User';
 import ListView from './ListView';
 
-module.exports = {
+export Accounts from './Accounts';
+
+export default {
   MeteorListView: ListView,
   connectMeteor(reactClass) {
     return reactMixin.onClass(reactClass, Mixin);

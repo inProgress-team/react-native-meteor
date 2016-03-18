@@ -2,15 +2,9 @@ import { AsyncStorage } from 'react-native';
 import SHA256 from 'crypto-js/sha256';
 
 import Data from './Data';
+import { hashPassword } from '../utils';
 
 const TOKEN_KEY = 'reactnativemeteor_usertoken';
-
-const hashPassword = (password) => {
-  return {
-    digest: SHA256(password).toString(),
-    algorithm: "sha-256"
-  }
-}
 
 module.exports = {
   user() {
@@ -48,24 +42,6 @@ module.exports = {
       this._handleLoginCallback(err, result);
 
       typeof callback == 'function' && callback(err);
-    });
-  },
-  createUser(options, callback) {
-    if (options.username) options.username = options.username;
-    if (options.email) options.email = options.email;
-
-    // Replace password with the hashed password.
-    options.password = hashPassword(options.password);
-
-    this._startLoggingIn();
-    this.call("createUser", options, (err, result)=>{
-      this._endLoggingIn();
-
-      this._handleLoginCallback(err, result);
-
-      if(typeof callback == 'function') {
-        callback(err)
-      }
     });
   },
   _startLoggingIn() {
