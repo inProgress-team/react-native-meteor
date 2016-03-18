@@ -1,5 +1,4 @@
 import { AsyncStorage } from 'react-native';
-import SHA256 from 'crypto-js/sha256';
 
 import Data from './Data';
 import { hashPassword } from '../utils';
