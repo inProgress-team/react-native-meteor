@@ -26,8 +26,21 @@ export default class Status extends Component {
       loggingIn: Meteor.loggingIn()
     };
   }
+  startMeteorSubscriptions() {
+    console.log('startMeteorSubscriptions with ', Meteor.userId());
+  }
   signin() {
-    Meteor.loginWithPassword('User', 'password')
+    Meteor.loginWithPassword('User', 'password', (err, res)=>{
+      if(err) return console.log(err);
+    });
+  }
+  createUser() {
+    Meteor.createUser({
+      username: 'mokto',
+      password: '123456'
+    }, (err, res)=>{
+      console.log(err, res);
+    });
   }
   signout() {
     Meteor.logout();
@@ -52,10 +65,18 @@ export default class Status extends Component {
         }
 
 
+        {!loggingIn && !user &&
+          <Button onPress={this.createUser.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: '#00BC8C', marginBottom: 20}}
+                     style={{fontSize: 20, color: 'white'}}>
+            Create user (mokto///123456)
+          </Button>
+        }
+
+
           {!loggingIn && !user &&
             <Button onPress={this.signin.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: '#00BC8C'}}
                        style={{fontSize: 20, color: 'white'}}>
-              Sign in
+              Sign in (User///password)
             </Button>
           }
           {!loggingIn && user &&

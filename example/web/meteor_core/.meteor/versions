@@ -66,6 +66,7 @@ rate-limit@1.0.0
 react-meteor-data@0.1.9
 reactive-dict@1.1.2
 reactive-var@1.0.6
+reactjs:react@0.2.4
 reload@1.1.4
 retry@1.0.4
 routepolicy@1.0.6

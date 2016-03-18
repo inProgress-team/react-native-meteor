@@ -5,10 +5,16 @@ import reactMixin from 'react-mixin';
 import { Todos } from 'collections';
 import { ListGroup, ListGroupItem, Glyphicon, Button } from 'react-bootstrap';
 
+import BlazeTemplate from '../BlazeTemplate';
+
 var faker = require('faker');
 
+@reactMixin.decorate(ReactMeteor.Mixin)
 @reactMixin.decorate(ReactMeteorData)
 export default class TodosComponent extends Component {
+  startMeteorSubscriptions() {
+    console.log(Meteor.user());
+  }
   getMeteorData() {
     return {
       todos: Todos.find().fetch()
@@ -42,6 +48,7 @@ export default class TodosComponent extends Component {
 
     return (
       <div>
+        <BlazeTemplate template={Template.loginButtons} />
         <hr/>
         <Button onClick={this.addTodo.bind(this)}>Add a Todo</Button>
         <hr/>

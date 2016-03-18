@@ -79,7 +79,13 @@ const enqueueMeteorDataUpdate = function(component) {
     // If it's the first time we've called enqueueMeteorDataUpdate since
     // the component was mounted, set the state synchronously.
     component._meteorFirstRun = false;
-    component._meteorChangeCallback = () => { updateData(component); };
+    component._meteorChangeCallback = () => {
+      updateData(component);
+
+      if (component._meteorDataDep) {
+        component._meteorDataDep.changed();
+      }
+    };
 
     updateData(component);
 
