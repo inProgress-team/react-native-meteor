@@ -31,6 +31,17 @@ class Todos extends Component {
   startMeteorSubscriptions() {
     Meteor.subscribe('todos', this.state.done);
   }
+  add() {
+    const { todos } = this.data;
+
+    const item = {
+      title: 'Todo '+(todos.length+1)
+    };
+
+    Meteor.collection('todos').insert(item, (err, item)=> {
+      console.log(err, item);
+    });
+  }
   changeDone() {
     this.setState({done: !this.state.done});
   }
@@ -61,10 +72,9 @@ class Todos extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={{marginTop: 25}}>
-        <Button containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'green'}}
-                 style={{fontSize: 20, color: 'white'}} onPress={this.changeDone.bind(this)}
-          >
+        <View style={styles.buttonsContainer}>
+          <Button containerStyle={styles.button} style={styles.buttonText} onPress={this.add.bind(this)}>Add Todo</Button>
+          <Button containerStyle={styles.button} style={styles.buttonText} onPress={this.changeDone.bind(this)} >
             {done && 'Done'}
             {!done && 'Undone'}
           </Button>
@@ -87,5 +97,20 @@ const styles = StyleSheet.create({
   item: {
     flex: 1,
     flexDirection: 'row'
+  },
+  buttonsContainer: {
+    marginTop: 25,
+    marginHorizontal: 10
+  },
+  button: {
+    paddingVertical: 8,
+    height:40,
+    overflow:'hidden',
+    borderRadius:4,
+    backgroundColor: '#00BC8C',
+    marginBottom: 5
+  },
+  buttonText: {
+    fontSize: 18, color: 'white'
   }
 });

@@ -16,20 +16,11 @@ import Button from 'react-native-button';
 
 
 @connectMeteor
-export default class AddTodo extends Component {
-  add() {
-    const item = {
-      title: 'yo'
-    };
-
-    Meteor.collection('todos').insert(item, (err, item)=> {
-      console.log(err, item);
-    });
-  }
+export default class CollectionFS extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button onPress={this.add.bind(this)}>Add Todo</Button>
+
       </View>
     );
   }

@@ -11,7 +11,7 @@ import React, {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Todos from './Routes/Todos';
-import AddTodo from './Routes/AddTodo';
+import CollectionFS from './Routes/CollectionFS';
 import Status from './Routes/Status';
 import Settings from './Routes/Settings';
 
@@ -19,7 +19,7 @@ export default class Tabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 1
+      selectedTab: 0
     };
   }
   selectTab(index) {
@@ -39,11 +39,11 @@ export default class Tabs extends Component {
           <Todos />
         </Icon.TabBarItem>
         <Icon.TabBarItem
-          iconName="plus-one"
-          title="Add todo"
+          iconName="attach-file"
+          title="CollectionFS"
           selected={selectedTab === 1}
           onPress={this.selectTab.bind(this, 1)}>
-          <AddTodo />
+          <CollectionFS />
         </Icon.TabBarItem>
         <Icon.TabBarItem
           title="Status"
