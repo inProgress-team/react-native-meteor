@@ -7,12 +7,14 @@ import DDP from '../lib/ddp.js';
 import Random from '../lib/Random';
 
 import Data from './Data';
-import Mixin from './Mixin';
-import User from './User';
-import ListView from './ListView';
 import collection from './Collection';
-import Accounts from './Accounts';
 import call from './Call';
+
+import Mixin from './components/Mixin';
+import ListView from './components/ListView';
+import User from './user/User';
+import Accounts from './user/Accounts';
+
 
 module.exports = {
   Accounts: Accounts,

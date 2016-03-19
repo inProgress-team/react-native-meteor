@@ -1,6 +1,6 @@
-import call from './Call';
+import call from '../Call';
 import User from './User';
-import { hashPassword } from '../lib/utils';
+import { hashPassword } from '../../lib/utils';
 
 
 module.exports = {
