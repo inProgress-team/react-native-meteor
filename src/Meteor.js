@@ -52,6 +52,17 @@ module.exports = {
     }
 
   },
+  waitDdpConnected(cb) {
+
+    if(Data.ddp && Data.ddp.status == 'connected') {
+      cb();
+    } else if(Data.ddp) {
+      Data.ddp.once('connected', cb);
+    } else {
+      setTimeout(()=>{ this.waitDdpConnected(cb) }, 500);
+    }
+
+  },
   connect(endpoint, options) {
     Data._endpoint = endpoint;
     Data._options = options;

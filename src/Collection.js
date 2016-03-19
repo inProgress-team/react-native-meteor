@@ -23,14 +23,17 @@ export default function(name) {
       const id = Random.id();
       const itemSaved = Data.db[name].upsert({...item, _id: id});
 
-      Meteor.call('/'+name+'/insert', itemSaved, err => {
-        if(err) {
-          Data.db[name].del(id);
-          return callback(err);
-        }
+      Meteor.waitDdpConnected(()=>{
+        Meteor.call('/'+name+'/insert', itemSaved, err => {
+          if(err) {
+            Data.db[name].del(id);
+            return callback(err);
+          }
 
-        callback(null, id);
+          callback(null, id);
+        });
       });
+
 
       return id;
     },
@@ -56,13 +59,15 @@ export default function(name) {
       if(element) {
         Data.db[name].del(element._id);
 
-        Meteor.call('/'+name+'/remove', {_id: id}, (err, res) => {
-          if(err) {
-            Data.db[name].upsert(element);
-            return callback(err);
-          }
-          callback(null, res);
+        Meteor.waitDdpConnected(()=>{
+          Meteor.call('/'+name+'/remove', {_id: id}, (err, res) => {
+            if(err) {
+              Data.db[name].upsert(element);
+              return callback(err);
+            }
+            callback(null, res);
 
+          });
         });
 
       } else {
