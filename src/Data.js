@@ -8,16 +8,7 @@ export default {
   subscriptions: {},
   db: new minimongo(),
   calls: [],
-
-  waitDdpReady(cb) {
-    if(this.ddp) {
-      cb();
-    } else {
-      setTimeout(()=>{
-        this.waitDdpReady(cb);
-      }, 10);
-    }
-  },
+  hasBeenConnected: false,
 
   _cbs: [],
   on(eventName, cb) {

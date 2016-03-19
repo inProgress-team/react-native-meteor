@@ -2,7 +2,9 @@ import { NetInfo } from 'react-native';
 
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
+import EJSON from 'ejson';
 import DDP from '../lib/ddp.js';
+import Random from '../lib/Random';
 
 import Data from './Data';
 import Mixin from './Mixin';
@@ -14,6 +16,9 @@ import collection from './Collection';
 module.exports = {
   MeteorListView: ListView,
   collection: collection,
+  getData() {
+    return Data
+  },
   connectMeteor(reactClass) {
     return reactMixin.onClass(reactClass, Mixin);
   },
@@ -51,16 +56,17 @@ module.exports = {
     }
   },
   _subscriptionsRestart() {
+
     for(var i in Data.subscriptions) {
       const sub = Data.subscriptions[i];
-      sub.references = Data.ddp.sub(sub.name, sub.params);
+      Data.ddp.unsub(sub.subIdRemember);
+      sub.subIdRemember = Data.ddp.sub(sub.name, sub.params);
     }
+
   },
   connect(endpoint, options) {
     Data._endpoint = endpoint;
     Data._options = options;
-
-
 
     this.ddp = Data.ddp = new DDP({
       endpoint: endpoint,
@@ -71,7 +77,12 @@ module.exports = {
     Data.ddp.on("connected", ()=>{
       console.info("Connected to DDP server.");
       this._loadInitialUser();
-      this._subscriptionsRestart();
+
+      if(Data.hasBeenConnected) {
+        this._subscriptionsRestart();
+      } else {
+        Data.hasBeenConnected = true;
+      }
 
 
       if(!this._netInfoListener) {
@@ -96,7 +107,12 @@ module.exports = {
     });
 
     Data.ddp.on("ready", message => {
-      //console.info('READY', message.subs);
+      /*
+      for(var i in Data.subscriptions) {
+        const sub = Data.subscriptions[i];
+        //console.log(sub.name, EJSON.clone(sub.params), sub.subIdRemember);
+      }
+      */
     });
 
     Data.ddp.on("changed", message => {
@@ -116,8 +132,8 @@ module.exports = {
     Data.ddp.on("nosub", message => {
       for(var i in Data.subscriptions) {
         const sub = Data.subscriptions[i];
-        if(sub.id == message.id) {
-          console.log("No sub for", sub.name);
+        if(sub.subIdRemember == message.id) {
+          console.warn("No subscription existing for", sub.name);
         }
       }
     });
@@ -135,55 +151,103 @@ module.exports = {
       }
     }
 
-    const stringKey = name+JSON.stringify(params);
+    // Is there an existing sub with the same name and param, run in an
+    // invalidated Computation? This will happen if we are rerunning an
+    // existing computation.
+    //
+    // For example, consider a rerun of:
+    //
+    //     Tracker.autorun(function () {
+    //       Meteor.subscribe("foo", Session.get("foo"));
+    //       Meteor.subscribe("bar", Session.get("bar"));
+    //     });
+    //
+    // If "foo" has changed but "bar" has not, we will match the "bar"
+    // subcribe to an existing inactive subscription in order to not
+    // unsub and resub the subscription unnecessarily.
+    //
+    // We only look for one such sub; if there are N apparently-identical subs
+    // being invalidated, we will require N matching subscribe calls to keep
+    // them all active.
 
-    if (!Data.subscriptions[stringKey]) {
-      // We're not currently subscribed to this. Go start a subscription.
-      //console.log("Subscribe to", name, "with params", params);
-      Data.subscriptions[stringKey] = {
-        references: 1,
-        name: name,
-        params: params,
-        id: Data.ddp.sub(name, params),
-        stop: function () {
-          // Wait for all autoruns to finish rerunning before processing the unsubscription
-          // request. It's possible that stop() was called because an autorun is rerunning,
-          // so before doing anything drastic, we should wait to see if the autorun
-          // recreates the subscription when it is rerun.
-          this.references--;
-          Trackr.afterFlush(() => {
-            if (this.references === 0) {
-              // Nope, either the autorun did not recreate the subscription, or there
-              // were multiple calls to subscribeToMagazine() in the first place and not all
-              // of them have been stopped. Go ahead and cancel.
-              //console.log("Canceling our subscription to", name, "with params", params);
-              Data.ddp.unsub(Data.subscriptions[stringKey].id);
-              delete Data.subscriptions[stringKey];
-            }
-          });
-        }
-      };
-    } else {
-      // We already have a subscription to this magazine running. Increment the reference
-      // count to stop it from going away.
-      Data.subscriptions[stringKey].references++;
+
+
+    let existing = false;
+    for(var i in Data.subscriptions) {
+      const sub = Data.subscriptions[i];
+      if(sub.inactive && sub.name === name && EJSON.equals(sub.params, params)) existing = sub;
     }
 
-    if (Trackr.active) {
-      Trackr.onInvalidate((c) => {
-        // subscribeToMagazine was called from inside an autorun, and the autorun is
-        // about to rerun itself. Tentatively plan to cancel the subscription. If the
-        // autorun resubscribes to that same magazine when it is rerun, the logic in
-        // in stop() is smart enough to leave the subscription alone rather than
-        // canceling and immediately recreating it.
-        //
-        // (Tracker.onInvalidate is a shortcut for Tracker.currentComputation.onInvalidate.)
-        if (Data.subscriptions[stringKey]) {
-          Data.subscriptions[stringKey].stop();
+    let id;
+    if (existing) {
+      id = existing.id;
+      existing.inactive = false;
+
+      if (callbacks.onStop) {
+        existing.stopCallback = callbacks.onStop;
+      }
+
+    } else {
+
+      // New sub! Generate an id, save it locally, and send message.
+
+      id = Random.id();
+      const subIdRemember = Data.ddp.sub(name, params);
+
+      Data.subscriptions[id] = {
+        id: id,
+        subIdRemember: subIdRemember,
+        name: name,
+        params: EJSON.clone(params),
+        inactive: false,
+        ready: false,
+        stopCallback: callbacks.onStop,
+        stop: function() {
+          Data.ddp.unsub(this.subIdRemember);
+          delete Data.subscriptions[this.id];
+
+          if (callbacks.onStop) {
+            callbacks.onStop();
+          }
         }
+      };
+
+    }
+
+
+    // return a handle to the application.
+    var handle = {
+      stop: function () {
+        if(Data.subscriptions[id])
+          Data.subscriptions[id].stop();
+      },
+      ready: function () {
+        //TODO
+      },
+      subscriptionId: id
+    };
+
+    if (Trackr.active) {
+      // We're in a reactive computation, so we'd like to unsubscribe when the
+      // computation is invalidated... but not if the rerun just re-subscribes
+      // to the same subscription!  When a rerun happens, we use onInvalidate
+      // as a change to mark the subscription "inactive" so that it can
+      // be reused from the rerun.  If it isn't reused, it's killed from
+      // an afterFlush.
+      Trackr.onInvalidate(function (c) {
+        if(Data.subscriptions[id]) {
+          Data.subscriptions[id].inactive = true;
+        }
+
+        Trackr.afterFlush(function () {
+          if (Data.subscriptions[id] && Data.subscriptions[id].inactive) {
+            handle.stop();
+          }
+        });
       });
     }
 
-    return Data.subscriptions[stringKey];
+    return handle;
+
   }
 }
