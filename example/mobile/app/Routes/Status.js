@@ -11,7 +11,7 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import Meteor, { connectMeteor } from 'react-native-meteor';
+import Meteor, { Accounts, connectMeteor } from 'react-native-meteor';
 
 import Button from 'react-native-button';
 
@@ -35,7 +35,8 @@ export default class Status extends Component {
     });
   }
   createUser() {
-    Meteor.createUser({
+    console.log(Accounts);
+    Accounts.createUser({
       username: 'mokto',
       password: '123456'
     }, (err, res)=>{
