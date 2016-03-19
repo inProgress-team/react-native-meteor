@@ -89,22 +89,7 @@ export default class App extends Component {
 
 Inside this method, you can create subscriptions (see below) when component is mounted. It will automatically unsubscribe if the component is unmounted.
 
-#### [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe)
-##### Example usage
-
-your server side:
-```javascript
-Meteor.publish('todos', function(done, options){
-    return Todos.find({ done: done }, options);
-});
-```
-
-your react-native client code:
-```javascript
-//Meteor subscribe can be used like on meteor official site
-Meteor.subscribe('todos', true, {limit: 10, sort: {createdAt: -1}});
-```
-
+* [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe)
 
 ## getMeteorData
 
@@ -132,7 +117,7 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 
 - `collection` **string** *required*
 - `selector` [**string** / **object**]
-- `url` **object**
+- `options` **object**
 
 ### Example usage
 
@@ -141,13 +126,15 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
   collection="todos"
   selector={{done: true}}
   options={{sort: {createdAt: -1}}}
-  renderItem={this.renderItem}
+  renderRow={this.renderItem}
 />
 ```
 
 # API
 
-## Meteor.connect(endpoint, options)
+## Meteor DDP connection
+
+#### Meteor.connect(endpoint, options)
 
 Connect to a DDP server. You only have to do this once in your app.
 
@@ -159,7 +146,7 @@ Connect to a DDP server. You only have to do this once in your app.
   - autoReconnect **boolean** [true] whether to try to reconnect to the server when the socket connection closes, unless the closing was initiated by a call to the disconnect method.
   - reconnectInterval **number** [10000] the interval in ms between reconnection attempts.
 
-## Meteor.disconnect()
+#### Meteor.disconnect()
 
 Disconnect from the DDP server.
 
