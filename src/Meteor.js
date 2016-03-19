@@ -13,7 +13,9 @@ import ListView from './ListView';
 import collection from './Collection';
 
 
-module.exports = {
+export Accounts from './Accounts';
+
+export default {
   MeteorListView: ListView,
   collection: collection,
   getData() {

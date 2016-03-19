@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 import Data from './Data';
+import { hashPassword } from '../utils';
 
 const TOKEN_KEY = 'reactnativemeteor_usertoken';
 
@@ -19,9 +20,7 @@ module.exports = {
   logout(callback) {
     this.call("logout", function(err) {
       AsyncStorage.removeItem(TOKEN_KEY);
-      if(typeof callback == 'function') {
-        callback(err);
-      }
+      typeof callback == 'function' && callback(err);
     });
   },
   loginWithPassword(selector, password, callback) {
@@ -35,15 +34,13 @@ module.exports = {
     this._startLoggingIn();
     this.call("login", {
         user: selector,
-        password: password
+        password: hashPassword(password)
     }, (err, result)=>{
       this._endLoggingIn();
 
       this._handleLoginCallback(err, result);
 
-      if(typeof callback == 'function') {
-        callback(err)
-      }
+      typeof callback == 'function' && callback(err);
     });
   },
   _startLoggingIn() {
