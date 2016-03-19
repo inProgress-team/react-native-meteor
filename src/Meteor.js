@@ -11,11 +11,11 @@ import Mixin from './Mixin';
 import User from './User';
 import ListView from './ListView';
 import collection from './Collection';
+import Accounts from './Accounts';
+import call from './Call';
 
-
-export Accounts from './Accounts';
-
-export default {
+module.exports = {
+  Accounts: Accounts,
   MeteorListView: ListView,
   collection: collection,
   getData() {
@@ -34,19 +34,7 @@ export default {
       //reason:
     }
   },
-  call(eventName) {
-    var args = Array.prototype.slice.call(arguments, 1);
-    if (args.length && typeof args[args.length - 1] === "function") {
-      var callback = args.pop();
-    }
-
-
-    const id = Data.ddp.method(eventName, args);
-    Data.calls.push({
-      id: id,
-      callback: callback
-    });
-  },
+  call: call,
   disconnect() {
     if(Data.ddp) {
       Data.ddp.disconnect();

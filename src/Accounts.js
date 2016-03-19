@@ -1,8 +1,9 @@
+import call from './Call';
 import User from './User';
-import Meteor from './Meteor';
-import { hashPassword } from '../utils';
+import { hashPassword } from '../lib/utils';
 
-export default {
+
+module.exports = {
   createUser(options, callback) {
     if (options.username) options.username = options.username;
     if (options.email) options.email = options.email;
@@ -11,7 +12,7 @@ export default {
     options.password = hashPassword(options.password);
 
     User._startLoggingIn();
-    Meteor.call("createUser", options, (err, result)=>{
+    call("createUser", options, (err, result)=>{
       User._endLoggingIn();
 
       User._handleLoginCallback(err, result);
