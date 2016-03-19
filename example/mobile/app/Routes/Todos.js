@@ -29,11 +29,9 @@ class Todos extends Component {
     };
   }
   startMeteorSubscriptions() {
-    console.log(this.state.done);
     Meteor.subscribe('todos', this.state.done);
   }
   changeDone() {
-    console.log('plouf');
     this.setState({done: !this.state.done});
   }
   edit(todo) {
@@ -60,7 +58,7 @@ class Todos extends Component {
   render() {
     const { todos } = this.data;
     const { done } = this.state;
-    console.log(todos);
+
     return (
       <View style={styles.container}>
         <View style={{marginTop: 25}}>

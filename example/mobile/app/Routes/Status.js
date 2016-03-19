@@ -27,7 +27,7 @@ export default class Status extends Component {
     };
   }
   startMeteorSubscriptions() {
-    console.log('startMeteorSubscriptions with ', Meteor.userId());
+    Meteor.subscribe('test', Meteor.userId());
   }
   signin() {
     Meteor.loginWithPassword('User', 'password', (err, res)=>{
@@ -47,7 +47,7 @@ export default class Status extends Component {
   }
   render() {
     const { status, user, userId, loggingIn } = this.data;
-
+    console.log(status, user, userId, loggingIn);
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>

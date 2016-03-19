@@ -7,6 +7,7 @@ export default function() {
 
   if (Meteor.isServer) {
     Meteor.publish('todos', function(done) {
+      console.log('publish todos', done);
       if(typeof done == 'boolean') return Todos.find({done: done});
       if(done===undefined) return Todos.find({});
 
