@@ -1,3 +1,4 @@
+
 import { NetInfo } from 'react-native';
 
 import reactMixin from 'react-mixin';
@@ -42,11 +43,6 @@ module.exports = {
       Data.ddp.disconnect();
     }
   },
-  _reconnect() {
-    if(Data._endpoint) {
-      this.connect(Data._endpoint, Data._options);
-    }
-  },
   _subscriptionsRestart() {
 
     for(var i in Data.subscriptions) {
@@ -60,11 +56,19 @@ module.exports = {
     Data._endpoint = endpoint;
     Data._options = options;
 
+
     this.ddp = Data.ddp = new DDP({
       endpoint: endpoint,
       SocketConstructor: WebSocket,
       ...options
     });
+
+    NetInfo.isConnected.addEventListener('change', isConnected=>{
+      if(isConnected) {
+        Data.ddp.connect();
+      }
+    });
+
 
     Data.ddp.on("connected", ()=>{
       console.info("Connected to DDP server.");
@@ -74,16 +78,6 @@ module.exports = {
         this._subscriptionsRestart();
       } else {
         Data.hasBeenConnected = true;
-      }
-
-
-      if(!this._netInfoListener) {
-        this._netInfoListener = isConnected=>{
-          if(isConnected) {
-            this._reconnect();
-          }
-        };
-        NetInfo.isConnected.addEventListener('change', this._netInfoListener);
       }
     });
 
