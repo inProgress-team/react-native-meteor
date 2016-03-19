@@ -1,6 +1,6 @@
 import Trackr from 'trackr';
 import EJSON from 'ejson';
-import Data from './Data';
+import Data from '../Data';
 
 export default {
   componentWillMount() {
@@ -75,10 +75,7 @@ class MeteorSubscriptionsManager {
 
     this._meteorDataChangedCallback = ()=>{this._meteorSubscriptionsDep.changed()};
 
-    Data.db.on('change', this._meteorDataChangedCallback);
-    Data.ddp.on('connected', this._meteorDataChangedCallback);
-    Data.ddp.on('disconnected', this._meteorDataChangedCallback);
-    Data.on('loggingIn', this._meteorDataChangedCallback);
+    Data.onChange(this._meteorDataChangedCallback);
   }
   dispose() {
     if (this.computation) {
@@ -86,10 +83,7 @@ class MeteorSubscriptionsManager {
       this.computation = null;
     }
 
-    Data.db.off('change', this._meteorDataChangedCallback);
-    Data.ddp.off('connected', this._meteorDataChangedCallback);
-    Data.ddp.off('disconnected', this._meteorDataChangedCallback);
-    Data.off('loggingIn', this._meteorDataChangedCallback);
+    Data.offChange(this._meteorDataChangedCallback);
   }
   stateOrPropsChanged() {
 
@@ -119,10 +113,7 @@ class MeteorDataManager {
 
     this._meteorDataChangedCallback = ()=>{this._meteorDataDep.changed()};
 
-    Data.db.on('change', this._meteorDataChangedCallback);
-    Data.ddp.on('connected', this._meteorDataChangedCallback);
-    Data.ddp.on('disconnected', this._meteorDataChangedCallback);
-    Data.on('loggingIn', this._meteorDataChangedCallback);
+    Data.onChange(this._meteorDataChangedCallback);
   }
 
   dispose() {
@@ -131,10 +122,7 @@ class MeteorDataManager {
       this.computation = null;
     }
 
-    Data.db.off('change', this._meteorDataChangedCallback);
-    Data.ddp.off('connected', this._meteorDataChangedCallback);
-    Data.ddp.off('disconnected', this._meteorDataChangedCallback);
-    Data.off('loggingIn', this._meteorDataChangedCallback);
+    Data.offChange(this._meteorDataChangedCallback);
   }
 
   calculateData() {

@@ -7,7 +7,7 @@ import React, {
 } from 'react-native';
 
 
-import Data from './Data';
+import Data from '../Data';
 
 
 export default class MeteorListView extends Component {
