@@ -3,28 +3,39 @@ import Random from '../lib/Random';
 
 export default function(name) {
   const Meteor = this;
+  if(!Data.db[name]) { Data.db.addCollection(name) }
 
   return {
     find(selector, options) {
-      if(!Data.db || !Data.db[name]) return [];
       if(typeof selector == 'string') return this.find({_id: selector}, options);
       return Data.db[name].find(selector, options)
 
     },
     findOne(selector, options) {
-      if(!Data.db || !Data.db[name]) return null;
       if(typeof selector == 'string') return this.findOne({_id: selector}, options);
       return Data.db[name] && Data.db[name].findOne(selector, options)
 
     },
     insert(item, callback = ()=>{}) {
-      if(!Data.db[name]) { Data.db.addCollection(name) }
 
-      const id = Random.id();
-      const itemSaved = Data.db[name].upsert({...item, _id: id});
+      let id;
+
+      if('_id' in item) {
+        if(!item._id || typeof item._id != 'string') {
+          return callback("Meteor requires document _id fields to be non-empty strings");
+        }
+        id = item._id;
+      } else {
+        id = item._id = Random.id();
+      }
+
+      if(Data.db[name].get(id)) return callback({error: 409, reason: "Duplicate key _id with value "+id});
+
+
+      Data.db[name].upsert(item);
 
       Meteor.waitDdpConnected(()=>{
-        Meteor.call('/'+name+'/insert', itemSaved, err => {
+        Meteor.call('/'+name+'/insert', item, err => {
           if(err) {
             Data.db[name].del(id);
             return callback(err);
@@ -38,14 +49,18 @@ export default function(name) {
       return id;
     },
     update(id, modifier, options={}, callback=()=>{}) {
+
       if(typeof options == 'function') {
         callback = options;
         options = {};
       }
 
+      console.log(Data.db[name]);
+
       console.info('Update not impletemented yet');
     },
     upsert(id, modifier, options={}, callback=()=>{}) {
+
       if(typeof options == 'function') {
         callback = options;
         options = {};
