@@ -10,7 +10,7 @@ Add this to your AndroidManifest.xml file to autoreconnect fastly to DDP server 
 
 # Installing decorators
 
-## With RN >= 0.20.0 (Babel 6)
+## With RN >= 0.16.0 (Babel 6)
 
 - `npm i --save-dev babel-plugin-transform-decorators-legacy babel-preset-react-native` in your project
 - Create a .babelrc file at the root of your project :
@@ -21,11 +21,6 @@ Add this to your AndroidManifest.xml file to autoreconnect fastly to DDP server 
   "plugins": ["transform-decorators-legacy"]
 }
 ```
-
-
-## With RN >= 0.16.0 && <= 0.19.0 (Babel 6)
-
-Looking for your help. The RN 0.20.0 solution might be working, please let me know ;)
 
 ## With RN <0.16.0 (Babel 5)
 
