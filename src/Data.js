@@ -21,7 +21,7 @@ export default {
     this.ddp.on('disconnected', cb);
     this.on('loggingIn', cb);
   },
-  offChange() {
+  offChange(cb) {
     this.db.off('change', cb);
     this.ddp.off('connected', cb);
     this.ddp.off('disconnected', cb);
