@@ -45,6 +45,17 @@ module.exports = {
       typeof callback == 'function' && callback(err);
     });
   },
+  logoutOtherClients(callback = ()=>{}) {
+    this.call('getNewToken', (err, res) => {
+      if(err) return callback(err);
+
+      this._handleLoginCallback(err, res);
+
+      this.call('removeOtherTokens', err=>{
+        callback(err);
+      })
+    });
+  },
   _startLoggingIn() {
     this._isLoggingIn = true;
     Data._notifyLoggingIn();

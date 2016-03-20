@@ -41,6 +41,13 @@ export default class Status extends Component {
       console.log('password changed');
     });
   }
+  logoutOtherClients() {
+    Meteor.logoutOtherClients(err=>{
+      if(err) return console.log(err);
+
+      console.log('success logoutOtherClients');
+    })
+  }
   forgotPassword() {
     Accounts.forgotPassword({
       email: 'contact@in-progress.io'
@@ -107,6 +114,13 @@ export default class Status extends Component {
             <Button onPress={this.signout.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'red', marginBottom: 20}}
                        style={{fontSize: 20, color: 'white'}}>
               Sign out
+            </Button>
+          }
+
+          {!loggingIn && user &&
+            <Button onPress={this.logoutOtherClients.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: '#00BC8C', marginBottom: 20}}
+                       style={{fontSize: 20, color: 'white'}}>
+              logoutOtherClients
             </Button>
           }
           {!loggingIn && user &&
