@@ -110,6 +110,7 @@ Inside getMeteorData, you can access any Meteor reactive data source, which mean
   * [.update(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/update) (not implemented yet)
   * [.upsert(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/upsert) (not implemented yet)
   * [.remove(id, callback(err, countRemoved))](http://docs.meteor.com/#/full/remove)
+* Meteor.FSCollection(collectionName) : Helper for [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). Full documentation [here](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/FSCollection.md)
 
 # MeteorListView Component
 
@@ -170,10 +171,10 @@ Once connected to the ddp server, you can access every method available in [ddp.
 
 # TODO
 
-- [ ] [Helper for Meteor-CollectionFS](https://github.com/inProgress-team/react-native-meteor/issues/18)
+- [X] [Helper for Meteor-CollectionFS](https://github.com/inProgress-team/react-native-meteor/issues/18)
 - [ ] [Accounts Methods 0/4](https://github.com/inProgress-team/react-native-meteor/issues/30)
 - [ ] [Meteor user methods 0/2](https://github.com/inProgress-team/react-native-meteor/issues/31)
 - [ ] [Update and upsert methods 0/2](https://github.com/inProgress-team/react-native-meteor/issues/24)
-- [ ] [When disconnected, minimongo insert is pushing data to view but not send to server when reconnecting.](https://github.com/inProgress-team/react-native-meteor/issues/29)
+- [X] [When disconnected, minimongo insert is pushing data to view but not send to server when reconnecting.](https://github.com/inProgress-team/react-native-meteor/issues/29)
 
 Pull Requests are welcome ! :)
