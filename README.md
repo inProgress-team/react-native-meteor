@@ -174,9 +174,9 @@ Once connected to the ddp server, you can access every method available in [ddp.
 # TODO
 
 - [X] [Helper for Meteor-CollectionFS](https://github.com/inProgress-team/react-native-meteor/issues/18)
-- [ ] [Accounts Methods 0/4](https://github.com/inProgress-team/react-native-meteor/issues/30)
-- [ ] [Meteor user methods 0/2](https://github.com/inProgress-team/react-native-meteor/issues/31)
-- [ ] [Update and upsert methods 0/2](https://github.com/inProgress-team/react-native-meteor/issues/24)
+- [ ] [Accounts Methods 2/4](https://github.com/inProgress-team/react-native-meteor/issues/30)
+- [ ] [Meteor user methods 1/2](https://github.com/inProgress-team/react-native-meteor/issues/31)
+- [X] [Update method](https://github.com/inProgress-team/react-native-meteor/issues/24)
 - [X] [When disconnected, minimongo insert is pushing data to view but not send to server when reconnecting.](https://github.com/inProgress-team/react-native-meteor/issues/29)
 
 Pull Requests are welcome ! :)
