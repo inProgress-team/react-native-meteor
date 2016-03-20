@@ -12,7 +12,7 @@
 
 # react-native-meteor
 
-Meteor-like methods for React Native. **Currently in v1.0.0-beta16** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
+Meteor-like methods for React Native. **Currently in v1.0.0-beta17** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
 
 ## What is it for ?
 
@@ -107,8 +107,7 @@ Inside getMeteorData, you can access any Meteor reactive data source, which mean
 
 * Meteor.collection(collectionName)
   * [.insert(doc, callback)](http://docs.meteor.com/#/full/insert)
-  * [.update(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/update) (not implemented yet)
-  * [.upsert(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/upsert) (not implemented yet)
+  * [.update(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/update)
   * [.remove(id, callback(err, countRemoved))](http://docs.meteor.com/#/full/remove)
 * Meteor.FSCollection(collectionName) : Helper for [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). Full documentation [here](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/FSCollection.md)
 
