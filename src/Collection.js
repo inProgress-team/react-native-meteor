@@ -55,18 +55,17 @@ export default function(name) {
         options = {};
       }
 
-      console.log(Data.db[name]);
+      if(!Data.db[name].get(id)) return callback({error: 409, reason: "Item not found in collection "+name+" with id "+id});
 
-      console.info('Update not impletemented yet');
-    },
-    upsert(id, modifier, options={}, callback=()=>{}) {
+      Meteor.waitDdpConnected(()=>{
+        Meteor.call('/'+name+'/update', {_id: id}, modifier, err => {
+          if(err) {
+            return callback(err);
+          }
 
-      if(typeof options == 'function') {
-        callback = options;
-        options = {};
-      }
-
-      console.info('Upsert not impletemented yet');
+          callback(null, id);
+        });
+      });
     },
     remove(id, callback = ()=>{}) {
 

@@ -68,7 +68,6 @@ export default function(name) {
     },
     insert: Collection(collectionName).insert,
     update: Collection(collectionName).update,
-    upsert: Collection(collectionName).upsert,
     remove: Collection(collectionName).remove
   };
 }
