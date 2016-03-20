@@ -46,7 +46,13 @@ class Todos extends Component {
     this.setState({done: !this.state.done});
   }
   edit(todo) {
-    console.log('edit', todo);
+    Meteor.collection('todos').update(todo._id, {
+      $set: {
+        title: 'NEW TITLE'
+      }
+    }, err=>{
+      console.log(err);
+    });
   }
   remove(todo) {
     Meteor.collection('todos').remove(todo._id, err=>{
