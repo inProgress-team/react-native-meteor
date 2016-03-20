@@ -36,15 +36,18 @@ export default class MeteorListView extends Component {
       Data.db.addCollection(collection)
     }
 
-    const items = Data.db.observe(() => {
+    this.items = Data.db.observe(() => {
       return Data.db[collection].find(selector, options);
     });
 
-    items.subscribe(results=>{
+    this.items.subscribe(results=>{
       this.setState({
         ds: this.state.ds.cloneWithRows(results)
       });
     });
+  }
+  componentWillUnmount() {
+    this.items.dispose();
   }
   render() {
     const { ds } = this.state;
