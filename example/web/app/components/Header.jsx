@@ -18,6 +18,9 @@ export default class Header extends Component {
             <NavItem eventKey={1} onClick={()=>{browserHistory.push('/todos')}}>
               Todos
             </NavItem>
+            <NavItem eventKey={1} onClick={()=>{browserHistory.push('/image')}}>
+              CollectionFS
+            </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

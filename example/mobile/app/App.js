@@ -19,7 +19,10 @@ export default class App extends Component {
     };
   }
   componentWillMount() {
-    const url = 'http://'+(this.props.serverUrl || '127.0.0.1')+':3000/websocket';
+    console.info('------');
+    console.info('------');
+
+    const url = 'http://'+(this.props.serverUrl || '192.168.1.139')+':3000/websocket';
     Meteor.connect(url);
 
     Meteor.ddp.on('connected', function() {

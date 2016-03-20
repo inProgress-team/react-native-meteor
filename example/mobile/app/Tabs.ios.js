@@ -19,7 +19,7 @@ export default class Tabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 0
+      selectedTab: 1
     };
   }
   selectTab(index) {
