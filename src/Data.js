@@ -14,6 +14,16 @@ export default {
     return this._endpoint.substring(0, this._endpoint.indexOf('/websocket'));
   },
 
+  waitDdpReady(cb) {
+    if(this.ddp) {
+      cb();
+    } else {
+      setTimeout(()=>{
+        this.waitDdpReady(cb);
+      }, 10);
+    }
+  },
+
   _cbs: [],
   onChange(cb) {
     this.db.on('change', cb);

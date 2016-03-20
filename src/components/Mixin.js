@@ -5,17 +5,20 @@ import Data from '../Data';
 export default {
   componentWillMount() {
 
-    if(this.getMeteorData) {
-      this.data = {};
-      this._meteorDataManager = new MeteorDataManager(this);
-      const newData = this._meteorDataManager.calculateData();
-      this._meteorDataManager.updateData(newData);
-    }
+    Data.waitDdpReady(()=>{
+      if(this.getMeteorData) {
+        this.data = {};
+        this._meteorDataManager = new MeteorDataManager(this);
+        const newData = this._meteorDataManager.calculateData();
+        this._meteorDataManager.updateData(newData);
+      }
 
-    if(this.startMeteorSubscriptions) {
-      this._meteorSubscriptionsManager = new MeteorSubscriptionsManager(this);
-      this._meteorSubscriptionsManager.getMeteorSubscriptions();
-    }
+      if(this.startMeteorSubscriptions) {
+        this._meteorSubscriptionsManager = new MeteorSubscriptionsManager(this);
+        this._meteorSubscriptionsManager.getMeteorSubscriptions();
+      }
+    });
+
 
   },
   componentWillUpdate(nextProps, nextState) {
