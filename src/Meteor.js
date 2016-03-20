@@ -9,6 +9,7 @@ import Random from '../lib/Random';
 
 import Data from './Data';
 import collection from './Collection';
+import FSCollection from './FSCollection';
 import call from './Call';
 
 import Mixin from './components/Mixin';
@@ -21,6 +22,7 @@ module.exports = {
   Accounts: Accounts,
   MeteorListView: ListView,
   collection: collection,
+  FSCollection: FSCollection,
   getData() {
     return Data
   },

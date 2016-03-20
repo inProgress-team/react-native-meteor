@@ -2,13 +2,17 @@ import minimongo from 'minimongo-cache';
 process.nextTick = setImmediate;
 
 export default {
-  endpoint: null,
-  options: null,
+  _endpoint: null,
+  _options: null,
   ddp: null,
   subscriptions: {},
   db: new minimongo(),
   calls: [],
   hasBeenConnected: false,
+
+  getUrl() {
+    return this._endpoint.substring(0, this._endpoint.indexOf('/websocket'));
+  },
 
   _cbs: [],
   onChange(cb) {

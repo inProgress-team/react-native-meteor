@@ -18,8 +18,10 @@ module.exports = {
     return this._isLoggingIn;
   },
   logout(callback) {
-    this.call("logout", function(err) {
+    this.call("logout", err => {
       AsyncStorage.removeItem(TOKEN_KEY);
+      this._tokenIdSaved = null;
+      this._userIdSaved = null;
       typeof callback == 'function' && callback(err);
     });
   },
@@ -54,12 +56,14 @@ module.exports = {
   _handleLoginCallback(err, result) {
     if(!err) {//save user id and token
       AsyncStorage.setItem(TOKEN_KEY, result.token);
+      this._tokenIdSaved = result.token;
       this._userIdSaved = result.id;
     }
   },
   async _loadInitialUser() {
     try {
       var value = await AsyncStorage.getItem(TOKEN_KEY);
+      this._tokenIdSaved = value;
       if (value !== null){
         this._startLoggingIn();
         this.call('login', { resume: value }, (err, result) => {
