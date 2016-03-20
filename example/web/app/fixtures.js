@@ -4,13 +4,14 @@ import { Settings, ImagesFiles } from 'collections';
 
 export function createUsers() {
   console.log('Creating fake users');
-  ['User'].forEach(function(name) {
-    Accounts.createUser({
-      username: name,
-      password: 'password',
-      profile: {},
-    });
+
+  const id = Accounts.createUser({
+    username: 'User',
+    password: 'password',
+    profile: {},
   });
+
+  Accounts.addEmail(id, 'contact@in-progress.io', true)
 }
 
 export function createSettings() {

@@ -12,7 +12,7 @@
 
 # react-native-meteor
 
-Meteor-like methods for React Native. **Currently in v1.0.0-beta15** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
+Meteor-like methods for React Native. **Currently in v1.0.0-beta16** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
 
 ## What is it for ?
 
@@ -160,6 +160,8 @@ Disconnect from the DDP server.
 ## Meteor.Accounts
 
 * [Accounts.createUser](http://docs.meteor.com/#/full/accounts_createuser)
+* [Accounts.changePassword](http://docs.meteor.com/#/full/accounts_forgotpassword)
+* [Accounts.forgotPassword](http://docs.meteor.com/#/full/accounts_changepassword)
 
 ## Meteor.ddp
 

@@ -34,6 +34,22 @@ export default class Status extends Component {
       if(err) return console.log(err);
     });
   }
+  changePassword() {
+    Accounts.changePassword('password1', 'password', err=>{
+      if(err) return console.log(err);
+
+      console.log('password changed');
+    });
+  }
+  forgotPassword() {
+    Accounts.forgotPassword({
+      email: 'contact@in-progress.io'
+    }, err=>{
+      if(err) return console.log(err);
+
+      console.log('password forgotten. Email incoming');
+    });
+  }
   createUser() {
     console.log(Accounts);
     Accounts.createUser({
@@ -48,7 +64,7 @@ export default class Status extends Component {
   }
   render() {
     const { status, user, userId, loggingIn } = this.data;
-    console.log(status, user, userId, loggingIn);
+    //console.log(status, user, userId, loggingIn);
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -75,15 +91,28 @@ export default class Status extends Component {
 
 
           {!loggingIn && !user &&
-            <Button onPress={this.signin.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: '#00BC8C'}}
+            <Button onPress={this.signin.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: '#00BC8C', marginBottom: 20}}
                        style={{fontSize: 20, color: 'white'}}>
               Sign in (User///password)
             </Button>
           }
+          {!loggingIn && !user &&
+            <Button onPress={this.forgotPassword.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: '#00BC8C'}}
+                       style={{fontSize: 20, color: 'white'}}>
+              Forgot Password
+            </Button>
+          }
+
           {!loggingIn && user &&
-            <Button onPress={this.signout.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'red'}}
+            <Button onPress={this.signout.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'red', marginBottom: 20}}
                        style={{fontSize: 20, color: 'white'}}>
               Sign out
+            </Button>
+          }
+          {!loggingIn && user &&
+            <Button onPress={this.changePassword.bind(this)} containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: '#00BC8C'}}
+                       style={{fontSize: 20, color: 'white'}}>
+              Change password
             </Button>
           }
 
