@@ -83,6 +83,7 @@ export default class App extends Component {
 }
 ```
 
+
 # connectMeteor
 
 ## startMeteorSubscriptions
