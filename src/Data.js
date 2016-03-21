@@ -1,12 +1,15 @@
 import minimongo from 'minimongo-cache';
 process.nextTick = setImmediate;
 
+const db = new minimongo();
+db.debug = false;
+
 export default {
   _endpoint: null,
   _options: null,
   ddp: null,
   subscriptions: {},
-  db: new minimongo(),
+  db: db,
   calls: [],
   hasBeenConnected: false,
 
