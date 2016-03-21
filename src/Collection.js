@@ -7,12 +7,25 @@ export default function(name) {
 
   return {
     find(selector, options) {
-      if(typeof selector == 'string') return [Data.db[name].findOne({_id: selector}, options)];
+      if(typeof selector == 'string') {
+        if(options) {
+          return [Data.db[name].findOne({_id: selector}, options)];
+        } else {
+          return [Data.db[name].get(selector)];
+        }
+      }
       return Data.db[name].find(selector, options);
 
     },
     findOne(selector, options) {
-      if(typeof selector == 'string') return Data.db[name].findOne({_id: selector}, options);
+
+      if(typeof selector == 'string') {
+        if(options) {
+          return Data.db[name].findOne({_id: selector}, options);
+        } else {
+          return Data.db[name].get(selector);
+        }
+      }
       return Data.db[name] && Data.db[name].findOne(selector, options)
 
     },
