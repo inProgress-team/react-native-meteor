@@ -6,37 +6,30 @@ import React, {
 } from 'react-native';
 
 import Button from '../components/button';
-// import ddpClient from '../ddp';
+import Meteor, { connectMeteor } from 'react-native-meteor';
 
+@connectMeteor
 export default class SignOut extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.data = {
       user: null
     }
   }
 
-  _userObserver = null;
-  componentDidMount() {
-    // ddpClient.user()
-    //   .then((user) => {
-    //     this.setState({user})
-    //   })
-  }
-
-  componentWillUnmount() {
-    this._userObserver && this._userObserver.stop();
+  getMeteorData() {
+    return {
+      user: Meteor.user()
+    };
   }
 
   handleSignOut() {
-    // ddpClient.logout(() => {
-    //   this.props.changedSignedIn(false);
-    // });
+    Meteor.logout();
   }
 
   render() {
-    let { user } = this.state;
+    const { user } = this.data;
     let email;
 
     if (user) {

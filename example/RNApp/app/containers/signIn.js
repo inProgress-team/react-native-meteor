@@ -7,7 +7,7 @@ import React, {
 } from 'react-native';
 
 import Button from '../components/button';
-// import ddpClient from '../ddp';
+import Meteor, { Accounts } from 'react-native-meteor';
 
 export default class SignIn extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ export default class SignIn extends Component {
   }
 
   validInput() {
-    let { email, password } = this.state;
+    const { email, password } = this.state;
     let valid = false;
     if (email.length && password.length) {
       this.setState({error: null});
@@ -35,25 +35,21 @@ export default class SignIn extends Component {
 
   handleSignIn() {
     if (this.validInput()) {
-      // ddpClient.loginWithEmail(this.state.email, this.state.password, (error, res) => {
-      //   if (error) {
-      //     this.setState({error: error.reason})
-      //   } else {
-      //     this.props.changedSignedIn(true);
-      //   }
-      // });
+      Meteor.loginWithPassword(this.state.email, this.state.password, (err) => {
+        if (err) {
+          this.setState({ error: err.reason });
+        }
+      });
     }
   }
 
   handleCreateAccount() {
     if (this.validInput()) {
-      // ddpClient.signUpWithEmail(this.state.email, this.state.password, (error, res) => {
-      //   if (error) {
-      //     this.setState({error: error.reason})
-      //   } else {
-      //     this.props.changedSignedIn(true);
-      //   }
-      // });
+      Accounts.createUser({email: this.state.email, password: this.state.password}, (err) => {
+        if (err) {
+          this.setState({ error: err.reason });
+        }
+      })
     }
   }
 
