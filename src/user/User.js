@@ -85,7 +85,7 @@ module.exports = {
         this._endLoggingIn();
       }
     } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
+      console.warn('AsyncStorage error: ' + error.message);
     }
   }
 }
