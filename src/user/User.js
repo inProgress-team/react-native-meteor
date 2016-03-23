@@ -22,6 +22,9 @@ module.exports = {
       AsyncStorage.removeItem(TOKEN_KEY);
       this._tokenIdSaved = null;
       this._userIdSaved = null;
+      
+      this.connect();
+
       typeof callback == 'function' && callback(err);
     });
   },

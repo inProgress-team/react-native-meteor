@@ -66,6 +66,9 @@ module.exports = {
 
   },
   connect(endpoint, options) {
+    if(!endpoint) endpoint = Data._endpoint;
+    if(!options) options = Data._options;
+
     Data._endpoint = endpoint;
     Data._options = options;
 
