@@ -7,8 +7,9 @@ import React, {
 } from 'react-native';
 
 import Button from '../components/button';
-import Meteor, { Accounts } from 'react-native-meteor';
+import Meteor, { Accounts, connectMeteor } from 'react-native-meteor';
 
+@connectMeteor
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +19,15 @@ export default class SignIn extends Component {
       password: '',
       error: null
     }
+    this.data = {
+      loggingIn: false
+    }
+  }
+
+  getMeteorData() {
+    return {
+      loggingIn: Meteor.loggingIn(),
+    };
   }
 
   validInput() {
@@ -54,11 +64,12 @@ export default class SignIn extends Component {
   }
 
   render() {
-    let signIn, createAccount;
-
-    if (this.props.connected) {
-      signIn = <Button text="Sign In" onPress={() => this.handleSignIn()} />;
-      createAccount = <Button text="Create Account" onPress={() => this.handleCreateAccount()} />;
+    if (this.data.loggingIn) {
+      return (
+        <View style={styles.container}>
+          <Text>Logging In</Text>
+        </View>
+      )
     }
 
     return (
@@ -86,8 +97,8 @@ export default class SignIn extends Component {
         <Text style={styles.error}>{this.state.error}</Text>
 
         <View style={styles.buttons}>
-          {signIn}
-          {createAccount}
+          <Button text="Sign In" onPress={() => this.handleSignIn()} />
+          <Button text="Create Account" onPress={() => this.handleCreateAccount()} />
         </View>
       </View>
     );
@@ -111,7 +122,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginHorizontal: 20,
     marginVertical: 5,
-    padding: 5
+    padding: 5,
+    width: 300,
+    backgroundColor: 'white'
   },
   buttons: {
     flexDirection: 'row'

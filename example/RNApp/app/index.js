@@ -1,9 +1,10 @@
-import React, { Component, View, Text } from 'react-native';
+import React, { Component, View, Text, StyleSheet } from 'react-native';
 
 import SignIn from './containers/signIn';
 import SignOut from './containers/signOut';
+import Items from './containers/items';
+import Tabs from 'react-native-tabs';
 
-// import ddpClient from './ddp';
 import Meteor, { connectMeteor } from 'react-native-meteor';
 
 @connectMeteor
@@ -11,28 +12,14 @@ export default class RNApp extends Component {
   constructor(props) {
     super(props);
 
-    // this.state = {
-    //   connected: false,
-    //   signedIn: false
-    // };
     this.data = {
       status: {},
       user: null
     }
+    this.state = {
+      page: 'account'
+    }
   }
-
-  // componentWillMount() {
-  //   ddpClient.connect((error, wasReconnect) => {
-  //     if (error) {
-  //       this.setState({connected: false});
-  //     } else {
-  //       this.setState({connected: true});
-  //       ddpClient.loginWithToken((err, res) => {
-  //         if (!err) this.handleSignedInStatus(true);
-  //       });
-  //     }
-  //   });
-  // }
 
   componentWillMount() {
     const url = 'http://localhost:3000/websocket';
@@ -46,31 +33,65 @@ export default class RNApp extends Component {
     };
   }
 
-  // handleSignedInStatus(status = false) {
-  //   this.setState({ signedIn: status });
-  // }
+  renderAccountPage() {
+    const { status, user } = this.data;
+    if (user) {
+      return <SignOut />;
+    } else {
+      return <SignIn />;
+    }
+  }
 
   render() {
     const { status, user } = this.data;
-    if (status.connected && user) {
-      return (
-        <SignOut
-          // changedSignedIn={(status) => this.handleSignedInStatus(status)}
-          />
-      );
-    } else if (status.connected) {
-      return (
-        <SignIn
-          connected={status.connected}
-          // changedSignedIn={(status) => this.handleSignedInStatus(status)}
-          />
-      );
-    } else {
+    const { page } = this.state;
+
+    if (!status.connected) {
       return (
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Text>Connecting to Server...</Text>
         </View>
-      )
+      );
     }
+
+    let SelectedComponent = null;
+
+    if (page === 'account') {
+      SelectedComponent = this.renderAccountPage();
+    } else if (page === 'items') {
+      SelectedComponent = <Items />;
+    }
+
+    return (
+      <View style={styles.container}>
+        {SelectedComponent}
+        <Tabs
+          selected={this.state.page}
+          style={styles.tabStyle}
+          selectedStyle={styles.tabSelectedStyle}
+          onSelect={el=>this.setState({page:el.props.name})}
+        >
+            <Text name="account">Account</Text>
+            <Text name="items">Items</Text>
+        </Tabs>
+      </View>
+    );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  tabStyle: {
+    backgroundColor:'white',
+    borderTopWidth:2,
+    borderTopColor:'red'
+  },
+  tabSelectedStyle: {
+    color:'red'
+  }
+});

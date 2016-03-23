@@ -1,5 +1,7 @@
 accounts-base@1.2.2
 accounts-password@1.1.4
+accounts-ui@1.1.6
+accounts-ui-unstyled@1.1.8
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
 babel-runtime@0.1.4
@@ -34,6 +36,7 @@ http@1.1.1
 id-map@1.0.4
 jquery@1.11.4
 launch-screen@1.0.4
+less@2.5.1
 livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8

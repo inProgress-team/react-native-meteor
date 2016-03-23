@@ -20,7 +20,8 @@ export default class SignOut extends Component {
 
   getMeteorData() {
     return {
-      user: Meteor.user()
+      user: Meteor.user(),
+      userId: Meteor.userId()
     };
   }
 
@@ -28,8 +29,12 @@ export default class SignOut extends Component {
     Meteor.logout();
   }
 
+  handleLogoutOtherClients() {
+    Meteor.logoutOtherClients()
+  }
+
   render() {
-    const { user } = this.data;
+    const { user, userId } = this.data;
     let email;
 
     if (user) {
@@ -41,8 +46,10 @@ export default class SignOut extends Component {
         <Text style={styles.main}>
           Sign Out Screen
         </Text>
-        <Text>{email}</Text>
-        <Button text="Sign Out" onPress={() => this.handleSignOut()}/>
+        <Text>User Email: {email}</Text>
+        <Text>User ID: {userId}</Text>
+        <Button text="Logout" onPress={() => this.handleSignOut()}/>
+        <Button text="Logout other clients" onPress={() => this.handleLogoutOtherClients()}/>
       </View>
     );
   }
