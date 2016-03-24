@@ -14,6 +14,7 @@ import call from './Call';
 
 import Mixin from './components/Mixin';
 import ListView from './components/ListView';
+import MeteorComplexListView from './components/ComplexListView';
 import User from './user/User';
 import Accounts from './user/Accounts';
 
@@ -21,6 +22,7 @@ import Accounts from './user/Accounts';
 module.exports = {
   Accounts: Accounts,
   MeteorListView: ListView,
+  MeteorComplexListView: MeteorComplexListView,
   collection: collection,
   FSCollection: FSCollection,
   getData() {
