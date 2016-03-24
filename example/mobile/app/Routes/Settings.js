@@ -32,6 +32,11 @@ export default class Settings extends Component {
       <View style={styles.container}>
         <View style={{marginTop: 25}}>
         <Button containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'green'}}
+                 style={{fontSize: 20, color: 'white'}} onPress={()=>{Meteor.call('sayHello')} }
+          >
+            Say hello
+          </Button>
+        <Button containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: 'green'}}
                  style={{fontSize: 20, color: 'white'}} onPress={()=>{this.setState({show: !show})}}
           >
             Show : {!show && 'false'}

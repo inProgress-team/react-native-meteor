@@ -7,6 +7,7 @@
 
 Meteor.methods({
   sayHello() {
+    console.log(this.userId);
     return 'Hello from Meteor method!';
   },
 });
