@@ -29,8 +29,21 @@ export default class MeteorListView extends Component {
       })
     };
   }
+  componentWillReceiveProps(props) {
+    const { collection, selector, options } = props;
+
+    this.update(Data.db[collection].find(selector, options));
+  }
   componentWillMount() {
     const { collection, selector, options } = this.props;
+
+
+    this.update = results=>{
+      this.setState({
+        ds: this.state.ds.cloneWithRows(results)
+      });
+    };
+
 
     if(!Data.db[collection]) {
       Data.db.addCollection(collection)
@@ -40,11 +53,7 @@ export default class MeteorListView extends Component {
       return Data.db[collection].find(selector, options);
     });
 
-    this.items.subscribe(results=>{
-      this.setState({
-        ds: this.state.ds.cloneWithRows(results)
-      });
-    });
+    this.items.subscribe(this.update);
   }
   componentWillUnmount() {
     this.items.dispose();

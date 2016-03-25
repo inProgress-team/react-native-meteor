@@ -24,6 +24,15 @@ export default class MeteorListView extends Component {
       })
     };
   }
+  componentWillReceiveProps(props) {
+    const { elements } = props;
+
+    const elems = elements();
+    this.setState({
+      ds: this.state.ds.cloneWithRows(elems)
+    });
+
+  }
   componentWillMount() {
 
     const { elements } = this.props;
