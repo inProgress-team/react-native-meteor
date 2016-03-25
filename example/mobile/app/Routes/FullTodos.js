@@ -15,7 +15,8 @@ import Meteor, { connectMeteor, MeteorListView } from 'react-native-meteor';
 import Button from 'react-native-button';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-class Todos extends Component {
+@connectMeteor
+export default class FullTodos extends Component {
   constructor(props) {
     super(props);
 
@@ -24,46 +25,15 @@ class Todos extends Component {
     };
   }
   startMeteorSubscriptions() {
-    Meteor.subscribe('todos', this.state.done);
-  }
-  add() {
-    const { todos } = this.data;
-
-    const item = {
-      title: 'Todo '+(todos.length+1)
-    };
-
-    Meteor.collection('todos').insert(item, (err, item)=> {
-      console.log(err, item);
-    });
+    Meteor.subscribe('todos');
   }
   changeDone() {
     this.setState({done: !this.state.done});
-  }
-  edit(todo) {
-    Meteor.collection('todos').update(todo._id, {
-      $set: {
-        title: 'NEW TITLE'
-      }
-    }, err=>{
-      console.log(err);
-    });
-  }
-  remove(todo) {
-    Meteor.collection('todos').remove(todo._id, err=>{
-      console.log(err);
-    });
   }
   renderItem(todo) {
     return (
       <View key={todo._id} style={styles.item}>
         <Text style={{flex: 1}}>{todo.title}</Text>
-        <TouchableOpacity onPress={this.edit.bind(this, todo)}>
-          <Icon name="mode-edit" size={30} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.remove.bind(this, todo)}>
-          <Icon name="delete" size={30} />
-        </TouchableOpacity>
       </View>
     )
   }
@@ -73,7 +43,6 @@ class Todos extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.buttonsContainer}>
-          <Button containerStyle={styles.button} style={styles.buttonText} onPress={this.add.bind(this)}>Add Todo</Button>
           <Button containerStyle={styles.button} style={styles.buttonText} onPress={this.changeDone.bind(this)} >
             {done && 'Done'}
             {!done && 'Undone'}
@@ -81,14 +50,14 @@ class Todos extends Component {
         </View>
         <MeteorListView
           collection="todos"
+          selector={{done: done}}
           renderRow={this.renderItem.bind(this)}
         />
       </View>
     );
   }
 }
-connectMeteor(Todos)
-export default Todos;
+
 
 const styles = StyleSheet.create({
   container: {

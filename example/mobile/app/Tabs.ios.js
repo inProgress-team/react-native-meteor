@@ -11,6 +11,7 @@ import React, {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Todos from './Routes/Todos';
+import FullTodos from './Routes/FullTodos';
 import CollectionFS from './Routes/CollectionFS';
 import Status from './Routes/Status';
 import Settings from './Routes/Settings';
@@ -19,7 +20,7 @@ export default class Tabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 1
+      selectedTab: 4
     };
   }
   selectTab(index) {
@@ -58,6 +59,13 @@ export default class Tabs extends Component {
           selected={selectedTab === 3}
           onPress={this.selectTab.bind(this, 3)}>
           <Settings />
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
+          iconName="list"
+          title="Full Todos"
+          selected={selectedTab === 4}
+          onPress={this.selectTab.bind(this, 4)}>
+          <FullTodos />
         </Icon.TabBarItem>
       </TabBarIOS>
     );
