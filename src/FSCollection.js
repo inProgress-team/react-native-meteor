@@ -1,4 +1,5 @@
 import EJSON from "ejson";
+import base64 from 'base-64';
 
 import Collection from './Collection';
 import Data from './Data';
@@ -62,7 +63,7 @@ const setProperties = (name, file)=> {
     ...file,
     url: params => {
       const token = Data._tokenIdSaved;
-      return Data.getUrl()+'/cfs/files/'+name+'/'+file._id+'?store='+getStoreName(params)+(token ? '&token='+btoa(JSON.stringify({authToken: token})) : "");
+      return Data.getUrl()+'/cfs/files/'+name+'/'+file._id+'?store='+getStoreName(params)+(token ? '&token='+base64.encode(JSON.stringify({authToken: token})) : "");
     },
     isImage: params => {
       const type = getType(params);
