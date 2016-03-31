@@ -22,6 +22,9 @@ module.exports = {
       AsyncStorage.removeItem(TOKEN_KEY);
       this._tokenIdSaved = null;
       this._userIdSaved = null;
+      
+      this.connect();
+
       typeof callback == 'function' && callback(err);
     });
   },
@@ -85,7 +88,7 @@ module.exports = {
         this._endLoggingIn();
       }
     } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
+      console.warn('AsyncStorage error: ' + error.message);
     }
   }
 }

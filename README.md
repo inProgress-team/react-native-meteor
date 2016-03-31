@@ -1,18 +1,6 @@
-[![GitHub version](https://badge.fury.io/gh/inProgress-team%2Freact-native-meteor.svg)](https://badge.fury.io/gh/inProgress-team%2Freact-native-meteor)
-[![npm version](https://badge.fury.io/js/react-native-meteor.svg)](http://badge.fury.io/js/react-native-meteor)
-[![Dependency Status](https://david-dm.org/inProgress-team/react-native-meteor.svg)](https://david-dm.org/inProgress-team/react-native-meteor)
-[![devDependency Status](https://david-dm.org/inProgress-team/react-native-meteor/dev-status.svg)](https://david-dm.org/inProgress-team/react-native-meteor#info=devDependencies)
-[![MIT][license-badge]][license]
-[![bitHound Score][bithound-badge]][bithound]
+# react-native-meteor [![react-native-meteor](http://img.shields.io/npm/dm/react-native-meteor.svg)](https://www.npmjs.org/package/react-native-meteor) [![npm version](https://badge.fury.io/js/react-native-meteor.svg)](http://badge.fury.io/js/react-native-meteor) [![Dependency Status](https://david-dm.org/inProgress-team/react-native-meteor.svg)](https://david-dm.org/inProgress-team/react-native-meteor)
 
-[bithound-badge]: https://www.bithound.io/github/inProgress-Team/react-native-meteor/badges/score.svg
-[bithound]: https://www.bithound.io/github/inProgress-Team/react-native-meteor
-[license-badge]: https://img.shields.io/dub/l/vibe-d.svg
-[license]: https://github.com/inProgress-team/react-native-meteor/blob/master/LICENSE
-
-# react-native-meteor
-
-Meteor-like methods for React Native. **Currently in v1.0.0-beta18** ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
+Meteor-like methods for React Native. ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
 
 ## What is it for ?
 
@@ -131,6 +119,21 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 />
 ```
 
+# MeteorComplexListView Component
+
+Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) Component but does not need dataSource and accepts one argument. You may need it if you make complex requests combining multiples collections.
+
+- `elements` **function** *required* : a reactive function which returns an array of elements.
+
+### Example usage
+
+```javascript
+<MeteorComplexListView
+  elements={()=>{return Meteor.collection('todos').find()}}
+  renderRow={this.renderItem}
+/>
+```
+
 # API
 
 ## Meteor DDP connection
@@ -172,12 +175,10 @@ Once connected to the ddp server, you can access every method available in [ddp.
 * Meteor.ddp.on('changed')
 * ...
 
-# TODO
+## react-native-router-flux
 
-- [X] [Helper for Meteor-CollectionFS](https://github.com/inProgress-team/react-native-meteor/issues/18)
-- [ ] [Accounts Methods 2/4](https://github.com/inProgress-team/react-native-meteor/issues/30)
-- [ ] [Meteor user methods 1/2](https://github.com/inProgress-team/react-native-meteor/issues/31)
-- [X] [Update method](https://github.com/inProgress-team/react-native-meteor/issues/24)
-- [X] [When disconnected, minimongo insert is pushing data to view but not send to server when reconnecting.](https://github.com/inProgress-team/react-native-meteor/issues/29)
+* [Github repository](https://github.com/inProgress-team/react-native-meteor-router-flux)
+* npm i --save react-native-meteor-router-flux@latest
+* [Custom scene renderer](https://github.com/aksonov/react-native-router-flux#switch-new-feature) which allows to select tab scene to show depending from app state. It could be useful for authentication, restricted scenes, etc.
 
 Pull Requests are welcome ! :)
