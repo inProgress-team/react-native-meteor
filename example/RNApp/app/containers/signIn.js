@@ -67,14 +67,14 @@ export default class SignIn extends Component {
     if (this.data.loggingIn) {
       return (
         <View style={styles.container}>
-          <Text>Logging In</Text>
+          <Text style={styles.text}>Logging In</Text>
         </View>
       )
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.main}>
+        <Text style={[styles.text, styles.main]}>
           Sign In Screen
         </Text>
 
@@ -110,6 +110,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  text: {
+    color: '#fff',
+    fontWeight: '500'
   },
   main: {
     fontSize: 20,

@@ -43,11 +43,11 @@ export default class SignOut extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.main}>
+        <Text style={[styles.main, styles.text]}>
           Sign Out Screen
         </Text>
-        <Text>User Email: {email}</Text>
-        <Text>User ID: {userId}</Text>
+        <Text style={styles.text}>User Email: {email}</Text>
+        <Text style={styles.text}>User ID: {userId}</Text>
         <Button text="Logout" onPress={() => this.handleSignOut()}/>
         <Button text="Logout other clients" onPress={() => this.handleLogoutOtherClients()}/>
       </View>
@@ -65,5 +65,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10
+  },
+  text: {
+    color: '#fff',
+    fontWeight: '500'
   }
 });

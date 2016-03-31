@@ -2,11 +2,14 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View
+  View,
+  Dimensions
 } from 'react-native';
 
 import Button from '../components/button';
 import Meteor, { connectMeteor, MeteorListView } from 'react-native-meteor';
+
+const WIDTH = Dimensions.get('window').width;
 
 @connectMeteor
 export default class SignOut extends Component {
@@ -38,7 +41,7 @@ export default class SignOut extends Component {
 
   renderItem(item) {
     return (
-      <View>
+      <View style={styles.row}>
         <Text>{item.name}</Text>
       </View>
     );
@@ -49,18 +52,18 @@ export default class SignOut extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.main}>Items Screen</Text>
-        <Text>Total Items Count: {items.length}</Text>
-        <View style={styles.buttons}>
-          <Button text="Add Item" onPress={() => this.handleAddItem()}/>
-          <Button text="Remove Item" onPress={() => this.handleRemoveItem()}/>
-        </View>
+        <Text style={[styles.text, styles.main]}>Items Screen</Text>
+        <Text style={[styles.text, styles.sub]}>Total Items Count: {items.length}</Text>
         <MeteorListView
           collection="items"
           selector={{}}
           options={{sort: {createdAt: -1}}}
           renderRow={this.renderItem}
           />
+        <View style={styles.buttons}>
+          <Button text="Add Item" onPress={() => this.handleAddItem()}/>
+          <Button text="Remove Item" onPress={() => this.handleRemoveItem()}/>
+        </View>
       </View>
     );
   }
@@ -77,7 +80,25 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20
   },
+  sub: {
+    marginBottom: 8
+  },
   buttons: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: 50,
+    width: WIDTH,
+    justifyContent: 'center'
+  },
+  text: {
+    color: '#fff',
+    fontWeight: '500'
+  },
+  row: {
+    flex: 1,
+    width: WIDTH,
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginBottom: 1
   }
 });

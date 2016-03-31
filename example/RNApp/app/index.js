@@ -17,7 +17,8 @@ export default class RNApp extends Component {
       user: null
     }
     this.state = {
-      page: 'account'
+      // page: 'account'
+      page: 'items'
     }
   }
 
@@ -84,12 +85,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#3B5998',
   },
   tabStyle: {
     backgroundColor:'white',
     borderTopWidth:2,
-    borderTopColor:'red'
+    borderTopColor:'red',
+    height: 50
   },
   tabSelectedStyle: {
     color:'red'

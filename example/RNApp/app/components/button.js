@@ -28,8 +28,13 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: '#A7A7A7',
-    margin: 5
+    margin: 5,
+    borderWidth: 1,
+    borderColor: '#fff',
+    borderRadius: 5
   },
-  buttonText: {}
+  buttonText: {
+    color: '#fff',
+    fontWeight: '500'
+  }
 });
