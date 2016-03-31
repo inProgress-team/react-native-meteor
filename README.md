@@ -98,7 +98,7 @@ Inside getMeteorData, you can access any Meteor reactive data source, which mean
   * [.insert(doc, callback)](http://docs.meteor.com/#/full/insert)
   * [.update(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/update)
   * [.remove(id, callback(err, countRemoved))](http://docs.meteor.com/#/full/remove)
-* Meteor.FSCollection(collectionName) : Helper for [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). Full documentation [here](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/FSCollection.md)
+
 
 # MeteorListView Component
 
@@ -175,10 +175,28 @@ Once connected to the ddp server, you can access every method available in [ddp.
 * Meteor.ddp.on('changed')
 * ...
 
+## CollectionFS
+
+* Meteor.FSCollection(collectionName) : Helper for [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). Full documentation [here](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/FSCollection.md)
+* This plugin also exposes a FSCollectionImagesPreloader component which helps you preload every image you want in CollectionFS
+
+```javascript
+import { FSCollectionImagesPreloader } from 'react-native-meteor';
+
+<FSCollectionImagesPreloader
+  collection="imagesFiles"
+  selector={{metadata.owner: XXX}}
+/>
+```
+
+
 ## react-native-router-flux
 
 * [Github repository](https://github.com/inProgress-team/react-native-meteor-router-flux)
 * npm i --save react-native-meteor-router-flux@latest
 * [Custom scene renderer](https://github.com/aksonov/react-native-router-flux#switch-new-feature) which allows to select tab scene to show depending from app state. It could be useful for authentication, restricted scenes, etc.
 
-Pull Requests are welcome ! :)
+
+# Want to help ?
+
+Pull Requests and issues reported are welcome ! :)

@@ -9,12 +9,15 @@ import Random from '../lib/Random';
 
 import Data from './Data';
 import collection from './Collection';
-import FSCollection from './FSCollection';
 import call from './Call';
 
 import Mixin from './components/Mixin';
 import ListView from './components/ListView';
 import MeteorComplexListView from './components/ComplexListView';
+
+import FSCollection from './CollectionFS/FSCollection';
+import FSCollectionImagesPreloader from './CollectionFS/FSCollectionImagesPreloader';
+
 import User from './user/User';
 import Accounts from './user/Accounts';
 
@@ -23,6 +26,7 @@ module.exports = {
   Accounts: Accounts,
   MeteorListView: ListView,
   MeteorComplexListView: MeteorComplexListView,
+  FSCollectionImagesPreloader: FSCollectionImagesPreloader,
   collection: collection,
   FSCollection: FSCollection,
   getData() {
@@ -111,12 +115,12 @@ module.exports = {
     });
 
     Data.ddp.on("ready", message => {
-      /*
+
       for(var i in Data.subscriptions) {
         const sub = Data.subscriptions[i];
         //console.log(sub.name, EJSON.clone(sub.params), sub.subIdRemember);
       }
-      */
+
     });
 
     Data.ddp.on("changed", message => {

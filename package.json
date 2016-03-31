@@ -1,6 +1,6 @@
 {
   "name": "react-native-meteor",
-  "version": "1.0.0-beta23",
+  "version": "1.0.0-beta24",
   "description": "Full Meteor Client for React Native",
   "main": "src/Meteor.js",
   "scripts": {
