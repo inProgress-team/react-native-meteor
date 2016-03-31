@@ -40,12 +40,12 @@ export default class App extends Component {
     const url = 'http://192.168.X.X:3000/websocket';
     Meteor.connect(url);
   }
-  startMeteorSubscriptions() {
-    Meteor.subscribe('todos');
-    Meteor.subscribe('settings');
-  }
   getMeteorData() {
+    const handle = Meteor.subscribe('todos');
+    Meteor.subscribe('settings');
+
     return {
+      todosReady: handle.ready(),
       settings: Meteor.collection('settings').findOne()
     };
   }
@@ -55,10 +55,12 @@ export default class App extends Component {
     );
   }
   render() {
-    const { settings } = this.data;
+    const { settings, todosReady } = this.data;
 
     <View>
       <Text>{settings.title}</Text>
+        {!todosReady && <Text>Not ready</Text>}
+
         <MeteorListView
           collection="todos"
           selector={{done: true}}
@@ -74,16 +76,16 @@ export default class App extends Component {
 
 # connectMeteor
 
-## startMeteorSubscriptions
-
-Inside this method, you can create subscriptions (see below) when component is mounted. It will automatically unsubscribe if the component is unmounted.
-
-* [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe)
 
 ## getMeteorData
 
-Inside getMeteorData, you can access any Meteor reactive data source, which means :
+Inside this method, you can create subscriptions (see below) when component is mounted. It will automatically unsubscribe if the component is unmounted.
 
+* [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe) : returns an handle
+
+Inside getMeteorData, you can also access any Meteor reactive data source, which means :
+
+* Meteor.subscribe handle
 * Meteor.collection(collectionName)
   * [.find(selector, options)](http://docs.meteor.com/#/full/find)
   * [.findOne(selector, options)](http://docs.meteor.com/#/full/findone)
@@ -93,6 +95,8 @@ Inside getMeteorData, you can access any Meteor reactive data source, which mean
 * [Meteor.loggingIn()](http://docs.meteor.com/#/full/meteor_loggingin)
 
 # Additionals collection methods
+
+These methods (except update) work offline. That means that elements are correctly updated offline, and when you reconnect to ddp, Meteor calls are taken care of.
 
 * Meteor.collection(collectionName)
   * [.insert(doc, callback)](http://docs.meteor.com/#/full/insert)

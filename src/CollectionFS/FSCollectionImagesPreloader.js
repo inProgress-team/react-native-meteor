@@ -56,7 +56,7 @@ export default class FSCollectionImagesPreloader extends Component {
       <View style={styles.hidden}>
         {items && items.map(item=>{
           return (
-            <Image style={styles.hidden} key={item._id} onLoadEnd={()=>console.log('LOADED IMAGE')} source={{uri: item.url()}} />
+            <Image style={styles.hidden} key={item._id} source={{uri: item.url()}} />
           );
         })}
       </View>

@@ -118,7 +118,9 @@ module.exports = {
 
       for(var i in Data.subscriptions) {
         const sub = Data.subscriptions[i];
-        //console.log(sub.name, EJSON.clone(sub.params), sub.subIdRemember);
+        sub.ready = true;
+        sub.readyDeps.changed();
+        sub.readyCallback && sub.readyCallback();
       }
 
     });
@@ -191,6 +193,15 @@ module.exports = {
       id = existing.id;
       existing.inactive = false;
 
+      if (callbacks.onReady) {
+        // If the sub is not already ready, replace any ready callback with the
+        // one provided now. (It's not really clear what users would expect for
+        // an onReady callback inside an autorun; the semantics we provide is
+        // that at the time the sub first becomes ready, we call the last
+        // onReady callback provided, if any.)
+        if (!existing.ready)
+          existing.readyCallback = callbacks.onReady;
+      }
       if (callbacks.onStop) {
         existing.stopCallback = callbacks.onStop;
       }
@@ -209,10 +220,13 @@ module.exports = {
         params: EJSON.clone(params),
         inactive: false,
         ready: false,
+        readyDeps: new Trackr.Dependency,
+        readyCallback: callbacks.onReady,
         stopCallback: callbacks.onStop,
         stop: function() {
           Data.ddp.unsub(this.subIdRemember);
           delete Data.subscriptions[this.id];
+          this.ready && this.readyDeps.changed();
 
           if (callbacks.onStop) {
             callbacks.onStop();
@@ -230,7 +244,11 @@ module.exports = {
           Data.subscriptions[id].stop();
       },
       ready: function () {
-        //TODO
+        if (!Data.subscriptions[id]) return false;
+
+        var record = Data.subscriptions[id];
+        record.readyDeps.depend();
+        return record.ready;
       },
       subscriptionId: id
     };
