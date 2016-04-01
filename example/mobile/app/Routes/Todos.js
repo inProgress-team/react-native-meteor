@@ -23,14 +23,17 @@ class Todos extends Component {
       done: false
     };
   }
-  startMeteorSubscriptions() {
-    Meteor.subscribe('todos', this.state.done);
+  getMeteorData() {
+    const handle = Meteor.subscribe('todos', this.state.done);
+
+    return {
+      ready: handle.ready()
+    };
   }
   add() {
-    const { todos } = this.data;
 
     const item = {
-      title: 'Todo '+(todos.length+1)
+      title: 'Todo added'
     };
 
     Meteor.collection('todos').insert(item, (err, item)=> {
@@ -68,8 +71,9 @@ class Todos extends Component {
     )
   }
   render() {
+    const { ready } = this.data;
     const { done } = this.state;
-
+    console.log('ready', ready);
     return (
       <View style={styles.container}>
         <View style={styles.buttonsContainer}>
