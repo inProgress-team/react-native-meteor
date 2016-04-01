@@ -36,12 +36,14 @@ export default class FSCollectionImagesPreloader extends Component {
       });
     };
 
-    if(!Data.db[collection]) {
-      Data.db.addCollection(collection)
+    const collectionName = 'cfs.'+collection+'.filerecord';
+
+    if(!Data.db[collectionName]) {
+      Data.db.addCollection(collectionName)
     }
 
     this.items = Data.db.observe(() => {
-      return Data.db['cfs.'+collection+'.filerecord'].find(selector);
+      return Data.db[collectionName].find(selector);
     });
 
     this.items.subscribe(this.update);
