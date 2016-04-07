@@ -8,8 +8,7 @@ Meteor.methods({
     });
   },
 
-  'removeItem': function() {
-    const item = Items.findOne();
-    Items.remove({_id: item._id});
+  'removeItem': function(_id) {
+    Items.remove({_id: _id});
   }
 });

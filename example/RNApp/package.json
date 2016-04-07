@@ -7,6 +7,7 @@
     "ios": "open ios/RNApp.xcodeproj"
   },
   "dependencies": {
+    "@exponent/react-native-navigator": "^0.4.2",
     "react": "^0.14.7",
     "react-native": "^0.22.0",
     "react-native-meteor": "file:../..",
