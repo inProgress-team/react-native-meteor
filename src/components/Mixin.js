@@ -14,6 +14,7 @@ export default {
       }
 
       if(this.startMeteorSubscriptions) {
+        console.warn('startMeteorSubscriptions is deprecated and will be removed soon. Please create your subscriptions in getMeteorData.');
         this._meteorSubscriptionsManager = new MeteorSubscriptionsManager(this);
         this._meteorSubscriptionsManager.getMeteorSubscriptions();
       }

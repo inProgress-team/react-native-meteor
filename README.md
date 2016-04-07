@@ -40,12 +40,12 @@ export default class App extends Component {
     const url = 'http://192.168.X.X:3000/websocket';
     Meteor.connect(url);
   }
-  startMeteorSubscriptions() {
-    Meteor.subscribe('todos');
-    Meteor.subscribe('settings');
-  }
   getMeteorData() {
+    const handle = Meteor.subscribe('todos');
+    Meteor.subscribe('settings');
+
     return {
+      todosReady: handle.ready(),
       settings: Meteor.collection('settings').findOne()
     };
   }
@@ -55,10 +55,12 @@ export default class App extends Component {
     );
   }
   render() {
-    const { settings } = this.data;
+    const { settings, todosReady } = this.data;
 
     <View>
       <Text>{settings.title}</Text>
+        {!todosReady && <Text>Not ready</Text>}
+
         <MeteorListView
           collection="todos"
           selector={{done: true}}
@@ -74,16 +76,16 @@ export default class App extends Component {
 
 # connectMeteor
 
-## startMeteorSubscriptions
-
-Inside this method, you can create subscriptions (see below) when component is mounted. It will automatically unsubscribe if the component is unmounted.
-
-* [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe)
 
 ## getMeteorData
 
-Inside getMeteorData, you can access any Meteor reactive data source, which means :
+Inside this method, you can create subscriptions (see below) when component is mounted. It will automatically unsubscribe if the component is unmounted.
 
+* [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe) : returns an handle
+
+Inside getMeteorData, you can also access any Meteor reactive data source, which means :
+
+* Meteor.subscribe handle
 * Meteor.collection(collectionName)
   * [.find(selector, options)](http://docs.meteor.com/#/full/find)
   * [.findOne(selector, options)](http://docs.meteor.com/#/full/findone)
@@ -94,11 +96,13 @@ Inside getMeteorData, you can access any Meteor reactive data source, which mean
 
 # Additionals collection methods
 
+These methods (except update) work offline. That means that elements are correctly updated offline, and when you reconnect to ddp, Meteor calls are taken care of.
+
 * Meteor.collection(collectionName)
   * [.insert(doc, callback)](http://docs.meteor.com/#/full/insert)
   * [.update(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/update)
   * [.remove(id, callback(err, countRemoved))](http://docs.meteor.com/#/full/remove)
-* Meteor.FSCollection(collectionName) : Helper for [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). Full documentation [here](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/FSCollection.md)
+
 
 # MeteorListView Component
 
@@ -175,10 +179,28 @@ Once connected to the ddp server, you can access every method available in [ddp.
 * Meteor.ddp.on('changed')
 * ...
 
+## CollectionFS
+
+* Meteor.FSCollection(collectionName) : Helper for [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). Full documentation [here](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/FSCollection.md)
+* This plugin also exposes a FSCollectionImagesPreloader component which helps you preload every image you want in CollectionFS
+
+```javascript
+import { FSCollectionImagesPreloader } from 'react-native-meteor';
+
+<FSCollectionImagesPreloader
+  collection="imagesFiles"
+  selector={{metadata.owner: XXX}}
+/>
+```
+
+
 ## react-native-router-flux
 
 * [Github repository](https://github.com/inProgress-team/react-native-meteor-router-flux)
 * npm i --save react-native-meteor-router-flux@latest
 * [Custom scene renderer](https://github.com/aksonov/react-native-router-flux#switch-new-feature) which allows to select tab scene to show depending from app state. It could be useful for authentication, restricted scenes, etc.
 
-Pull Requests are welcome ! :)
+
+# Want to help ?
+
+Pull Requests and issues reported are welcome ! :)
