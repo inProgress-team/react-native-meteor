@@ -60,10 +60,12 @@ export default class MeteorListView extends Component {
   }
   render() {
     const { ds } = this.state;
+    const { listViewRef, ...props } = this.props;
 
     return (
       <ListView
-        {...this.props}
+        {...props}
+        ref={listViewRef}
         dataSource={ds}
       />
     );
