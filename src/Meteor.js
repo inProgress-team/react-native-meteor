@@ -1,5 +1,5 @@
 
-import { NetInfo } from 'react-native';
+import { NetInfo, Platform, View } from 'react-native';
 
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
@@ -26,7 +26,7 @@ module.exports = {
   Accounts: Accounts,
   MeteorListView: ListView,
   MeteorComplexListView: MeteorComplexListView,
-  FSCollectionImagesPreloader: FSCollectionImagesPreloader,
+  FSCollectionImagesPreloader: Platform.OS == 'android' ? View : FSCollectionImagesPreloader,
   collection: collection,
   FSCollection: FSCollection,
   getData() {
@@ -108,6 +108,7 @@ module.exports = {
     });
 
     Data.ddp.on("added", message => {
+      console.info(message);
       if(!Data.db[message.collection]) {
         Data.db.addCollection(message.collection)
       }

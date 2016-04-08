@@ -182,7 +182,7 @@ Once connected to the ddp server, you can access every method available in [ddp.
 ## CollectionFS
 
 * Meteor.FSCollection(collectionName) : Helper for [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). Full documentation [here](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/FSCollection.md)
-* This plugin also exposes a FSCollectionImagesPreloader component which helps you preload every image you want in CollectionFS
+* This plugin also exposes a FSCollectionImagesPreloader component which helps you preload every image you want in CollectionFS (only available on ios)
 
 ```javascript
 import { FSCollectionImagesPreloader } from 'react-native-meteor';
