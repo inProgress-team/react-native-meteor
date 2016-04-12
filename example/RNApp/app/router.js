@@ -15,7 +15,7 @@ const Router = {
       },
 
       getTitle() {
-        return 'Route List';
+        return 'Home';
       }
     }
   },

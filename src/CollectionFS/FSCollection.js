@@ -5,22 +5,24 @@ import Data from '../Data';
 import setProperties from './setProperties';
 
 
-EJSON.addType('FS.File', function(value) {
-  return {
-    getFileRecord() {
-      const collection = Data.db['cfs.'+value.collectionName+'.filerecord'];
+if(!EJSON._getTypes()['FS.File']) {
+  EJSON.addType('FS.File', function(value) {
+    return {
+      getFileRecord() {
+        const collection = Data.db['cfs.'+value.collectionName+'.filerecord'];
 
-      const item = collection && collection.get(value._id);
+        const item = collection && collection.get(value._id);
 
-      if(!item) return value;
+        if(!item) return value;
 
-      return setProperties(value.collectionName, item);
-    }
-  };
-});
+        return setProperties(value.collectionName, item);
+      }
+    };
+  }); 
+}
 
 export default function(name) {
-
+  const Meteor = this;
   const collectionName = 'cfs.'+name+'.filerecord';
 
 
@@ -35,9 +37,9 @@ export default function(name) {
       const elem = Collection(collectionName).findOne(selector, options);
       return elem && setProperties(name, elem);
     },
-    insert: Collection(collectionName).insert,
-    update: Collection(collectionName).update,
-    remove: Collection(collectionName).remove
+    insert: function() { Collection.apply(Meteor, [collectionName]).insert.apply(Meteor, arguments); },
+    update: function() { Collection.apply(Meteor, [collectionName]).update.apply(Meteor, arguments); },
+    remove: function() { Collection.apply(Meteor, [collectionName]).remove.apply(Meteor, arguments); },
   };
 }
 

@@ -2,6 +2,7 @@ import React, { View, Text, Component, StyleSheet } from 'react-native';
 import Meteor, { connectMeteor } from 'react-native-meteor';
 
 import Button from '../components/button';
+import connect from '../connect';
 
 @connectMeteor
 class Connection extends Component {
@@ -12,8 +13,7 @@ class Connection extends Component {
   }
 
   handleConnectPress() {
-    const url = 'http://localhost:3000/websocket';
-    Meteor.connect(url);
+    connect();
   }
 
   handleDisconnectPress() {
