@@ -25,23 +25,25 @@ class MeteorComplexListViewComponent extends Component {
   render() {
     const { itemsReady } = this.data;
 
-    if (itemsReady) {
+    if (!itemsReady) {
       return (
         <View>
           <Text>Loading...</Text>
         </View>
       )
-    } else {
-      return (
-        <View style={styles.container}>
-          <MeteorComplexListView
-            style={styles.container}
-            elements={()=>{return Meteor.collection('items').find()}}
-            renderRow={this.renderRow}
-          />
-        </View>
-      );
     }
+    
+    
+    return (
+      <View style={styles.container}>
+        <MeteorComplexListView
+          style={styles.container}
+          elements={()=>{return Meteor.collection('items').find()}}
+          renderRow={this.renderRow}
+        />
+      </View>
+    );
+
   }
 }
 

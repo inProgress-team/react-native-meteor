@@ -24,30 +24,29 @@ class MeteorListViewComponent extends Component {
 
   render() {
     const { itemsReady } = this.data;
-
-    if (itemsReady) {
+    if (!itemsReady) {
       return (
         <View>
           <Text>Loading...</Text>
         </View>
       )
-    } else {
-      return (
-        <View style={styles.container}>
-          <View style={styles.buttonContainer}>
-            <Button text="Add Item" onPress={() => Meteor.call('addItem')} />
-          </View>
-
-          <MeteorListView
-            collection="items"
-            style={styles.container}
-            // selector={{}}
-            options={{sort: {createdAt: -1}}}
-            renderRow={this.renderRow}
-          />
-        </View>
-      );
     }
+    
+    return (
+      <View style={styles.container}>
+        <View style={styles.buttonContainer}>
+          <Button text="Add Item" onPress={() => Meteor.call('addItem')} />
+        </View>
+
+        <MeteorListView
+          collection="items"
+          style={styles.container}
+          // selector={{}}
+          options={{sort: {createdAt: -1}}}
+          renderRow={this.renderRow}
+        />
+      </View>
+    );
   }
 }
 
