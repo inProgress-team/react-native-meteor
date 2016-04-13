@@ -17,7 +17,7 @@ export default (name, file)=> {
     ...file,
     url: params => {
       const token = Data._tokenIdSaved;
-      return Data.getUrl()+'/cfs/files/'+name+'/'+file._id+'?store='+getStoreName(params)+(token ? '&token='+base64.encode(JSON.stringify({authToken: token})) : "");
+      return Data.replace('ws://', 'http://').replace('wss://', 'https://').getUrl()+'/cfs/files/'+name+'/'+file._id+'?store='+getStoreName(params)+(token ? '&token='+base64.encode(JSON.stringify({authToken: token})) : "");
     },
     isImage: params => {
       const type = getType(params);
