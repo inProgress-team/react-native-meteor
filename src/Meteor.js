@@ -108,7 +108,6 @@ module.exports = {
     });
 
     Data.ddp.on("added", message => {
-      console.info(message);
       if(!Data.db[message.collection]) {
         Data.db.addCollection(message.collection)
       }
