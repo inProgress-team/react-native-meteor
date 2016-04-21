@@ -170,6 +170,8 @@ Disconnect from the DDP server.
 * [Accounts.createUser](http://docs.meteor.com/#/full/accounts_createuser)
 * [Accounts.changePassword](http://docs.meteor.com/#/full/accounts_forgotpassword)
 * [Accounts.forgotPassword](http://docs.meteor.com/#/full/accounts_changepassword)
+* [Accounts.onLogin](http://docs.meteor.com/#/full/accounts_onlogin)
+* [Accounts.onLoginFailure](http://docs.meteor.com/#/full/accounts_onloginfailure)
 
 ## Meteor.ddp
 
