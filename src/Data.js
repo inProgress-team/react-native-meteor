@@ -51,9 +51,9 @@ export default {
   off(eventName, cb) {
     this._cbs.splice(this._cbs.findIndex(_cb=>_cb.callback == cb && _cb.eventName == eventName), 1);
   },
-  _notifyLoggingIn() {
+  notify(eventName) {
     this._cbs.map(cb=>{
-      if(cb.eventName=='loggingIn' && typeof cb.callback=='function') {
+      if(cb.eventName == eventName && typeof cb.callback == 'function') {
         cb.callback();
       }
     });

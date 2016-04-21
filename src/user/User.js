@@ -65,17 +65,20 @@ module.exports = {
   },
   _startLoggingIn() {
     this._isLoggingIn = true;
-    Data._notifyLoggingIn();
+    Data.notify('loggingIn');
   },
   _endLoggingIn() {
     this._isLoggingIn = false;
-    Data._notifyLoggingIn();
+    Data.notify('loggingIn');
   },
   _handleLoginCallback(err, result) {
     if(!err) {//save user id and token
       AsyncStorage.setItem(TOKEN_KEY, result.token);
       Data._tokenIdSaved = result.token;
       this._userIdSaved = result.id;
+      Data.notify('onLogin');
+    } else {
+      Data.notify('onLoginFailure');
     }
   },
   async _loadInitialUser() {

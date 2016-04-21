@@ -45,5 +45,11 @@ module.exports = {
     call("forgotPassword", options, err => {
       callback(err);
     });
+  },
+  onLogin(cb) {
+    Data.on('onLogin', cb);
+  },
+  onLoginFailure(cb) {
+    Data.on('onLoginFailure', cb);
   }
 }
