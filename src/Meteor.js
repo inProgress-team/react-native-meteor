@@ -71,6 +71,9 @@ module.exports = {
     }
 
   },
+  reconnect() {
+    Data.ddp && Data.ddp.connect();
+  },
   connect(endpoint, options) {
     if(!endpoint) endpoint = Data._endpoint;
     if(!options) options = Data._options;
@@ -105,8 +108,8 @@ module.exports = {
 
     Data.ddp.on("disconnected", ()=>{
       console.info("Disconnected from DDP server.");
-      this.handleLogout();
-      this.connect();
+      //this.handleLogout();
+      Data.ddp.connect();
     });
 
     Data.ddp.on("added", message => {
