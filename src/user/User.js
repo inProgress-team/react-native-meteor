@@ -82,8 +82,12 @@ module.exports = {
     }
   },
   async _loadInitialUser() {
+    var value = null;
     try {
-      var value = await AsyncStorage.getItem(TOKEN_KEY);
+      value = await AsyncStorage.getItem(TOKEN_KEY);
+    } catch (error) {
+      console.warn('AsyncStorage error: ' + error.message);
+    } finally {
       Data._tokenIdSaved = value;
       if (value !== null){
         this._startLoggingIn();
@@ -94,8 +98,7 @@ module.exports = {
       } else {
         this._endLoggingIn();
       }
-    } catch (error) {
-      console.warn('AsyncStorage error: ' + error.message);
     }
+
   }
 }
