@@ -23,14 +23,16 @@ module.exports = {
   },
   logout(callback) {
     this.call("logout", err => {
-      AsyncStorage.removeItem(TOKEN_KEY);
-      Data._tokenIdSaved = null;
-      this._userIdSaved = null;
-
+      this.handleLogout();
       this.connect();
 
       typeof callback == 'function' && callback(err);
     });
+  },
+  handleLogout() {
+    AsyncStorage.removeItem(TOKEN_KEY);
+    Data._tokenIdSaved = null;
+    this._userIdSaved = null;
   },
   loginWithPassword(selector, password, callback) {
     if (typeof selector === 'string') {

@@ -105,6 +105,8 @@ module.exports = {
 
     Data.ddp.on("disconnected", ()=>{
       console.info("Disconnected from DDP server.");
+      this.handleLogout();
+      this.connect();
     });
 
     Data.ddp.on("added", message => {
