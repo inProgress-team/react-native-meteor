@@ -82,8 +82,8 @@ module.exports = {
     } else {
       Data.notify('onLoginFailure');
       this.handleLogout();
-      Data.notify('change');
     }
+    Data.notify('change');
   },
   async _loadInitialUser() {
     var value = null;
