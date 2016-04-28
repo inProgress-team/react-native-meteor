@@ -67,7 +67,7 @@ module.exports = {
     } else if(Data.ddp) {
       Data.ddp.once('connected', cb);
     } else {
-      setTimeout(()=>{ this.waitDdpConnected(cb) }, 500);
+      setTimeout(()=>{ this.waitDdpConnected(cb) }, 10);
     }
 
   },
@@ -106,9 +106,16 @@ module.exports = {
       }
     });
 
+    let lastDisconnect = null;
     Data.ddp.on("disconnected", ()=>{
       console.info("Disconnected from DDP server.");
-      Data.ddp.connect();
+
+      if(!lastDisconnect || new Date() - lastDisconnect > 3000) {
+        Data.ddp.connect();
+      }
+
+      lastDisconnect = new Date();
+
     });
 
     Data.ddp.on("added", message => {
