@@ -13,7 +13,6 @@ export default {
   subscriptions: {},
   db: db,
   calls: [],
-  hasBeenConnected: false,
 
   getUrl() {
     return this._endpoint.substring(0, this._endpoint.indexOf('/websocket'));

@@ -99,11 +99,7 @@ module.exports = {
       console.info("Connected to DDP server.");
       this._loadInitialUser();
 
-      if(Data.hasBeenConnected) {
-        this._subscriptionsRestart();
-      } else {
-        Data.hasBeenConnected = true;
-      }
+      this._subscriptionsRestart();
     });
 
     let lastDisconnect = null;
@@ -143,7 +139,6 @@ module.exports = {
     Data.ddp.on("removed", message => {
       Data.db[message.collection].del(message.id);
     });
-
     Data.ddp.on("result", message => {
       const call = Data.calls.find(call=>call.id==message.id);
       if(typeof call.callback == 'function') call.callback(message.error, message.result);
