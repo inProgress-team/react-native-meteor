@@ -162,7 +162,7 @@ Disconnect from the DDP server.
 
 * [Meteor.call](http://docs.meteor.com/#/full/meteor_call)
 * [Meteor.loginWithPassword](http://docs.meteor.com/#/full/meteor_loginwithpassword) (Please note that user is auto-resigned in - like in Meteor Web applications - thanks to React Native AsyncStorage.)
-* [Meteor.loginWithGoogle](https://atmospherejs.com/spencercarli/accounts-google-oauth) [Example](https://gist.github.com/FaridSafi/d1a2ed36ce84c4bc9960aac1b6b4c6c1)
+* [Meteor.loginWithGoogle](https://atmospherejs.com/spencercarli/accounts-google-oauth) See [Example](https://gist.github.com/FaridSafi/d1a2ed36ce84c4bc9960aac1b6b4c6c1)
 * [Meteor.logout](http://docs.meteor.com/#/full/meteor_logout)
 * [Meteor.logoutOtherClients](http://docs.meteor.com/#/full/meteor_logoutotherclients)
 
