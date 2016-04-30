@@ -202,6 +202,8 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
 * npm i --save react-native-meteor-router-flux@latest
 * [Custom scene renderer](https://github.com/aksonov/react-native-router-flux#switch-new-feature) which allows to select tab scene to show depending from app state. It could be useful for authentication, restricted scenes, etc.
 
+### Using react-native-router-flux and MeteorListView
+To prevent react-native-router-flux's navbar from blocking out parts of MeteorListView, make sure to set the style of the container of MeteorListView to include `paddingTop: 64`. This will position MeteorListView properly below navbar.
 
 # Want to help ?
 
