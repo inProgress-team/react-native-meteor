@@ -1,6 +1,6 @@
 # react-native-meteor [![react-native-meteor](http://img.shields.io/npm/dm/react-native-meteor.svg)](https://www.npmjs.org/package/react-native-meteor) [![npm version](https://badge.fury.io/js/react-native-meteor.svg)](http://badge.fury.io/js/react-native-meteor) [![Dependency Status](https://david-dm.org/inProgress-team/react-native-meteor.svg)](https://david-dm.org/inProgress-team/react-native-meteor)
 
-Meteor-like methods for React Native. ! For old docs, see [v0.6.2 documentation](https://github.com/inProgress-team/react-native-meteor/tree/0.6.2) (classic ddp interface).
+Meteor-like methods for React Native.
 
 ## What is it for ?
 
@@ -20,35 +20,11 @@ The purpose of this library is :
 ```javascript
 
 import { View, Text, Component } from 'react-native';
-import Meteor, { connectMeteor, MeteorListView } from 'react-native-meteor';
+import Meteor, { createContainer } from 'react-native-meteor';
 
-/*
-* Uses decorators (see detailed installation to activate it)
-* Or use :
+Meteor.connect('http://192.168.X.X:3000/websocket');//do this only once
 
-  class Todos extends Component {
-    ...
-  }
-  connectMeteor(Todos);
-  export default Todos;
-
-*/
-
-@connectMeteor
-export default class App extends Component {
-  componentWillMount() {
-    const url = 'http://192.168.X.X:3000/websocket';
-    Meteor.connect(url);
-  }
-  getMeteorData() {
-    const handle = Meteor.subscribe('todos');
-    Meteor.subscribe('settings');
-
-    return {
-      todosReady: handle.ready(),
-      settings: Meteor.collection('settings').findOne()
-    };
-  }
+class App extends Component {
   renderRow(todo) {
     return (
       <Text>{todo.title}</Text>
@@ -71,21 +47,86 @@ export default class App extends Component {
 
   }
 }
+
+export default createContainer(params=>{
+  const handle = Meteor.subscribe('todos');
+  Meteor.subscribe('settings');
+
+  return {
+    todosReady: handle.ready(),
+    settings: Meteor.collection('settings').findOne()
+  };
+})
 ```
 
+# createContainer
 
-# connectMeteor
+[Since Meteor 1.3, createContainer is the recommended way to go to populate your React Classes](http://guide.meteor.com/v1.3/react.html#using-createContainer). Very similar to getMeteorData but your separate container components from presentational components.
+
+## Example
+
+```javascript
+import Meteor, { createContainer } from 'react-native-meteor';
 
 
-## getMeteorData
+class Orders extends Component {
+  render() {
+    const { pendingOrders } = this.props;
 
-Inside this method, you can create subscriptions (see below) when component is mounted. It will automatically unsubscribe if the component is unmounted.
+    //...
+    );
+  }
+}
 
-* [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe) : returns an handle
+export default createContainer(params=>{
+  return {
+    pendingOrders: Meteor.collection('orders').find({status: "pending"}),
+  };
+}, Orders)
+```
 
-Inside getMeteorData, you can also access any Meteor reactive data source, which means :
+# connectMeteor && getMeteorData
 
-* Meteor.subscribe handle
+connectMeteor is a React Mixin which enables getMeteorData (the old way of populating meteor data into your components).
+
+## Example
+
+```javascript
+import Meteor, { connectMeteor } from 'react-native-meteor';
+
+/*
+* Uses decorators (see detailed installation to activate it)
+* Or use :
+
+  class Todos extends Component {
+    ...
+  }
+  connectMeteor(Todos);
+  export default Todos;
+
+*/
+
+@connectMeteor
+class Orders extends Component {
+  getMeteorData() {
+    return {
+      pendingOrders: Meteor.collection('orders').find({status: "pending"}),
+    };
+  }
+  render() {
+    const { pendingOrders } = this.props;
+
+    //...
+    );
+  }
+}
+```
+
+# Reactive variables
+
+These variables can be used inside getMeteorData or createContainer. They will be populated into your component if they change.
+
+* [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe) : returns an handle. !! If the component which called subscribe is unmounted, the subscription is automatically canceled.
 * Meteor.collection(collectionName)
   * [.find(selector, options)](http://docs.meteor.com/#/full/find)
   * [.findOne(selector, options)](http://docs.meteor.com/#/full/findone)
@@ -112,6 +153,7 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 - `selector` [**string** / **object**]
 - `options` **object**
 
+
 ### Example usage
 
 ```javascript
@@ -120,6 +162,7 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
   selector={{done: true}}
   options={{sort: {createdAt: -1}}}
   renderRow={this.renderItem}
+  //...other listview props
 />
 ```
 
@@ -135,6 +178,7 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 <MeteorComplexListView
   elements={()=>{return Meteor.collection('todos').find()}}
   renderRow={this.renderItem}
+  //...other listview props
 />
 ```
 
