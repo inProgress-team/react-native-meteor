@@ -51,6 +51,9 @@ export default class MeteorListView extends Component {
   componentWillUnmount() {
     Data.offChange(this.onChange);
   }
+  getListViewRef() {
+    return this._listView;
+  }
   render() {
     const { ds } = this.state;
 
@@ -58,6 +61,7 @@ export default class MeteorListView extends Component {
       <ListView
         {...this.props}
         dataSource={ds}
+        ref={(r) => this._listView = r}
       />
     );
   }
