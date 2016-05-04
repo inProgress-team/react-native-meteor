@@ -15,7 +15,8 @@ export default class MeteorListView extends Component {
     collection: PropTypes.string.isRequired,
     selector: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
     options: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
-    renderRow: PropTypes.func.isRequired
+    renderRow: PropTypes.func.isRequired,
+    listViewRef: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ])
   };
   static defaultProps = {
     selector: {}
@@ -60,10 +61,12 @@ export default class MeteorListView extends Component {
   }
   render() {
     const { ds } = this.state;
+    const { listViewRef, ...props } = this.props;
 
     return (
       <ListView
-        {...this.props}
+        {...props}
+        ref={listViewRef}
         dataSource={ds}
       />
     );

@@ -13,7 +13,8 @@ import Data from '../Data';
 export default class MeteorListView extends Component {
   static propTypes = {
     elements: PropTypes.func.isRequired,
-    renderRow: PropTypes.func.isRequired
+    renderRow: PropTypes.func.isRequired,
+    listViewRef: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ])
   };
   constructor(props) {
     super(props);
@@ -53,10 +54,12 @@ export default class MeteorListView extends Component {
   }
   render() {
     const { ds } = this.state;
+    const { listViewRef, ...props } = this.props;
 
     return (
       <ListView
-        {...this.props}
+        {...props}
+        ref={listViewRef}
         dataSource={ds}
       />
     );
