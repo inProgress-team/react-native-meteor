@@ -152,6 +152,7 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 - `collection` **string** *required*
 - `selector` [**string** / **object**]
 - `options` **object**
+- `listViewRef` [**string** / **function**] ref to ListView component.
 
 
 ### Example usage
@@ -171,6 +172,7 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) Component but does not need dataSource and accepts one argument. You may need it if you make complex requests combining multiples collections.
 
 - `elements` **function** *required* : a reactive function which returns an array of elements.
+- `listViewRef` [**string** / **function**] ref to ListView component.
 
 ### Example usage
 
