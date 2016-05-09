@@ -46,6 +46,20 @@ module.exports = {
       callback(err);
     });
   },
+  resetPassword(token, newPassword, callback = ()=>{}) {
+    if (!newPassword) {
+      return callback("Must pass a new password");
+    }
+
+    User._startLoggingIn();
+    call("resetPassword", token, newPassword, (err, result) => {
+      User._endLoggingIn();
+
+      User._handleLoginCallback(err, result);
+
+      callback(err);
+    });
+  },
   onLogin(cb) {
     Data.on('onLogin', cb);
   },
