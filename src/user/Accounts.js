@@ -52,7 +52,7 @@ module.exports = {
     }
 
     User._startLoggingIn();
-    call("resetPassword", token, newPassword, (err, result) => {
+    call("resetPassword", token, hashPassword(newPassword), (err, result) => {
       User._endLoggingIn();
 
       User._handleLoginCallback(err, result);
