@@ -51,11 +51,10 @@ module.exports = {
       return callback("Must pass a new password");
     }
 
-    User._startLoggingIn();
     call("resetPassword", token, hashPassword(newPassword), (err, result) => {
-      User._endLoggingIn();
-
-      User._handleLoginCallback(err, result);
+      if (!err) {
+        User._loginWithToken(result.token);
+      }
 
       callback(err);
     });
