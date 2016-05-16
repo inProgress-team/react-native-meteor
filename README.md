@@ -249,6 +249,11 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
 * [Custom scene renderer](https://github.com/aksonov/react-native-router-flux#switch-new-feature) which allows to select tab scene to show depending from app state. It could be useful for authentication, restricted scenes, etc.
 
 
+# Author
+
+* Théo Mathieu
+* From [inProgress](https://in-progress.io)
+
 # Want to help ?
 
 Pull Requests and issues reported are welcome ! :)
