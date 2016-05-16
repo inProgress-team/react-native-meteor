@@ -65,6 +65,16 @@ module.exports = {
       })
     });
   },
+  _login(user, callback) {
+    this._startLoggingIn();
+    this.call("login", user, (err, result)=>{
+      this._endLoggingIn();
+
+      this._handleLoginCallback(err, result);
+
+      typeof callback == 'function' && callback(err);
+    });
+  },
   _startLoggingIn() {
     this._isLoggingIn = true;
     Data.notify('loggingIn');
