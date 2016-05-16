@@ -251,8 +251,10 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
 
 # Author
 
-* Théo Mathieu
+* Théo Mathieu ([@Mokto](https://github.com/Mokto))
 * From [inProgress](https://in-progress.io)
+
+![inProgress](https://in-progress.io/wp-content/uploads/2016/04/LOGO-RESPONSIVE-IPG-01-copie-1.png?2a6543)
 
 # Want to help ?
 
