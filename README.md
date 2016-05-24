@@ -19,7 +19,8 @@ The purpose of this library is :
 
 ```javascript
 
-import { View, Text, Component } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 import Meteor, { createContainer } from 'react-native-meteor';
 
 Meteor.connect('http://192.168.X.X:3000/websocket');//do this only once
