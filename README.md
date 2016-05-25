@@ -19,7 +19,8 @@ The purpose of this library is :
 
 ```javascript
 
-import { View, Text, Component } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 import Meteor, { createContainer } from 'react-native-meteor';
 
 Meteor.connect('http://192.168.X.X:3000/websocket');//do this only once
@@ -248,6 +249,13 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
 * npm i --save react-native-meteor-router-flux@latest
 * [Custom scene renderer](https://github.com/aksonov/react-native-router-flux#switch-new-feature) which allows to select tab scene to show depending from app state. It could be useful for authentication, restricted scenes, etc.
 
+
+# Author
+
+* Théo Mathieu ([@Mokto](https://github.com/Mokto))
+* From [inProgress](https://in-progress.io)
+
+![inProgress](https://in-progress.io/wp-content/uploads/2016/04/LOGO-RESPONSIVE-IPG-01-copie-1.png?2a6543)
 
 # Want to help ?
 
