@@ -1,4 +1,6 @@
-import React, { View, Text, Component, StyleSheet } from 'react-native';
+
+import React, { Component } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import Meteor, { connectMeteor } from 'react-native-meteor';
 
 import Button from '../components/button';
@@ -22,7 +24,7 @@ class Connection extends Component {
 
   render() {
     const { status } = this.data;
-    
+
     return (
       <View style={styles.container}>
         <Text style={styles.text}>

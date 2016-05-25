@@ -1,5 +1,7 @@
-import React, { View, Text, Component, ListView, StyleSheet, TouchableOpacity } from 'react-native';
-import Router from '../router';
+
+import React, { Component } from 'react';
+import { View, Text, ListView, StyleSheet, TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 const ROUTE_LIST = [
   { name: 'Meteor Connection', route: 'getMeteorConnection' },
@@ -20,8 +22,7 @@ class RouteList extends Component {
   }
 
   onPress(row) {
-    const { navigator } = this.props;
-    navigator.push(Router[row.route]());
+    Actions[row.route]();
   }
 
   renderRow(row) {

@@ -1,4 +1,5 @@
-import React, { View, Text, Component, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Meteor, { connectMeteor, MeteorComplexListView } from 'react-native-meteor';
 import Button from '../components/button';
 
@@ -32,8 +33,8 @@ class MeteorComplexListViewComponent extends Component {
         </View>
       )
     }
-    
-    
+
+
     return (
       <View style={styles.container}>
         <MeteorComplexListView
