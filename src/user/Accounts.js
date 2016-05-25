@@ -46,6 +46,19 @@ module.exports = {
       callback(err);
     });
   },
+  resetPassword(token, newPassword, callback = ()=>{}) {
+    if (!newPassword) {
+      return callback("Must pass a new password");
+    }
+
+    call("resetPassword", token, hashPassword(newPassword), (err, result) => {
+      if (!err) {
+        User._loginWithToken(result.token);
+      }
+
+      callback(err);
+    });
+  },
   onLogin(cb) {
     Data.on('onLogin', cb);
   },
