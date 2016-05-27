@@ -246,10 +246,48 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
 
 ## react-native-router-flux
 
-* [Github repository](https://github.com/inProgress-team/react-native-meteor-router-flux)
-* npm i --save react-native-meteor-router-flux@latest
-* [Custom scene renderer](https://github.com/aksonov/react-native-router-flux#switch-new-feature) which allows to select tab scene to show depending from app state. It could be useful for authentication, restricted scenes, etc.
+* You can use Switch with createContainer. Example : 
+```javascript
+  componentWillMount() {
+    this.scenes = Actions.create(
+        <Scene key="root" component={createContainer(this.getMeteorData, Switch)} selector={this.selector} tabs={true}>
+            <Scene key="loading" hideNavBar={true} component={Loading} />
+            <Scene key="login" hideNavBar={true}>
+              <Scene key="loginbis" component={Login} />
+            </Scene>
+    
+            <Scene key="loggedIn" component={Layout}>
+                <Scene key="main" hideNavBar={true}>
+                    //...
+                </Scene>
+            </Scene>
+        </Scene>
+    );
+  }
+  getMeteorData() {
+    return {
+      connected: Meteor.status().connected,
+      user: Meteor.user()
+    }
+  }
+  selector(data, props) {
+    if(!data.connected) {
+      return "loading";
+    } else if (!data.user) {
+      return "login";
+    } else {
+      return "loggedIn";
+    }
+  }
+  
+```
 
+Note you have to do this sometimes, I have not understood why yet. Please let me know if you find something ;)
+```javascript
+<Scene key="login" hideNavBar={true}>
+    <Scene key="loginbis" component={Login} />
+</Scene>
+```
 
 # Author
 
