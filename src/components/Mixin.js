@@ -136,7 +136,12 @@ class MeteorDataManager {
           c.stop();
           // Calling forceUpdate() triggers componentWillUpdate which
           // recalculates getMeteorData() and re-renders the component.
-          component.forceUpdate();
+          try {
+            component.forceUpdate();
+          } catch(e) {
+            console.error(e);
+          }
+
         }
       });
     });
