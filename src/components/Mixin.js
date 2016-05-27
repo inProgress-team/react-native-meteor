@@ -12,12 +12,6 @@ export default {
         const newData = this._meteorDataManager.calculateData();
         this._meteorDataManager.updateData(newData);
       }
-
-      if(this.startMeteorSubscriptions) {
-        console.warn('startMeteorSubscriptions is deprecated and will be removed soon. Please create your subscriptions in getMeteorData.');
-        this._meteorSubscriptionsManager = new MeteorSubscriptionsManager(this);
-        this._meteorSubscriptionsManager.getMeteorSubscriptions();
-      }
     });
 
 
@@ -65,45 +59,6 @@ export default {
 
   }
 };
-
-
-
-
-
-class MeteorSubscriptionsManager {
-  constructor(component) {
-    this.component = component;
-    this.computation = null;
-
-    this._meteorSubscriptionsDep = new Trackr.Dependency();
-
-    this._meteorDataChangedCallback = ()=>{this._meteorSubscriptionsDep.changed()};
-
-    Data.onChange(this._meteorDataChangedCallback);
-  }
-  dispose() {
-    if (this.computation) {
-      this.computation.stop();
-      this.computation = null;
-    }
-
-    Data.offChange(this._meteorDataChangedCallback);
-  }
-  stateOrPropsChanged() {
-
-  }
-  getMeteorSubscriptions() {
-    this.computation = Trackr.nonreactive(() => {
-      return Trackr.autorun((c) => {
-        this._meteorSubscriptionsDep.depend();
-
-        this.component.startMeteorSubscriptions();
-
-      });
-    });
-  }
-
-}
 
 
 // A class to keep the state and utility methods needed to manage
