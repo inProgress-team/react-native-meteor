@@ -1,4 +1,4 @@
-import React from 'react-native';
+import ReactNative from 'react-native';
 import minimongo from 'minimongo-cache';
 process.nextTick = setImmediate;
 
