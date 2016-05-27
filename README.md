@@ -57,7 +57,7 @@ export default createContainer(params=>{
     todosReady: handle.ready(),
     settings: Meteor.collection('settings').findOne()
   };
-})
+}, App)
 ```
 
 # createContainer
