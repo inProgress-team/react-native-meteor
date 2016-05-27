@@ -4,7 +4,7 @@ process.nextTick = setImmediate;
 
 const db = new minimongo();
 db.debug = false;
-db.batchedUpdates = React.addons.batchedUpdates;
+db.batchedUpdates = ReactNative.unstable_batchedUpdates;
 
 export default {
   _endpoint: null,
