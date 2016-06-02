@@ -286,13 +286,6 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
   
 ```
 
-Note you have to do this sometimes, I have not understood why yet. Please let me know if you find something ;)
-```javascript
-<Scene key="login" hideNavBar={true}>
-    <Scene key="loginbis" component={Login} />
-</Scene>
-```
-
 # Author
 
 * Théo Mathieu ([@Mokto](https://github.com/Mokto))
