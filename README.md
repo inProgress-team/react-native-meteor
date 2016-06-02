@@ -2,6 +2,10 @@
 
 Meteor-like methods for React Native.
 
+## UPDATE NOTE
+
+* Since RN 0.26.0 you have to use ws or wss protocol. http is not working on Android.
+
 ## What is it for ?
 
 The purpose of this library is :
@@ -23,7 +27,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import Meteor, { createContainer } from 'react-native-meteor';
 
-Meteor.connect('http://192.168.X.X:3000/websocket');//do this only once
+Meteor.connect('ws://192.168.X.X:3000/websocket');//do this only once
 
 class App extends Component {
   renderRow(todo) {
