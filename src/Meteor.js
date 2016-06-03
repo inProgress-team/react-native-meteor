@@ -98,6 +98,9 @@ module.exports = {
 
 
     Data.ddp.on("connected", ()=>{
+
+      Data.notify('change');
+
       console.info("Connected to DDP server.");
       this._loadInitialUser();
 
@@ -106,6 +109,9 @@ module.exports = {
 
     let lastDisconnect = null;
     Data.ddp.on("disconnected", ()=>{
+
+      Data.notify('change');
+
       console.info("Disconnected from DDP server.");
 
       if(!lastDisconnect || new Date() - lastDisconnect > 3000) {
