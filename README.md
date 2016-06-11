@@ -36,7 +36,7 @@ class App extends Component {
     );
   }
   render() {
-    const { settings, todosReady } = this.data;
+    const { settings, todosReady } = this.props;
 
     <View>
       <Text>{settings.title}</Text>
