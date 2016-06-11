@@ -26,14 +26,14 @@ import Accounts from './user/Accounts';
 
 module.exports = {
   composeWithTracker,
-  Accounts: Accounts,
-  Tracker: Trackr,
-  MeteorListView: ListView,
-  MeteorComplexListView: MeteorComplexListView,
+  Accounts,
+  Trackr,
+  ListView,
+  MeteorComplexListView,
   FSCollectionImagesPreloader: Platform.OS == 'android' ? View : FSCollectionImagesPreloader,
-  collection: collection,
-  FSCollection: FSCollection,
-  createContainer: createContainer,
+  collection,
+  FSCollection,
+  createContainer,
   getData() {
     return Data;
   },
