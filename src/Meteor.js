@@ -15,6 +15,7 @@ import Mixin from './components/Mixin';
 import ListView from './components/ListView';
 import MeteorComplexListView from './components/ComplexListView';
 import createContainer from './components/createContainer';
+import composeWithTracker from './components/composeWithTracker';
 
 import FSCollection from './CollectionFS/FSCollection';
 import FSCollectionImagesPreloader from './CollectionFS/FSCollectionImagesPreloader';
@@ -24,6 +25,7 @@ import Accounts from './user/Accounts';
 
 
 module.exports = {
+  composeWithTracker,
   Accounts: Accounts,
   Tracker: Trackr,
   MeteorListView: ListView,
