@@ -25,6 +25,7 @@ import Accounts from './user/Accounts';
 
 module.exports = {
   Accounts: Accounts,
+  Tracker: Trackr,
   MeteorListView: ListView,
   MeteorComplexListView: MeteorComplexListView,
   FSCollectionImagesPreloader: Platform.OS == 'android' ? View : FSCollectionImagesPreloader,

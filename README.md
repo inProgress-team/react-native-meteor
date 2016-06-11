@@ -216,6 +216,10 @@ Disconnect from the DDP server.
 * [Meteor.logout](http://docs.meteor.com/#/full/meteor_logout)
 * [Meteor.logoutOtherClients](http://docs.meteor.com/#/full/meteor_logoutotherclients)
 
+## Meteor.Tracker
+
+* contains Meteor Tracker
+
 ## Meteor.Accounts
 
 * [Accounts.createUser](http://docs.meteor.com/#/full/accounts_createuser)
@@ -250,7 +254,7 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
 
 ## react-native-router-flux
 
-* You can use Switch with createContainer. Example : 
+* You can use Switch with createContainer. Example :
 ```javascript
   componentWillMount() {
     this.scenes = Actions.create(
@@ -259,7 +263,7 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
             <Scene key="login" hideNavBar={true}>
               <Scene key="loginbis" component={Login} />
             </Scene>
-    
+
             <Scene key="loggedIn" component={Layout}>
                 <Scene key="main" hideNavBar={true}>
                     //...
@@ -283,7 +287,7 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
       return "loggedIn";
     }
   }
-  
+
 ```
 
 # Author
