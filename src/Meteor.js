@@ -20,6 +20,8 @@ import composeWithTracker from './components/composeWithTracker';
 import FSCollection from './CollectionFS/FSCollection';
 import FSCollectionImagesPreloader from './CollectionFS/FSCollectionImagesPreloader';
 
+import ReactiveDict from './ReactiveDict';
+
 import User from './user/User';
 import Accounts from './user/Accounts';
 
@@ -30,6 +32,7 @@ module.exports = {
   Trackr,
   ListView,
   MeteorComplexListView,
+  ReactiveDict,
   FSCollectionImagesPreloader: Platform.OS == 'android' ? View : FSCollectionImagesPreloader,
   collection,
   FSCollection,
