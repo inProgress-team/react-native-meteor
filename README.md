@@ -1,10 +1,50 @@
-# react-native-meteor [![react-native-meteor](http://img.shields.io/npm/dm/react-native-meteor.svg)](https://www.npmjs.org/package/react-native-meteor) [![npm version](https://badge.fury.io/js/react-native-meteor.svg)](http://badge.fury.io/js/react-native-meteor) [![Dependency Status](https://david-dm.org/inProgress-team/react-native-meteor.svg)](https://david-dm.org/inProgress-team/react-native-meteor)
+
+
+# react-native-meteor
+ [![react-native-meteor](http://img.shields.io/npm/dm/react-native-meteor.svg)](https://www.npmjs.org/package/react-native-meteor) [![npm version](https://badge.fury.io/js/react-native-meteor.svg)](http://badge.fury.io/js/react-native-meteor) [![Dependency Status](https://david-dm.org/inProgress-team/react-native-meteor.svg)](https://david-dm.org/inProgress-team/react-native-meteor)
 
 Meteor-like methods for React Native.
 
-## UPDATE NOTE
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-* Since RN 0.26.0 you have to use ws or wss protocol. http is not working on Android.
+- [react-native-meteor](#react-native-meteor)
+	- [Compatibility notes](#compatibility-notes)
+	- [What is it for ?](#what-is-it-for-)
+	- [Install](#install)
+	- [Example usage](#example-usage)
+- [Connect your components](#connect-your-components)
+	- [createContainer](#createcontainer)
+		- [Example](#example)
+	- [connectMeteor && getMeteorData](#connectmeteor-getmeteordata)
+		- [Example](#example)
+- [Reactive variables](#reactive-variables)
+- [Additionals collection methods](#additionals-collection-methods)
+- [ListView Components](#listview-components)
+	- [MeteorListView Component](#meteorlistview-component)
+		- [Example usage](#example-usage)
+	- [MeteorComplexListView Component](#meteorcomplexlistview-component)
+		- [Example usage](#example-usage)
+- [API](#api)
+	- [Meteor DDP connection](#meteor-ddp-connection)
+		- [Meteor.connect(endpoint, options)](#meteorconnectendpoint-options)
+		- [Meteor.disconnect()](#meteordisconnect)
+	- [Meteor methods](#meteor-methods)
+	- [Availables packages](#availables-packages)
+		- [Convenience packages](#convenience-packages)
+		- [Meteor.Accounts](#meteoraccounts)
+		- [FSCollection](#fscollection)
+		- [Meteor.ddp](#meteorddp)
+	- [How To ?](#how-to-)
+		- [react-native-router-flux](#react-native-router-flux)
+- [Author](#author)
+- [Want to help ?](#want-to-help-)
+
+<!-- /TOC -->
+
+
+## Compatibility notes
+
+* Since RN 0.26.0 you have to use ws or wss protocol to connect to your meteor server. http is not working on Android.
 
 ## What is it for ?
 
@@ -12,6 +52,8 @@ The purpose of this library is :
 * to set up and maintain a ddp connection with a ddp server, freeing the developer from having to do it on their own.
 * be fully compatible with react-native and help react-native developers.
 * **to match with [Meteor documentation](http://docs.meteor.com/) used with React.**
+
+
 
 ## Install
 
@@ -64,11 +106,15 @@ export default createContainer(params=>{
 }, App)
 ```
 
-# createContainer
+# Connect your components
 
-[Since Meteor 1.3, createContainer is the recommended way to populate your React Components](http://guide.meteor.com/v1.3/react.html#using-createContainer). Very similar to getMeteorData but your separate container components from presentational components.
+[Since Meteor 1.3, createContainer is the recommended way to populate your React Components](http://guide.meteor.com/v1.3/react.html#using-createContainer).
 
-## Example
+## createContainer
+
+ Very similar to getMeteorData but your separate container components from presentational components.
+
+### Example
 
 ```javascript
 import Meteor, { createContainer } from 'react-native-meteor';
@@ -90,11 +136,11 @@ export default createContainer(params=>{
 }, Orders)
 ```
 
-# connectMeteor && getMeteorData
+## connectMeteor && getMeteorData
 
 connectMeteor is a React Mixin which enables getMeteorData (the old way of populating meteor data into your components).
 
-## Example
+### Example
 
 ```javascript
 import Meteor, { connectMeteor } from 'react-native-meteor';
@@ -150,8 +196,8 @@ These methods (except update) work offline. That means that elements are correct
   * [.update(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/update)
   * [.remove(id, callback(err, countRemoved))](http://docs.meteor.com/#/full/remove)
 
-
-# MeteorListView Component
+# ListView Components
+## MeteorListView Component
 
 Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) Component but does not need dataSource and accepts three arguments :
 
@@ -173,7 +219,7 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 />
 ```
 
-# MeteorComplexListView Component
+## MeteorComplexListView Component
 
 Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) Component but does not need dataSource and accepts one argument. You may need it if you make complex requests combining multiples collections.
 
@@ -194,11 +240,11 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 
 ## Meteor DDP connection
 
-#### Meteor.connect(endpoint, options)
+### Meteor.connect(endpoint, options)
 
 Connect to a DDP server. You only have to do this once in your app.
 
-#### Arguments
+*Arguments*
 
 - `url` **string** *required*
 - `options` **object** Available options are :
@@ -206,7 +252,7 @@ Connect to a DDP server. You only have to do this once in your app.
   - autoReconnect **boolean** [true] whether to try to reconnect to the server when the socket connection closes, unless the closing was initiated by a call to the disconnect method.
   - reconnectInterval **number** [10000] the interval in ms between reconnection attempts.
 
-#### Meteor.disconnect()
+### Meteor.disconnect()
 
 Disconnect from the DDP server.
 
@@ -219,16 +265,19 @@ Disconnect from the DDP server.
 
 ## Availables packages
 
+###  Convenience packages
 Example `import { composeWithTracker } from 'react-native-meteor';``
 
 * EJSON
 * Tracker
 * composeWithTracker: If you want to use [react-komposer](https://github.com/kadirahq/react-komposer), you can use react-native-meteor compatible composeWithTracker
 * Accounts (see below)
-* FSCollection (see below)
 
 
-## Meteor.Accounts
+
+### Meteor.Accounts
+
+`import { Accounts } from 'react-native-meteor';``
 
 * [Accounts.createUser](http://docs.meteor.com/#/full/accounts_createuser)
 * [Accounts.changePassword](http://docs.meteor.com/#/full/accounts_forgotpassword)
@@ -237,15 +286,7 @@ Example `import { composeWithTracker } from 'react-native-meteor';``
 * [Accounts.onLogin](http://docs.meteor.com/#/full/accounts_onlogin)
 * [Accounts.onLoginFailure](http://docs.meteor.com/#/full/accounts_onloginfailure)
 
-## Meteor.ddp
-
-Once connected to the ddp server, you can access every method available in [ddp.js](https://github.com/mondora/ddp.js/).
-* Meteor.ddp.on('connected')
-* Meteor.ddp.on('added')
-* Meteor.ddp.on('changed')
-* ...
-
-## FSCollection
+### FSCollection
 
 * Meteor.FSCollection(collectionName) : Helper for [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). Full documentation [here](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/FSCollection.md)
 * This plugin also exposes a FSCollectionImagesPreloader component which helps you preload every image you want in CollectionFS (only available on ios)
@@ -259,8 +300,17 @@ import { FSCollectionImagesPreloader } from 'react-native-meteor';
 />
 ```
 
+### Meteor.ddp
 
-## react-native-router-flux
+Once connected to the ddp server, you can access every method available in [ddp.js](https://github.com/mondora/ddp.js/).
+* Meteor.ddp.on('connected')
+* Meteor.ddp.on('added')
+* Meteor.ddp.on('changed')
+* ...
+
+## How To ?
+
+### react-native-router-flux
 
 * You can use Switch with createContainer. Example :
 ```javascript
