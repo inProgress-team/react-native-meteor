@@ -30,7 +30,7 @@ module.exports = {
   composeWithTracker,
   Accounts,
   Tracker: Trackr,
-  EJSON
+  EJSON,
   ListView,
   MeteorComplexListView,
   ReactiveDict,
