@@ -29,7 +29,8 @@ import Accounts from './user/Accounts';
 module.exports = {
   composeWithTracker,
   Accounts,
-  Trackr,
+  Tracker: Trackr,
+  EJSON
   ListView,
   MeteorComplexListView,
   ReactiveDict,
