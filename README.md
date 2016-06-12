@@ -31,6 +31,7 @@ Meteor-like methods for React Native.
 	- [Meteor methods](#meteor-methods)
 	- [Availables packages](#availables-packages)
 		- [Convenience packages](#convenience-packages)
+		- [ReactiveDict](#reactivedict)
 		- [Meteor.Accounts](#meteoraccounts)
 		- [FSCollection](#fscollection)
 		- [Meteor.ddp](#meteorddp)
@@ -273,6 +274,9 @@ Example `import { composeWithTracker } from 'react-native-meteor';``
 * composeWithTracker: If you want to use [react-komposer](https://github.com/kadirahq/react-komposer), you can use react-native-meteor compatible composeWithTracker
 * Accounts (see below)
 
+### ReactiveDict
+
+See [documentation](https://atmospherejs.com/meteor/reactive-dict).
 
 
 ### Meteor.Accounts
