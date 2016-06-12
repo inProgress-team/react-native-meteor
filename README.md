@@ -66,7 +66,7 @@ export default createContainer(params=>{
 
 # createContainer
 
-[Since Meteor 1.3, createContainer is the recommended way to go populate your React Components](http://guide.meteor.com/v1.3/react.html#using-createContainer). Very similar to getMeteorData but your separate container components from presentational components.
+[Since Meteor 1.3, createContainer is the recommended way to populate your React Components](http://guide.meteor.com/v1.3/react.html#using-createContainer). Very similar to getMeteorData but your separate container components from presentational components.
 
 ## Example
 
