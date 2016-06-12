@@ -34,8 +34,8 @@ Meteor-like methods for React Native.
 		- [Meteor.Accounts](#meteoraccounts)
 		- [FSCollection](#fscollection)
 		- [Meteor.ddp](#meteorddp)
-	- [How To ?](#how-to-)
-		- [react-native-router-flux](#react-native-router-flux)
+- [How To ?](#how-to-)
+	- [react-native-router-flux](#react-native-router-flux)
 - [Author](#author)
 - [Want to help ?](#want-to-help-)
 
@@ -308,15 +308,15 @@ Once connected to the ddp server, you can access every method available in [ddp.
 * Meteor.ddp.on('changed')
 * ...
 
-## How To ?
+# How To ?
 
-### react-native-router-flux
+## react-native-router-flux
 
 * You can use Switch with createContainer. Example :
 ```javascript
   componentWillMount() {
     this.scenes = Actions.create(
-        <Scene key="root" component={createContainer(this.getMeteorData, Switch)} selector={this.selector} tabs={true}>
+        <Scene key="root" component={createContainer(this.composer, Switch)} selector={this.selector} tabs={true}>
             <Scene key="loading" hideNavBar={true} component={Loading} />
             <Scene key="login" hideNavBar={true}>
               <Scene key="loginbis" component={Login} />
@@ -330,7 +330,7 @@ Once connected to the ddp server, you can access every method available in [ddp.
         </Scene>
     );
   }
-  getMeteorData() {
+  composer() {
     return {
       connected: Meteor.status().connected,
       user: Meteor.user()
