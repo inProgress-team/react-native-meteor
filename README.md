@@ -220,6 +220,10 @@ Disconnect from the DDP server.
 
 * contains Meteor Tracker
 
+## Meteor.composeWithTracker
+
+* If you want to use [react-komposer](https://github.com/kadirahq/react-komposer), you can use react-native-meteor compatible composeWithTracker
+
 ## Meteor.Accounts
 
 * [Accounts.createUser](http://docs.meteor.com/#/full/accounts_createuser)
