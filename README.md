@@ -139,6 +139,7 @@ These variables can be used inside getMeteorData or createContainer. They will b
 * [Meteor.userId()](http://docs.meteor.com/#/full/meteor_userid)
 * [Meteor.status()](http://docs.meteor.com/#/full/meteor_status)
 * [Meteor.loggingIn()](http://docs.meteor.com/#/full/meteor_loggingin)
+* [ReactiveDict()](https://atmospherejs.com/meteor/reactive-dict)
 
 # Additionals collection methods
 
@@ -216,13 +217,16 @@ Disconnect from the DDP server.
 * [Meteor.logout](http://docs.meteor.com/#/full/meteor_logout)
 * [Meteor.logoutOtherClients](http://docs.meteor.com/#/full/meteor_logoutotherclients)
 
-## Meteor.Tracker
+## Availables packages
 
-* contains Meteor Tracker
+Example `import { composeWithTracker } from 'react-native-meteor';``
 
-## Meteor.composeWithTracker
+* EJSON
+* Tracker
+* composeWithTracker: If you want to use [react-komposer](https://github.com/kadirahq/react-komposer), you can use react-native-meteor compatible composeWithTracker
+* Accounts (see below)
+* FSCollection (see below)
 
-* If you want to use [react-komposer](https://github.com/kadirahq/react-komposer), you can use react-native-meteor compatible composeWithTracker
 
 ## Meteor.Accounts
 
@@ -241,7 +245,7 @@ Once connected to the ddp server, you can access every method available in [ddp.
 * Meteor.ddp.on('changed')
 * ...
 
-## CollectionFS
+## FSCollection
 
 * Meteor.FSCollection(collectionName) : Helper for [Meteor-CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). Full documentation [here](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/FSCollection.md)
 * This plugin also exposes a FSCollectionImagesPreloader component which helps you preload every image you want in CollectionFS (only available on ios)
