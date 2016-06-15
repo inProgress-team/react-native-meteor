@@ -20,7 +20,7 @@ import composeWithTracker from './components/composeWithTracker';
 import FSCollection from './CollectionFS/FSCollection';
 import FSCollectionImagesPreloader from './CollectionFS/FSCollectionImagesPreloader';
 
-import ReactiveDict from './ReactDict';
+import ReactiveDict from './ReactiveDict';
 
 import User from './user/User';
 import Accounts from './user/Accounts';

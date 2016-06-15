@@ -16,10 +16,11 @@ const parse = function (serialized) {
 
 export default class ReactiveDict {
   constructor(dictName) {
+    this.keys = {};
     if (typeof dictName === 'object') {
-      this.keys = dictName;
-    } else {
-      this.keys = {};
+      for(var i in dictName) {
+        this.keys[i] = stringify(dictName[i])
+      }
     }
   }
   set(keyOrObject, value) {
