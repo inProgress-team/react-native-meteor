@@ -12,7 +12,7 @@ import collection from './Collection';
 import call from './Call';
 
 import Mixin from './components/Mixin';
-import ListView from './components/ListView';
+import MeteorListView from './components/ListView';
 import MeteorComplexListView from './components/ComplexListView';
 import createContainer from './components/createContainer';
 import composeWithTracker from './components/composeWithTracker';
@@ -31,7 +31,7 @@ module.exports = {
   Accounts,
   Tracker: Trackr,
   EJSON,
-  ListView,
+  MeteorListView,
   MeteorComplexListView,
   ReactiveDict,
   FSCollectionImagesPreloader: Platform.OS == 'android' ? View : FSCollectionImagesPreloader,
