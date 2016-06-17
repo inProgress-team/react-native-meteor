@@ -109,9 +109,7 @@ module.exports = {
       Data.notify('change');
 
       console.info("Connected to DDP server.");
-      this._loadInitialUser();
-
-      this._subscriptionsRestart();
+      this._loadInitialUser().then(this._subscriptionsRestart);
     });
 
     let lastDisconnect = null;
