@@ -148,11 +148,11 @@ module.exports = {
     });
 
     Data.ddp.on("changed", message => {
-      Data.db[message.collection].upsert({_id: message.id, ...message.fields});
+      Data.db[message.collection] && Data.db[message.collection].upsert({_id: message.id, ...message.fields});
     });
 
     Data.ddp.on("removed", message => {
-      Data.db[message.collection].del(message.id);
+      Data.db[message.collection] && Data.db[message.collection].del(message.id);
     });
     Data.ddp.on("result", message => {
       const call = Data.calls.find(call=>call.id==message.id);
