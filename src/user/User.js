@@ -108,6 +108,9 @@ module.exports = {
       this._endLoggingIn();
     }
   },
+  getAuthToken() {
+    return Data._tokenIdSaved;
+  },
   async _loadInitialUser() {
     var value = null;
     try {
