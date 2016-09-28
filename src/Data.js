@@ -32,7 +32,7 @@ export default {
     if(this.ddp) {
       cb();
     } else {
-      runAfterInteractions(()=>{
+      runAfterOtherComputations(()=>{
         this.waitDdpReady(cb);
       });
     }
