@@ -139,14 +139,20 @@ module.exports = {
     });
 
     Data.ddp.on("ready", message => {
-
+      const idsMap = new Map();
       for(var i in Data.subscriptions) {
         const sub = Data.subscriptions[i];
-        sub.ready = true;
-        sub.readyDeps.changed();
-        sub.readyCallback && sub.readyCallback();
+        idsMap.set(sub.subIdRemember, sub.id);
       }
-
+      for(var i in message.subs) {
+        const subId = idsMap.get(message.subs[i]);
+        if(subId){
+          const sub = Data.subscriptions[subId];
+          sub.ready = true;
+          sub.readyDeps.changed();
+          sub.readyCallback && sub.readyCallback();
+        }
+      }
     });
 
     Data.ddp.on("changed", message => {
