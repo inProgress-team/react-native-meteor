@@ -1,10 +1,20 @@
 import ReactNative from 'react-native';
 import minimongo from 'minimongo-cache';
+import Trackr from 'trackr';
+import { InteractionManager } from 'react-native';
 process.nextTick = setImmediate;
 
 const db = new minimongo();
 db.debug = false;
 db.batchedUpdates = ReactNative.unstable_batchedUpdates;
+
+function runAfterOtherComputations(fn){
+  InteractionManager.runAfterInteractions(() => {
+    Trackr.afterFlush(() => {
+      fn();
+    });
+  });
+}
 
 export default {
   _endpoint: null,
@@ -22,9 +32,9 @@ export default {
     if(this.ddp) {
       cb();
     } else {
-      setTimeout(()=>{
+      runAfterInteractions(()=>{
         this.waitDdpReady(cb);
-      }, 10);
+      });
     }
   },
 
