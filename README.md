@@ -166,7 +166,7 @@ class Orders extends Component {
     };
   }
   render() {
-    const { pendingOrders } = this.props;
+    const { pendingOrders } = this.data;
 
     //...
     );
