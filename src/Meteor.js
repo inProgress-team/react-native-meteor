@@ -98,7 +98,7 @@ module.exports = {
     });
 
     NetInfo.isConnected.addEventListener('change', isConnected=>{
-      if(isConnected) {
+      if(isConnected && Data.ddp.autoReconnect) {
         Data.ddp.connect();
       }
     });
