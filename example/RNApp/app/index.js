@@ -8,7 +8,7 @@ import connect from './connect';
 
 import RouteList from './routes/routeList';
 import Connection from './routes/connection';
-import Accounts from './routes/accounts';
+import Accounts from './containers/accounts';
 import MeteorListView from './routes/meteorListView';
 import MeteorComplexListView from './routes/meteorComplexListView';
 import EditItem from './routes/editItem';
