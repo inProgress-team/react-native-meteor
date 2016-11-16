@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, Dimensions } from 'react-native';
-import Meteor, { connectMeteor } from 'react-native-meteor';
+import Meteor from 'react-native-meteor';
 import Button from '../components/button';
 
 const { width } = Dimensions.get('window');
 
-@connectMeteor
 class EditItem extends Component {
+
   constructor(props) {
     super(props);
 
@@ -15,31 +15,19 @@ class EditItem extends Component {
     }
   }
 
-  getMeteorData() {
-    Meteor.subscribe('items');
-    return {
-      item: Meteor.collection('items').findOne()
-    }
-  }
-
   updateName() {
     const { name } = this.state;
-    const { item } = this.data;
-
-    Meteor.collection('items').update({_id: item._id}, {
-      $set: {
-        name: name
-      }
-    });
+    const { item } = this.props;
+    Meteor.call('updateItemName', item._id, name);
   }
 
   handleRemove() {
-    const { item } = this.data;
-    Meteor.collection('items').remove({_id: item._id});
+    const { item } = this.props;
+    Meteor.call('removeItem', item._id);
   }
 
   render() {
-    let { item } = this.data;
+    let { item } = this.props;
     item = item || {};
 
     return (
