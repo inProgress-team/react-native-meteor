@@ -25,6 +25,9 @@ import ReactiveDict from './ReactiveDict';
 import User from './user/User';
 import Accounts from './user/Accounts';
 
+const subscribing = [];
+const unsubscribing = [];
+
 
 module.exports = {
   composeWithTracker,
@@ -65,7 +68,9 @@ module.exports = {
     for(var i in Data.subscriptions) {
       const sub = Data.subscriptions[i];
       Data.ddp.unsub(sub.subIdRemember);
+      unsubscribing.push(sub.subIdRemember);
       sub.subIdRemember = Data.ddp.sub(sub.name, sub.params);
+      subscribing.push(sub.subIdRemember);
     }
 
   },
@@ -139,6 +144,14 @@ module.exports = {
     });
 
     Data.ddp.on("ready", message => {
+      let subs = message.subs;
+      subs && subs.forEach(subId => {
+        let subIndex = subscribing.findIndex(item => item === subId);
+        if (subIndex !== -1) {
+          subscribing.splice(subIndex, 1);
+        }
+      });
+
       const idsMap = new Map();
       for(var i in Data.subscriptions) {
         const sub = Data.subscriptions[i];
@@ -156,7 +169,19 @@ module.exports = {
     });
 
     Data.ddp.on("changed", message => {
-      Data.db[message.collection] && Data.db[message.collection].upsert({_id: message.id, ...message.fields});
+      let fields = {...message.fields};
+      let cleared;
+
+      if (!subscribing.length && !unsubscribing.length) {
+        cleared = message.cleared;
+        if (cleared && cleared.length) {
+          cleared.forEach(fieldName => {
+            fields[fieldName] = null;
+          });
+        }
+      }
+
+      Data.db[message.collection] && Data.db[message.collection].upsert({_id: message.id, ...fields});
     });
 
     Data.ddp.on("removed", message => {
@@ -169,6 +194,12 @@ module.exports = {
     });
 
     Data.ddp.on("nosub", message => {
+      let subId = message.id;
+      let subIndex = unsubscribing.findIndex(item => item === subId);
+      if (subIndex !== -1) {
+        unsubscribing.splice(subIndex, 1);
+      }
+
       for(var i in Data.subscriptions) {
         const sub = Data.subscriptions[i];
         if(sub.subIdRemember == message.id) {
@@ -241,6 +272,7 @@ module.exports = {
 
       id = Random.id();
       const subIdRemember = Data.ddp.sub(name, params);
+      subscribing.push(subIdRemember);
 
       Data.subscriptions[id] = {
         id: id,
@@ -254,6 +286,7 @@ module.exports = {
         stopCallback: callbacks.onStop,
         stop: function() {
           Data.ddp.unsub(this.subIdRemember);
+          unsubscribing.push(this.subIdRemember);
           delete Data.subscriptions[this.id];
           this.ready && this.readyDeps.changed();
 
