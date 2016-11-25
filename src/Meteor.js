@@ -8,7 +8,7 @@ import DDP from '../lib/ddp.js';
 import Random from '../lib/Random';
 
 import Data from './Data';
-import collection from './Collection';
+import { Collection } from './Collection';
 import call from './Call';
 
 import Mixin from './components/Mixin';
@@ -35,7 +35,7 @@ module.exports = {
   MeteorComplexListView,
   ReactiveDict,
   FSCollectionImagesPreloader: Platform.OS == 'android' ? View : FSCollectionImagesPreloader,
-  collection,
+  collection(name, options) { return new Collection(name, options) },
   FSCollection,
   createContainer,
   getData() {
@@ -69,17 +69,7 @@ module.exports = {
     }
 
   },
-  waitDdpConnected(cb) {
-
-    if(Data.ddp && Data.ddp.status == 'connected') {
-      cb();
-    } else if(Data.ddp) {
-      Data.ddp.once('connected', cb);
-    } else {
-      setTimeout(()=>{ this.waitDdpConnected(cb) }, 10);
-    }
-
-  },
+  waitDdpConnected: Data.waitDdpConnected.bind(Data),
   reconnect() {
     Data.ddp && Data.ddp.connect();
   },
