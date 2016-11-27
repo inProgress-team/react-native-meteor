@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Meteor, { connectMeteor, MeteorComplexListView } from 'react-native-meteor';
-import Button from '../components/button';
+import Meteor, { MeteorComplexListView } from 'react-native-meteor';
 
-@connectMeteor
 class MeteorComplexListViewComponent extends Component {
-  getMeteorData() {
-    const itemsHandle = Meteor.subscribe('items');
-    return {
-      itemsReady: itemsHandle.ready()
-    };
-  }
 
   renderRow(item) {
     return (
@@ -24,7 +16,7 @@ class MeteorComplexListViewComponent extends Component {
   }
 
   render() {
-    const { itemsReady } = this.data;
+    const { itemsReady } = this.props;
 
     if (!itemsReady) {
       return (

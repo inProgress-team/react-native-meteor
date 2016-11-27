@@ -1,18 +1,12 @@
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Meteor, { connectMeteor } from 'react-native-meteor';
 
 import Button from '../components/button';
 import connect from '../connect';
 
-@connectMeteor
 class Connection extends Component {
-  getMeteorData() {
-    return {
-      status: Meteor.status()
-    }
-  }
 
   handleConnectPress() {
     connect();
@@ -23,7 +17,7 @@ class Connection extends Component {
   }
 
   render() {
-    const { status } = this.data;
+    const { status } = this.props;
 
     return (
       <View style={styles.container}>
@@ -44,6 +38,10 @@ class Connection extends Component {
     );
   }
 }
+
+Connection.propTypes = {
+  status: PropTypes.object.isRequired
+};
 
 export default Connection;
 

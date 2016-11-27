@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import {Items} from '../lib/items';
+
 Meteor.startup(function () {
   if (Items.find().count() === 0) {
     let i = 0;
