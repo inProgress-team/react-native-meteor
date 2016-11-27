@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { View, Text, StyleSheet, TextInput, Dimensions } from 'react-native';
 import Meteor, { connectMeteor, Accounts } from 'react-native-meteor';
 import Button from '../components/button';
 
 const { width } = Dimensions.get('window');
 
-@connectMeteor
 class AccountsComponent extends Component {
   constructor(props) {
     super(props);
@@ -16,14 +15,6 @@ class AccountsComponent extends Component {
       error: null,
       oldPassword: '',
       newPassword: ''
-    }
-  }
-
-  getMeteorData() {
-    return {
-      loggingIn: Meteor.loggingIn(),
-      user: Meteor.user(),
-      userId: Meteor.userId()
     }
   }
 
@@ -151,7 +142,7 @@ class AccountsComponent extends Component {
   }
 
   render() {
-    const { loggingIn, userId, user } = this.data;
+    const { loggingIn, userId, user } = this.props;
     const { error } = this.state;
 
     return (
@@ -173,6 +164,12 @@ class AccountsComponent extends Component {
     );
   }
 }
+
+AccountsComponent.propTypes = {
+  loggingIn: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+  userId: PropTypes.string
+};
 
 export default AccountsComponent;
 
