@@ -34,6 +34,7 @@ module.exports = {
   MeteorListView,
   MeteorComplexListView,
   ReactiveDict,
+  Collection,
   FSCollectionImagesPreloader: Platform.OS == 'android' ? View : FSCollectionImagesPreloader,
   collection(name, options) { return new Collection(name, options) },
   FSCollection,
