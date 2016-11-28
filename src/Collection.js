@@ -19,26 +19,30 @@ export class Collection {
 
   find(selector, options) {
     let result;
+    let docs;
 
     if(typeof selector == 'string') {
       if(options) {
-        result = this._collection.findOne({_id: selector}, options);
+        docs = this._collection.findOne({_id: selector}, options);
       } else {
-        result = this._collection.get(selector);
+        docs = this._collection.get(selector);
       }
 
-      if (result) result = [ result ];
+      if (docs) docs = [ docs ];
     } else {
-      result = this._collection.find(selector, options);
+      docs = this._collection.find(selector, options);
     }
 
-    if (result && this._transform) result = result.map(this._transform);
+    if (docs && this._transform) docs = docs.map(this._transform);
 
     if (this._cursoredFind) {
-      result = result || [ ];
+      docs = docs || [ ];
+      result = docs.slice();
 
-      result.fetch = () => result;
-      result.count = () => result.length;
+      result.fetch = () => docs;
+      result.count = () => docs.length;
+    } else {
+      result = docs;
     }
 
     return result;
