@@ -5,6 +5,7 @@ import _ from 'underscore';
 import Data from './Data';
 import Random from '../lib/Random';
 import call from './Call';
+import { isPlainObject } from "../lib/utils.js";
 
 export class Collection {
   constructor(name, options = { }) {
