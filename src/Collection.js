@@ -11,7 +11,7 @@ export class Collection {
     this._collection = Data.db[name];
     this._cursoredFind = options.cursoredFind;
     this._name = name;
-    self._transform = wrapTransform(options.transform);
+    this._transform = wrapTransform(options.transform);
   }
 
   find(selector, options) {
