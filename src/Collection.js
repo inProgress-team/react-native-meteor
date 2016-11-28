@@ -124,6 +124,28 @@ export class Collection {
       callback(`No document with _id : ${id}`);
     }
   }
+
+  helpers(helpers) {
+    var self = this;
+    let _transform;
+
+    if (this._transform && ! this._helpers)
+      _transform = this._transform;
+
+    if (! this._helpers) {
+      this._helpers = function Document(doc) { return _.extend(this, doc); };
+      this._transform = doc => {
+        if (_transform) {
+          doc = _transform(doc);
+        };
+        return new this._helpers(doc);
+      };
+    }
+
+    _.each(helpers, (helper, key) => {
+      this._helpers.prototype[key] = helper;
+    });
+  }
 }
 
 //From Meteor core
