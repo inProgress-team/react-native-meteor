@@ -68,7 +68,7 @@ export default {
         cb.callback();
       }
     });
-  }
+  },
   waitDdpConnected(cb) {
     if(this.ddp && this.ddp.status == 'connected') {
       cb();
