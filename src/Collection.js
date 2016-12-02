@@ -7,6 +7,25 @@ import Random from '../lib/Random';
 import call from './Call';
 import { isPlainObject } from "../lib/utils.js";
 
+class Cursor {
+  constructor(collection, docs) {
+    this._docs = docs || [ ];
+    this._collection = collection;
+  }
+
+  count() { return this._docs.length }
+
+  fetch() { return this._transformedDocs() }
+
+  forEach(callback) { this._transformedDocs().forEach(callback) }
+
+  map(callback) { return this._transformedDocs().map(callback) }
+
+  _transformedDocs() {
+    return this._collection._transform ? this._docs.map(this._collection._transform) : this._docs;
+  }
+}
+
 export class Collection {
   constructor(name, options = { }) {
     if (!Data.db[name]) Data.db.addCollection(name);
@@ -33,15 +52,11 @@ export class Collection {
       docs = this._collection.find(selector, options);
     }
 
-    if (docs && this._transform) docs = docs.map(this._transform);
-
     if (this._cursoredFind) {
-      docs = docs || [ ];
-      result = docs.slice();
-
-      result.fetch = () => docs;
-      result.count = () => docs.length;
+      result = new Cursor(this, docs);
     } else {
+      if (docs && this._transform) docs = docs.map(this._transform);
+
       result = docs;
     }
 
@@ -49,9 +64,15 @@ export class Collection {
   }
 
   findOne(selector, options) {
-    const result = this.find(selector, options);
+    let result = this.find(selector, options);
 
-    return result ? result[0] : result;
+    if (result) {
+      if (this._cursoredFind) result = result.fetch();
+
+      result = result[0];
+    }
+
+    return result;
   }
 
   insert(item, callback = ()=>{}) {
