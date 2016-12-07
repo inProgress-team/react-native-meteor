@@ -58,7 +58,7 @@ The purpose of this library is :
 
 ## Install
 
-    npm i --save react-native-meteor@latest 
+    npm i --save react-native-meteor
 
 [!! See detailed installation guide](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/Install.md)
 
