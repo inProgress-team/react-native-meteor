@@ -5,6 +5,9 @@
 
 Meteor-like methods for React Native.
 
+If you have questions, you can open a new issue in the repository or ask in the our Gitter chat:
+https://gitter.im/react-native-meteor/Lobby
+
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [react-native-meteor](#react-native-meteor)
