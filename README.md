@@ -22,8 +22,6 @@ https://gitter.im/react-native-meteor/Lobby
 	- [connectMeteor && getMeteorData](#connectmeteor-getmeteordata)
 		- [Example](#example)
 - [Reactive variables](#reactive-variables)
-	- [Meteor.subscribe](#meteorsubscribe)
-	- [Meteor.collection(collectionName, options)](#meteorcollectioncollectionname-options)
 - [Additionals collection methods](#additionals-collection-methods)
 - [ListView Components](#listview-components)
 	- [MeteorListView Component](#meteorlistview-component)
@@ -31,6 +29,9 @@ https://gitter.im/react-native-meteor/Lobby
 	- [MeteorComplexListView Component](#meteorcomplexlistview-component)
 		- [Example usage](#example-usage)
 - [API](#api)
+	- [Meteor Collections](#meteor-collections)
+		- [Meteor.subscribe](#meteorsubscribe)
+		- [Meteor.collection(collectionName, options)](#meteorcollectioncollectionname-options)
 	- [Meteor DDP connection](#meteor-ddp-connection)
 		- [Meteor.connect(endpoint, options)](#meteorconnectendpoint-options)
 		- [Meteor.disconnect()](#meteordisconnect)
@@ -198,17 +199,6 @@ These variables can be used inside getMeteorData or createContainer. They will b
 * [Meteor.loggingIn()](http://docs.meteor.com/#/full/meteor_loggingin)
 * [ReactiveDict()](https://atmospherejs.com/meteor/reactive-dict)
 
-## Meteor.subscribe
-[Meteor.subscribe()](http://docs.meteor.com/#/full/meteor_subscribe) returns an handle. If the component which called subscribe is unmounted, the subscription is automatically canceled.
-## Meteor.collection(collectionName, options)
-You need pass the `cursoredFind` option when you get your collection if you want to use cursor-like method:
-
-```‍‍‍javascript
-Meteor.collection("collectionName", { cursoredFind: true })
-```
-
-Or you can simply use `find()` to get an array of documents. The option default to false for backward compatibility. Cursor methods are available to share code more easily between a react-native app and a standard Meteor app.
-
 # Additionals collection methods
 
 These methods (except update) work offline. That means that elements are correctly updated offline, and when you reconnect to ddp, Meteor calls are taken care of.
@@ -259,6 +249,21 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 ```
 
 # API
+
+## Meteor Collections
+
+### Meteor.subscribe
+[Meteor.subscribe()](http://docs.meteor.com/#/full/meteor_subscribe) returns an handle. If the component which called subscribe is unmounted, the subscription is automatically canceled.
+
+### Meteor.collection(collectionName, options)
+You need pass the `cursoredFind` option when you get your collection if you want to use cursor-like method:
+
+```‍‍‍javascript
+Meteor.collection("collectionName", { cursoredFind: true })
+```
+
+Or you can simply use `find()` to get an array of documents. The option default to false for backward compatibility. Cursor methods are available to share code more easily between a react-native app and a standard Meteor app.
+
 
 ## Meteor DDP connection
 
