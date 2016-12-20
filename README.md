@@ -5,7 +5,7 @@
 
 Meteor-like methods for React Native.
 
-If you have questions, you can open a new issue in the repository or ask in the our Gitter chat:
+If you have questions, you can open a new issue in the repository or ask in the our Gitter chat:  
 https://gitter.im/react-native-meteor/Lobby
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
@@ -14,6 +14,7 @@ https://gitter.im/react-native-meteor/Lobby
 	- [Compatibility notes](#compatibility-notes)
 	- [What is it for ?](#what-is-it-for-)
 	- [Install](#install)
+	- [Install from Git](#install-from-git)
 	- [Example usage](#example-usage)
 - [Connect your components](#connect-your-components)
 	- [createContainer](#createcontainer)
@@ -21,6 +22,8 @@ https://gitter.im/react-native-meteor/Lobby
 	- [connectMeteor && getMeteorData](#connectmeteor-getmeteordata)
 		- [Example](#example)
 - [Reactive variables](#reactive-variables)
+	- [Meteor.subscribe](#meteorsubscribe)
+	- [Meteor.collection(collectionName, options)](#meteorcollectioncollectionname-options)
 - [Additionals collection methods](#additionals-collection-methods)
 - [ListView Components](#listview-components)
 	- [MeteorListView Component](#meteorlistview-component)
@@ -45,7 +48,6 @@ https://gitter.im/react-native-meteor/Lobby
 
 <!-- /TOC -->
 
-
 ## Compatibility notes
 
 * Since RN 0.26.0 you have to use ws or wss protocol to connect to your meteor server. http is not working on Android.
@@ -66,10 +68,10 @@ The purpose of this library is :
 [!! See detailed installation guide](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/Install.md)
 
 ## Install from Git
-Sometimes we do not have time to update the version of the NPM package. In this case, you can use the latest version from the repository. 
+Sometimes we do not have time to update the version of the NPM package. In this case, you can use the latest version from the repository.
 
     npm i --save https://github.com/inProgress-team/react-native-meteor
-    
+
 ## Example usage
 
 ```javascript
@@ -186,21 +188,32 @@ class Orders extends Component {
 
 These variables can be used inside getMeteorData or createContainer. They will be populated into your component if they change.
 
-* [Meteor.subscribe](http://docs.meteor.com/#/full/meteor_subscribe) : returns an handle. !! If the component which called subscribe is unmounted, the subscription is automatically canceled.
-* Meteor.collection(collectionName)
-  * [.find(selector, options)](http://docs.meteor.com/#/full/find)
-  * [.findOne(selector, options)](http://docs.meteor.com/#/full/findone)
+* [Meteor.subscribe()](http://docs.meteor.com/#/full/meteor_subscribe)
+* Meteor.collection(collectionName, options)
+* [.find(selector, options)](http://docs.meteor.com/#/full/find)
+* [.findOne(selector, options)](http://docs.meteor.com/#/full/findone)
 * [Meteor.user()](http://docs.meteor.com/#/full/meteor_user)
 * [Meteor.userId()](http://docs.meteor.com/#/full/meteor_userid)
 * [Meteor.status()](http://docs.meteor.com/#/full/meteor_status)
 * [Meteor.loggingIn()](http://docs.meteor.com/#/full/meteor_loggingin)
 * [ReactiveDict()](https://atmospherejs.com/meteor/reactive-dict)
 
+## Meteor.subscribe
+[Meteor.subscribe()](http://docs.meteor.com/#/full/meteor_subscribe) returns an handle. If the component which called subscribe is unmounted, the subscription is automatically canceled.
+## Meteor.collection(collectionName, options)
+You need pass the `cursoredFind` option when you get your collection if you want to use cursor-like method:
+
+```‍‍‍javascript
+Meteor.collection("collectionName", { cursoredFind: true })
+```
+
+Or you can simply use `find()` to get an array of documents. The option default to false for backward compatibility. Cursor methods are available to share code more easily between a react-native app and a standard Meteor app.
+
 # Additionals collection methods
 
 These methods (except update) work offline. That means that elements are correctly updated offline, and when you reconnect to ddp, Meteor calls are taken care of.
 
-* Meteor.collection(collectionName)
+* Meteor.collection(collectionName, options)
   * [.insert(doc, callback)](http://docs.meteor.com/#/full/insert)
   * [.update(id, modifier, [options], [callback])](http://docs.meteor.com/#/full/update)
   * [.remove(id, callback(err, countRemoved))](http://docs.meteor.com/#/full/remove)
@@ -369,4 +382,4 @@ Once connected to the ddp server, you can access every method available in [ddp.
 
 # Want to help ?
 
-Pull Requests and issues reported are welcome ! :)
+Pull Requests and issues reported are welcome! :)
