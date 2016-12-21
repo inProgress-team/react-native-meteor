@@ -191,8 +191,8 @@ These variables can be used inside getMeteorData or createContainer. They will b
 
 * [Meteor.subscribe()](http://docs.meteor.com/#/full/meteor_subscribe)
 * Meteor.collection(collectionName, options)
-* [.find(selector, options)](http://docs.meteor.com/#/full/find)
-* [.findOne(selector, options)](http://docs.meteor.com/#/full/findone)
+  * [.find(selector, options)](http://docs.meteor.com/#/full/find)
+  * [.findOne(selector, options)](http://docs.meteor.com/#/full/findone)
 * [Meteor.user()](http://docs.meteor.com/#/full/meteor_user)
 * [Meteor.userId()](http://docs.meteor.com/#/full/meteor_userid)
 * [Meteor.status()](http://docs.meteor.com/#/full/meteor_status)
