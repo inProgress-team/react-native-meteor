@@ -92,18 +92,19 @@ class App extends Component {
   render() {
     const { settings, todosReady } = this.props;
 
-    <View>
-      <Text>{settings.title}</Text>
-        {!todosReady && <Text>Not ready</Text>}
+    return(
+      <View>
+        <Text>{settings.title}</Text>
+          {!todosReady && <Text>Not ready</Text>}
 
-        <MeteorListView
-          collection="todos"
-          selector={{done: true}}
-          options={{sort: {createdAt: -1}}}
-          renderRow={this.renderRow}
-        />
-    </View>
-
+          <MeteorListView
+            collection="todos"
+            selector={{done: true}}
+            options={{sort: {createdAt: -1}}}
+            renderRow={this.renderRow}
+          />
+      </View>
+    )
   }
 }
 
