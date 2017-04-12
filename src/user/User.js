@@ -35,6 +35,18 @@ module.exports = {
     Data._tokenIdSaved = null;
     this._userIdSaved = null;
   },
+  loginWithGoogle(googleUser, callback) {
+    this._startLoggingIn();
+    this.call("login", {
+      google: googleUser
+    }, (err, result)=>{
+      this._endLoggingIn();
+
+      this._handleLoginCallback(err, result);
+
+      typeof callback == 'function' && callback(err);
+    });
+  },
   loginWithPassword(selector, password, callback) {
     if (typeof selector === 'string') {
       if (selector.indexOf('@') === -1)
