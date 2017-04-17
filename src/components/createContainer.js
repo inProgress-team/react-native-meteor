@@ -2,7 +2,7 @@
  * Container helper using react-meteor-data.
  */
 
-import React from 'react';
+import React from 'react-native';
 
 import Mixin from './Mixin';
 
