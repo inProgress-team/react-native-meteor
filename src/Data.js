@@ -1,4 +1,4 @@
-import ReactNative from 'react-native';
+import ReactNative from 'react-native/Libraries/Renderer/src/renderers/native/ReactNative';
 import minimongo from 'minimongo-cache';
 import Trackr from 'trackr';
 import { InteractionManager } from 'react-native';
