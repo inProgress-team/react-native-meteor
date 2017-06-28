@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import Meteor, {createContainer} from 'react-native-meteor';
 import MetorComplexListViewComponent from '../routes/meteorComplexListView';
 
