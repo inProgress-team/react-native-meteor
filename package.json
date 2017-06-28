@@ -33,6 +33,7 @@
     "react-komposer": "^1.8.0",
     "react-mixin": "^3.0.3",
     "trackr": "^2.0.2",
+    "react-dom": "^16.0.0-alpha.12",
     "wolfy87-eventemitter": "^4.3.0",
     "underscore": "^1.8.3"
   },

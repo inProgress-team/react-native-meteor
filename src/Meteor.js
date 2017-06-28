@@ -67,9 +67,11 @@ module.exports = {
       const sub = Data.subscriptions[i];
       Data.ddp.unsub(sub.subIdRemember);
       sub.subIdRemember = Data.ddp.sub(sub.name, sub.params);
+      sub.resubscribed = false; // set resubscribed to false, to keep track of which subs have had 'ready' called
     }
 
   },
+  _collectionIdsHash: {}, // the map to store collections/document ids
   waitDdpConnected: Data.waitDdpConnected.bind(Data),
   reconnect() {
     Data.ddp && Data.ddp.connect();
@@ -108,6 +110,8 @@ module.exports = {
     let lastDisconnect = null;
     Data.ddp.on("disconnected", ()=>{
 
+      this._collectionIdsHash = {}; // empty out the map on disconnect, because all subs will be restarted on reconnect
+
       Data.notify('change');
 
       console.info("Disconnected from DDP server.");
@@ -127,6 +131,14 @@ module.exports = {
         Data.db.addCollection(message.collection)
       }
       Data.db[message.collection].upsert({_id: message.id, ...message.fields});
+
+      // add the collection/document id to the map
+      if (!this._collectionIdsHash[message.collection]) {
+        this._collectionIdsHash[message.collection] = [];
+      }
+      if (this._collectionIdsHash[message.collection].indexOf(message.id) < 0) {
+        this._collectionIdsHash[message.collection].push(message.id);
+      }
     });
 
     Data.ddp.on("ready", message => {
@@ -142,6 +154,28 @@ module.exports = {
           sub.ready = true;
           sub.readyDeps.changed();
           sub.readyCallback && sub.readyCallback();
+          sub.resubscribed = true; // set this subscription as resubscribed
+        }
+      }
+
+      // iterate through all the subscriptions to see if they've all been "re-readied"
+      var allResubscribed = true;
+
+      for (var sub in Data.subscriptions) {
+        if (Data.subscriptions[sub].resubscribed == false) allResubscribed = false
+      }
+
+      // if every subscription has finished, the collection/document ids map should contain the ids of every subscribed document.
+      // therefore, we are able to remove all documents from minimongo that do not appear in the map
+      if (allResubscribed) {
+        for (var collection in this._collectionIdsHash) {
+          if (this._collectionIdsHash[collection].length && Data.db && Data.db.collections && Data.db[collection]) {
+            Data.db[collection].remove({
+              _id: {
+                $nin: this._collectionIdsHash[collection]
+              }
+            });
+          }
         }
       }
     });
@@ -152,6 +186,11 @@ module.exports = {
 
     Data.ddp.on("removed", message => {
       Data.db[message.collection] && Data.db[message.collection].del(message.id);
+
+      // remove the document id from the map
+     if (this._collectionIdsHash[message.collection] && this._collectionIdsHash[message.collection].indexOf(message.id) > -1) {
+       this._collectionIdsHash[message.collection].splice(this._collectionIdsHash[message.collection].indexOf(message.id), 1);
+     }
     });
     Data.ddp.on("result", message => {
       const call = Data.calls.find(call=>call.id==message.id);
