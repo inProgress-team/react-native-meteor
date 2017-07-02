@@ -1,5 +1,5 @@
 import Meteor, {createContainer} from 'react-native-meteor';
-import React, {PropTypes} from 'react';
+import React from 'react';
 import MeteorListViewComponent from '../routes/meteorListView';
 
 export default MeteorListViewContainer = createContainer(ownProps => {
