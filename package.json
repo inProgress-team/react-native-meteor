@@ -46,5 +46,9 @@
     "mocha": "^2.4.5",
     "mock-socket": "^2.0.0",
     "sinon": "^1.17.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "^0.46.0"
   }
 }
