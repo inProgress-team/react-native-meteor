@@ -32,7 +32,7 @@ export class Collection {
 
     this._collection = Data.db[name];
     this._cursoredFind = options.cursoredFind;
-    this._clientOnly = options._clientOnly;
+    this._clientOnly = options.clientOnly || false;
     this._name = name;
     this._transform = wrapTransform(options.transform);
   }
