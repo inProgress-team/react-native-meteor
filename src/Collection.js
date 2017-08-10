@@ -32,6 +32,7 @@ export class Collection {
 
     this._collection = Data.db[name];
     this._cursoredFind = options.cursoredFind;
+    this._clientOnly = options._clientOnly;
     this._name = name;
     this._transform = wrapTransform(options.transform);
   }
@@ -90,16 +91,19 @@ export class Collection {
     if(this._collection.get(id)) return callback({error: 409, reason: `Duplicate key _id with value ${id}`});
 
     this._collection.upsert(item);
-    Data.waitDdpConnected(()=>{
-      call(`/${this._name}/insert`, item, err => {
-        if(err) {
-          this._collection.del(id);
-          return callback(err);
-        }
 
-        callback(null, id);
+    if (!this._clientOnly) {
+      Data.waitDdpConnected(()=>{
+        call(`/${this._name}/insert`, item, err => {
+          if(err) {
+            this._collection.del(id);
+            return callback(err);
+          }
+
+          callback(null, id);
+        });
       });
-    });
+    }
 
     return id;
   }
@@ -115,15 +119,17 @@ export class Collection {
       reason: `Item not found in collection ${this._name} with id ${id}`
     });
 
-    Data.waitDdpConnected(()=>{
-      call(`/${this._name}/update`, {_id: id}, modifier, err => {
-        if(err) {
-          return callback(err);
-        }
+    if (!this._clientOnly) {
+      Data.waitDdpConnected(()=>{
+        call(`/${this._name}/update`, {_id: id}, modifier, err => {
+          if(err) {
+            return callback(err);
+          }
 
-        callback(null, id);
+          callback(null, id);
+        });
       });
-    });
+    }
   }
 
   remove(id, callback = ()=>{}) {
@@ -132,15 +138,17 @@ export class Collection {
     if(element) {
       this._collection.del(element._id);
 
-      Data.waitDdpConnected(()=>{
-        call(`/${this._name}/remove`, {_id: id}, (err, res) => {
-          if(err) {
-            this._collection.upsert(element);
-            return callback(err);
-          }
-          callback(null, res);
+      if (!this._clientOnly) {
+        Data.waitDdpConnected(()=>{
+          call(`/${this._name}/remove`, {_id: id}, (err, res) => {
+            if(err) {
+              this._collection.upsert(element);
+              return callback(err);
+            }
+            callback(null, res);
+          });
         });
-      });
+      }
     } else {
       callback(`No document with _id : ${id}`);
     }
