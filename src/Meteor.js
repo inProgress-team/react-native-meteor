@@ -65,7 +65,7 @@ module.exports = {
 
     for(var i in Data.subscriptions) {
       const sub = Data.subscriptions[i];
-      Data.ddp.unsub(sub.subIdRemember);
+      // Data.ddp.unsub(sub.subIdRemember); //重新连接的时候禁止unsub,每次unsub都会出发remoted消息
       sub.subIdRemember = Data.ddp.sub(sub.name, sub.params);
     }
 
