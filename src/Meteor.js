@@ -110,11 +110,13 @@ module.exports = {
 
       Data.notify('change');
 
-      console.info("Disconnected from DDP server.");
+      console.info("Disconnected from DDP server.", Data.ddp.autoReconnect);
 
       if (!Data.ddp.autoReconnect) return;
 
+      console.log(lastDisconnect)
       if(!lastDisconnect || new Date() - lastDisconnect > 3000) {
+        console.log(lastDisconnect, "can reconnect")
         Data.ddp.connect();
       }
 
