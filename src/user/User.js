@@ -120,8 +120,9 @@ module.exports = {
             this._endLoggingIn();
         }
     },
-    getAuthToken() {
-        return Data._tokenIdSaved;
+    async getAuthToken() {
+        let value = await AsyncStorage.getItem(TOKEN_KEY);
+        return Data._tokenIdSaved || value;
     },
     async _loadInitialUser() {
         var value = null;
