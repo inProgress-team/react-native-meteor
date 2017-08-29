@@ -112,6 +112,7 @@ module.exports = {
 
       console.info("Disconnected from DDP server.", Data.ddp.autoReconnect);
 
+      this.checkToken()
       if (!Data.ddp.autoReconnect) return;
 
       console.log(lastDisconnect)

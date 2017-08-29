@@ -120,9 +120,17 @@ module.exports = {
             this._endLoggingIn();
         }
     },
-    async getAuthToken() {
-        let value = await AsyncStorage.getItem(TOKEN_KEY);
-        return Data._tokenIdSaved || value;
+    getAuthToken() {
+        return Data._tokenIdSaved;
+    },
+    async checkToken() {
+        try {
+            value = await AsyncStorage.getItem(TOKEN_KEY);
+        } catch (error) {
+            console.warn('AsyncStorage error: ' + error.message);
+        } finally {
+            Data._tokenIdSaved = value
+        }
     },
     async _loadInitialUser() {
         var value = null;

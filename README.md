@@ -393,3 +393,22 @@ Once connected to the ddp server, you can access every method available in [ddp.
 # Want to help ?
 
 Pull Requests and issues reported are welcome! :)
+
+
+
+## Meteor new features
+config:
+    Meteor.connect 
+    createContainer() only on appregister component
+
+
+    Meteor.getData() get current store
+    Meteor.collection("collectionName") collectionName same the message collection
+    const message = {
+        type: "added",
+        collection: "posts",
+        fields: value,
+        id: value._id,
+    }
+
+    Meteor.getData().ddp.emit("added", message);
