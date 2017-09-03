@@ -9,6 +9,7 @@ import {
 import call from '../Call';
 
 const TOKEN_KEY = 'reactnativemeteor_usertoken';
+const USER_ID_KEY = 'reactnativemeteor_userid';
 
 module.exports = {
     user() {
@@ -36,6 +37,7 @@ module.exports = {
     },
     handleLogout() {
         AsyncStorage.removeItem(TOKEN_KEY);
+        AsyncStorage.removeItem(USER_ID_KEY);
         Data._tokenIdSaved = null;
         this._userIdSaved = null;
     },
@@ -95,6 +97,7 @@ module.exports = {
     _handleLoginCallback(err, result) {
         if (!err) { //save user id and token
             AsyncStorage.setItem(TOKEN_KEY, result.token);
+            AsyncStorage.setItem(USER_ID_KEY, result.id);
             Data._tokenIdSaved = result.token;
             this._userIdSaved = result.id;
             Data.notify('onLogin');
@@ -126,16 +129,19 @@ module.exports = {
     async checkToken() {
         try {
             value = await AsyncStorage.getItem(TOKEN_KEY);
+            uid = await AsyncStorage.getItem(USER_ID_KEY);
         } catch (error) {
             console.warn('AsyncStorage error: ' + error.message);
         } finally {
             Data._tokenIdSaved = value
+            this._userIdSaved = uid
         }
     },
     async _loadInitialUser() {
         var value = null;
         try {
             value = await AsyncStorage.getItem(TOKEN_KEY);
+            uid = await AsyncStorage.getItem(USER_ID_KEY);
         } catch (error) {
             console.warn('AsyncStorage error: ' + error.message);
         } finally {

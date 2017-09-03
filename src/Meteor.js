@@ -9,6 +9,7 @@ import Trackr from 'trackr';
 import EJSON from 'ejson';
 import DDP from '../lib/ddp.js';
 import Random from '../lib/Random';
+import Streamer from '../lib/Streamer';
 
 import Data from './Data';
 import {
@@ -32,6 +33,7 @@ import Accounts from './user/Accounts';
 
 
 module.exports = {
+    Streamer,
     composeWithTracker,
     Accounts,
     Tracker: Trackr,
@@ -119,19 +121,16 @@ module.exports = {
 
             Data.notify('change');
 
-            console.info("Disconnected from DDP server.", Data.ddp.autoReconnect);
+            console.info("Disconnected from DDP server.");
 
             this.checkToken()
             if (!Data.ddp.autoReconnect) return;
 
-            console.log(lastDisconnect)
-            if (!lastDisconnect || new Date() - lastDisconnect > 3000) {
-                console.log(lastDisconnect, "can reconnect")
+            if (!lastDisconnect || new Date() - lastDisconnect > 30000) {
+                lastDisconnect = new Date();
                 Data.ddp.connect();
             }
-
-            lastDisconnect = new Date();
-
+            
         });
 
         Data.ddp.on("added", message => {
