@@ -185,13 +185,13 @@ module.exports = {
 
     },
     unsubscribe(name) {
-        Data.subscriptions.map((value, key, list) => {
-            var params = Array.prototype.slice.call(arguments, 1);
-            if (value.name == name && value.params == EJSON.clone(params)) {
-                Data.ddp.unsub(value.subIdRemember);
+        var params = Array.prototype.slice.call(arguments, 1);
+        for (var i in Data.subscriptions) {
+            const sub = Data.subscriptions[i];
+            if (sub.inactive && sub.name === name && EJSON.equals(sub.params, params)) {
+                Data.ddp.unsub(sub.subIdRemember);
             }
-        })
-        
+        }
     },
     subscribe(name) {
         var params = Array.prototype.slice.call(arguments, 1);
