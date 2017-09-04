@@ -9,7 +9,6 @@ import Trackr from 'trackr';
 import EJSON from 'ejson';
 import DDP from '../lib/ddp.js';
 import Random from '../lib/Random';
-import Streamer from '../lib/Streamer';
 
 import Data from './Data';
 import {
@@ -33,7 +32,6 @@ import Accounts from './user/Accounts';
 
 
 module.exports = {
-    Streamer,
     composeWithTracker,
     Accounts,
     Tracker: Trackr,
@@ -185,6 +183,15 @@ module.exports = {
             }
         });
 
+    },
+    unsubscribe(name) {
+        Data.subscriptions.map((value, key, list) => {
+            var params = Array.prototype.slice.call(arguments, 1);
+            if (value.name == name && value.params == EJSON.clone(params)) {
+                Data.ddp.unsub(value.subIdRemember);
+            }
+        })
+        
     },
     subscribe(name) {
         var params = Array.prototype.slice.call(arguments, 1);
