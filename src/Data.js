@@ -1,5 +1,5 @@
-// import ReactNative from 'react-native/Libraries/Renderer/shims/ReactNative';
-import ReactNative from 'react-native/Libraries/Renderer/src/renderers/native/ReactNative';
+import ReactNative from 'react-native/Libraries/Renderer/shims/ReactNative';
+// import ReactNative from 'react-native/Libraries/Renderer/src/renderers/native/ReactNative';
 import minimongo from 'minimongo-cache';
 import Trackr from 'trackr';
 import {
