@@ -5,7 +5,7 @@
 import React from 'react';
 
 import Mixin from './Mixin';
-
+var createReactClass = require('create-react-class');
 export default function createContainer(options = {}, Component) {
   let expandedOptions = options;
   if (typeof options === 'function') {
@@ -18,7 +18,7 @@ export default function createContainer(options = {}, Component) {
     getMeteorData
   } = expandedOptions;
 
-  return React.createClass({
+  return createReactClass({
     displayName: 'MeteorDataContainer',
     mixins: [Mixin],
     getMeteorData() {
