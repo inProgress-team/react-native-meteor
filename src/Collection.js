@@ -115,15 +115,8 @@ export class Collection {
       reason: `Item not found in collection ${this._name} with id ${id}`
     });
 
-    let item = this._collection.findOne({ _id: id });
-
-    // update the item fileds according to $ operators
-    Object.keys(modifier.$set).forEach((key) => {
-      item[key] = modifier.$set[key];
-    });
-
     // change mini mongo for optimize UI changes
-    this._collection.upsert(item);
+    this._collection.upsert({ _id: id, ...modifier.$set });
     
     Data.waitDdpConnected(()=>{
       call(`/${this._name}/update`, {_id: id}, modifier, err => {
