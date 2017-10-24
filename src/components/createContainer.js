@@ -6,7 +6,7 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 
 import Mixin from './Mixin';
-
+var createReactClass = require('create-react-class');
 export default function createContainer(options = {}, Component) {
   let expandedOptions = options;
   if (typeof options === 'function') {

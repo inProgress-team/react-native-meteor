@@ -1,6 +1,6 @@
 {
   "name": "react-native-meteor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Full Meteor Client for React Native",
   "main": "src/Meteor.js",
   "scripts": {
@@ -36,7 +36,7 @@
     "react-mixin": "^3.0.3",
     "trackr": "^2.0.2",
     "underscore": "^1.8.3",
-    "wolfy87-eventemitter": "^4.3.0"
+    "wolfy87-eventemitter": "^5.2.2"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",
