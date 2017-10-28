@@ -115,6 +115,9 @@ export class Collection {
       reason: `Item not found in collection ${this._name} with id ${id}`
     });
 
+    // change mini mongo for optimize UI changes
+    this._collection.upsert({ _id: id, ...modifier.$set });
+    
     Data.waitDdpConnected(()=>{
       call(`/${this._name}/update`, {_id: id}, modifier, err => {
         if(err) {
