@@ -84,7 +84,7 @@ Sometimes we do not have time to update the version of the NPM package. In this 
 
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import Meteor, { createContainer } from 'react-native-meteor';
+import Meteor, { createContainer, MeteorListView } from 'react-native-meteor';
 
 Meteor.connect('ws://192.168.X.X:3000/websocket');//do this only once
 
