@@ -1,6 +1,6 @@
 import EJSON from "ejson";
 
-import Collection from '../Collection';
+import {Collection} from '../Collection';
 import Data from '../Data';
 import setProperties from './setProperties';
 
@@ -18,7 +18,7 @@ if(!EJSON._getTypes()['FS.File']) {
         return setProperties(value.collectionName, item);
       }
     };
-  }); 
+  });
 }
 
 export default function(name) {
@@ -28,13 +28,15 @@ export default function(name) {
 
   return {
     find(selector, options) {
-      const elems = Collection(collectionName).find(selector, options);
+      const collection = new Collection(collectionName);
+      const elems = collection.find(selector, options);
       return elems.map(elem=>{
         return setProperties(name, elem);
       });
     },
     findOne(selector, options) {
-      const elem = Collection(collectionName).findOne(selector, options);
+      const collection = new Collection(collectionName);
+      const elem = collection.findOne(selector, options);
       return elem && setProperties(name, elem);
     },
     insert: function() { Collection.apply(Meteor, [collectionName]).insert.apply(Meteor, arguments); },
@@ -42,9 +44,3 @@ export default function(name) {
     remove: function() { Collection.apply(Meteor, [collectionName]).remove.apply(Meteor, arguments); },
   };
 }
-
-
-
-
-
-
