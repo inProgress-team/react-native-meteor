@@ -1,32 +1,82 @@
-/**
- * Container helper using react-meteor-data.
- */
-
 import React from 'react';
-import createReactClass from 'create-react-class';
+import EJSON from 'ejson';
 
-import Mixin from './Mixin';
+import Data from '../Data';
+import MeteorDataManager from './MeteorDataManger';
 
-export default function createContainer(options = {}, Component) {
-  let expandedOptions = options;
-  if (typeof options === 'function') {
-    expandedOptions = {
-      getMeteorData: options,
-    };
-  }
+export default function createContainer(mapMeteorDataToProps, WrappedComponent) {
+  class componetWithMeteorContainer extends React.Component {
+    constructor(props) {
+      super(props);
 
-  const {
-    getMeteorData
-  } = expandedOptions;
+      this.getMeteorData = this.getMeteorData.bind(this);
+    }
 
-  return createReactClass({
-    displayName: 'MeteorDataContainer',
-    mixins: [Mixin],
     getMeteorData() {
-      return getMeteorData(this.props);
-    },
+      return mapMeteorDataToProps(this.props);
+    }
+
+    componentWillMount() {
+      Data.waitDdpReady(()=>{
+        if(this.getMeteorData) {
+          this.data = {};
+          this._meteorDataManager = new MeteorDataManager(this);
+          const newData = this._meteorDataManager.calculateData();
+          this._meteorDataManager.updateData(newData);
+        }
+      });
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+      if(this.startMeteorSubscriptions) {
+        if(!EJSON.equals(this.state, nextState) || !EJSON.equals(this.props, nextProps)) {
+          this._meteorSubscriptionsManager._meteorDataChangedCallback()
+        }
+      }
+  
+      if(this.getMeteorData) {
+        const saveProps = this.props;
+        const saveState = this.state;
+        let newData;
+        try {
+          // Temporarily assign this.state and this.props,
+          // so that they are seen by getMeteorData!
+          // This is a simulation of how the proposed Observe API
+          // for React will work, which calls observe() after
+          // componentWillUpdate and after props and state are
+          // updated, but before render() is called.
+          // See https://github.com/facebook/react/issues/3398.
+          this.props = nextProps;
+          this.state = nextState;
+          newData = this._meteorDataManager.calculateData();
+        } finally {
+          this.props = saveProps;
+          this.state = saveState;
+        }
+  
+        this._meteorDataManager.updateData(newData);
+      }
+  
+    }
+
+    componentWillUnmount() {
+      if(this._meteorDataManager) {
+        this._meteorDataManager.dispose();
+      }
+  
+      if(this._meteorSubscriptionsManager) {
+        this._meteorSubscriptionsManager.dispose();
+      }
+  
+    }
+
     render() {
-      return <Component {...this.props} {...this.data} />;
-    },
-  });
+      return <WrappedComponent { ...this.data } { ...this.props } />
+    }
+  }
+  
+  const newDisplayName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  componetWithMeteorContainer.displayName = `WithMeteorContainer(${newDisplayName})`;
+
+  return componetWithMeteorContainer;
 }
