@@ -8,7 +8,7 @@ const db = new minimongo();
 db.debug = false;
 db.batchedUpdates = ReactNative.unstable_batchedUpdates;
 
-function runAfterOtherComputations(fn){
+function runAfterOtherComputations(fn) {
   InteractionManager.runAfterInteractions(() => {
     Trackr.afterFlush(() => {
       fn();
@@ -29,10 +29,10 @@ export default {
   },
 
   waitDdpReady(cb) {
-    if(this.ddp) {
+    if (this.ddp) {
       cb();
     } else {
-      runAfterOtherComputations(()=>{
+      runAfterOtherComputations(() => {
         this.waitDdpReady(cb);
       });
     }
@@ -56,26 +56,33 @@ export default {
   on(eventName, cb) {
     this._cbs.push({
       eventName: eventName,
-      callback: cb
+      callback: cb,
     });
   },
   off(eventName, cb) {
-    this._cbs.splice(this._cbs.findIndex(_cb=>_cb.callback == cb && _cb.eventName == eventName), 1);
+    this._cbs.splice(
+      this._cbs.findIndex(
+        _cb => _cb.callback == cb && _cb.eventName == eventName
+      ),
+      1
+    );
   },
   notify(eventName) {
-    this._cbs.map(cb=>{
-      if(cb.eventName == eventName && typeof cb.callback == 'function') {
+    this._cbs.map(cb => {
+      if (cb.eventName == eventName && typeof cb.callback == 'function') {
         cb.callback();
       }
     });
   },
   waitDdpConnected(cb) {
-    if(this.ddp && this.ddp.status == 'connected') {
+    if (this.ddp && this.ddp.status == 'connected') {
       cb();
-    } else if(this.ddp) {
+    } else if (this.ddp) {
       this.ddp.once('connected', cb);
     } else {
-      setTimeout(()=>{ this.waitDdpConnected(cb) }, 10);
+      setTimeout(() => {
+        this.waitDdpConnected(cb);
+      }, 10);
     }
-  }
-}
+  },
+};
