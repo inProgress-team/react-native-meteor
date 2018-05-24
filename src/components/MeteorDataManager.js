@@ -9,8 +9,7 @@ class MeteorDataManager {
     this.computation = null;
     this.oldData = null;
     this._meteorDataDep = new Trackr.Dependency();
-
-    this._meteorDataChangedCallback = ()=>{this._meteorDataDep.changed()};
+    this._meteorDataChangedCallback = () => { this._meteorDataDep.changed(); };
 
     Data.onChange(this._meteorDataChangedCallback);
   }
@@ -63,7 +62,6 @@ class MeteorDataManager {
             component.setState = savedSetState;
           }
 
-
         } else {
           // Stop this computation instead of using the re-run.
           // We use a brand-new autorun for each call to getMeteorData
@@ -81,7 +79,6 @@ class MeteorDataManager {
           } catch(e) {
             console.error(e);
           }
-
         }
       });
     });
