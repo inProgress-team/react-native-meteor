@@ -4,7 +4,11 @@
   "description": "Full Meteor Client for React Native",
   "main": "src/Meteor.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --require test/setup --recursive"
+    "test": "mocha --compilers js:babel-core/register --require test/setup --recursive",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": ["prettier --write", "git add"]
   },
   "repository": {
     "type": "git",
@@ -43,12 +47,15 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.1.2",
     "mocha": "^2.4.5",
     "mock-socket": "^2.0.0",
+    "prettier": "1.12.1",
     "sinon": "^1.17.3"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "^0.46.0"
+    "react-native": ">= 0.49.0"
   }
 }

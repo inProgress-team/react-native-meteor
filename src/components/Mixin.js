@@ -4,27 +4,26 @@ import Data from '../Data';
 
 export default {
   componentWillMount() {
-
-    Data.waitDdpReady(()=>{
-      if(this.getMeteorData) {
+    Data.waitDdpReady(() => {
+      if (this.getMeteorData) {
         this.data = {};
         this._meteorDataManager = new MeteorDataManager(this);
         const newData = this._meteorDataManager.calculateData();
         this._meteorDataManager.updateData(newData);
       }
     });
-
-
   },
   componentWillUpdate(nextProps, nextState) {
-
-    if(this.startMeteorSubscriptions) {
-      if(!EJSON.equals(this.state, nextState) || !EJSON.equals(this.props, nextProps)) {
-        this._meteorSubscriptionsManager._meteorDataChangedCallback()
+    if (this.startMeteorSubscriptions) {
+      if (
+        !EJSON.equals(this.state, nextState) ||
+        !EJSON.equals(this.props, nextProps)
+      ) {
+        this._meteorSubscriptionsManager._meteorDataChangedCallback();
       }
     }
 
-    if(this.getMeteorData) {
+    if (this.getMeteorData) {
       const saveProps = this.props;
       const saveState = this.state;
       let newData;
@@ -46,20 +45,17 @@ export default {
 
       this._meteorDataManager.updateData(newData);
     }
-
   },
   componentWillUnmount() {
-    if(this._meteorDataManager) {
+    if (this._meteorDataManager) {
       this._meteorDataManager.dispose();
     }
 
-    if(this._meteorSubscriptionsManager) {
+    if (this._meteorSubscriptionsManager) {
       this._meteorSubscriptionsManager.dispose();
     }
-
-  }
+  },
 };
-
 
 // A class to keep the state and utility methods needed to manage
 // the Meteor data for a component.
@@ -70,7 +66,9 @@ class MeteorDataManager {
     this.oldData = null;
     this._meteorDataDep = new Trackr.Dependency();
 
-    this._meteorDataChangedCallback = ()=>{this._meteorDataDep.changed()};
+    this._meteorDataChangedCallback = () => {
+      this._meteorDataDep.changed();
+    };
 
     Data.onChange(this._meteorDataChangedCallback);
   }
@@ -104,26 +102,25 @@ class MeteorDataManager {
     // it stops the inner one.
 
     this.computation = Trackr.nonreactive(() => {
-      return Trackr.autorun((c) => {
+      return Trackr.autorun(c => {
         this._meteorDataDep.depend();
         if (c.firstRun) {
           const savedSetState = component.setState;
           try {
             component.setState = () => {
               throw new Error(
-"Can't call `setState` inside `getMeteorData` as this could cause an endless" +
-" loop. To respond to Meteor data changing, consider making this component" +
-" a \"wrapper component\" that only fetches data and passes it in as props to" +
-" a child component. Then you can use `componentWillReceiveProps` in that" +
-" child component.");
+                "Can't call `setState` inside `getMeteorData` as this could cause an endless" +
+                  ' loop. To respond to Meteor data changing, consider making this component' +
+                  ' a "wrapper component" that only fetches data and passes it in as props to' +
+                  ' a child component. Then you can use `componentWillReceiveProps` in that' +
+                  ' child component.'
+              );
             };
 
             data = component.getMeteorData();
           } finally {
             component.setState = savedSetState;
           }
-
-
         } else {
           // Stop this computation instead of using the re-run.
           // We use a brand-new autorun for each call to getMeteorData
@@ -138,10 +135,9 @@ class MeteorDataManager {
           // recalculates getMeteorData() and re-renders the component.
           try {
             component.forceUpdate();
-          } catch(e) {
+          } catch (e) {
             console.error(e);
           }
-
         }
       });
     });
@@ -153,8 +149,8 @@ class MeteorDataManager {
     const component = this.component;
     const oldData = this.oldData;
 
-    if (! (newData && (typeof newData) === 'object')) {
-      throw new Error("Expected object returned from getMeteorData");
+    if (!(newData && typeof newData === 'object')) {
+      throw new Error('Expected object returned from getMeteorData');
     }
     // update componentData in place based on newData
     for (let key in newData) {
@@ -175,4 +171,3 @@ class MeteorDataManager {
     this.oldData = newData;
   }
 }
-

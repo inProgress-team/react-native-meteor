@@ -4,7 +4,10 @@ import EJSON from 'ejson';
 import Data from '../Data';
 import MeteorDataManager from './MeteorDataManager';
 
-export default function createContainer(mapMeteorDataToProps, WrappedComponent) {
+export default function createContainer(
+  mapMeteorDataToProps,
+  WrappedComponent
+) {
   class componentWithMeteorContainer extends React.Component {
     constructor(props) {
       super(props);
@@ -28,12 +31,15 @@ export default function createContainer(mapMeteorDataToProps, WrappedComponent) 
     }
 
     componentWillUpdate(nextProps, nextState) {
-      if(this.startMeteorSubscriptions) {
-        if(!EJSON.equals(this.state, nextState) || !EJSON.equals(this.props, nextProps)) {
-          this._meteorSubscriptionsManager._meteorDataChangedCallback()
+      if (this.startMeteorSubscriptions) {
+        if (
+          !EJSON.equals(this.state, nextState) ||
+          !EJSON.equals(this.props, nextProps)
+        ) {
+          this._meteorSubscriptionsManager._meteorDataChangedCallback();
         }
       }
-  
+
       if (this.getMeteorData) {
         const saveProps = this.props;
         const saveState = this.state;
@@ -53,7 +59,7 @@ export default function createContainer(mapMeteorDataToProps, WrappedComponent) 
           this.props = saveProps;
           this.state = saveState;
         }
-  
+
         this._meteorDataManager.updateData(newData);
       }
     }
@@ -62,18 +68,19 @@ export default function createContainer(mapMeteorDataToProps, WrappedComponent) 
       if (this._meteorDataManager) {
         this._meteorDataManager.dispose();
       }
-  
+
       if (this._meteorSubscriptionsManager) {
         this._meteorSubscriptionsManager.dispose();
       }
     }
 
     render() {
-      return <WrappedComponent { ...this.props } { ...this.data } />;
+      return <WrappedComponent {...this.props} {...this.data} />;
     }
   }
-  
-  const newDisplayName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
+
+  const newDisplayName =
+    WrappedComponent.displayName || WrappedComponent.name || 'Component';
   componentWithMeteorContainer.displayName = `WithMeteorContainer(${newDisplayName})`;
 
   return componentWithMeteorContainer;

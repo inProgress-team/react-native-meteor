@@ -8,7 +8,9 @@ export default function(reactiveFn, L, E, options) {
     let trackerCleanup;
 
     const _meteorDataDep = new Trackr.Dependency();
-    const _meteorDataChangedCallback = ()=>{_meteorDataDep.changed()};
+    const _meteorDataChangedCallback = () => {
+      _meteorDataDep.changed();
+    };
 
     Data.onChange(_meteorDataChangedCallback);
 
@@ -20,7 +22,7 @@ export default function(reactiveFn, L, E, options) {
     });
 
     return () => {
-      if (typeof (trackerCleanup) === 'function') {
+      if (typeof trackerCleanup === 'function') {
         trackerCleanup();
       }
       Data.offChange(_meteorDataChangedCallback);

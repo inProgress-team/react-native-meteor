@@ -10,18 +10,18 @@ export default class ImageFS extends Component {
   }
   getMeteorData() {
     return {
-      image: Meteor.FSCollection('imagesFiles').findOne()
-    }
+      image: Meteor.FSCollection('imagesFiles').findOne(),
+    };
   }
   render() {
     const { image } = this.data;
 
-    if(!image) return null;
+    if (!image) return null;
 
     return (
       <Image
-        style={{height: 400, width: 400}}
-        source={{uri: image.url()}}
+        style={{ height: 400, width: 400 }}
+        source={{ uri: image.url() }}
       />
     );
   }
@@ -46,4 +46,3 @@ All methods accept an optional parameter to choose another store. Example `file.
 ## Something wrong or missing ?
 
 Please create an issue or make a PR ;)
-
