@@ -84,7 +84,7 @@ Sometimes we do not have time to update the version of the NPM package. In this 
 ```javascript
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import Meteor, { createContainer, MeteorListView } from 'react-native-meteor';
+import Meteor, { withTracker, MeteorListView } from 'react-native-meteor';
 
 Meteor.connect('ws://192.168.X.X:3000/websocket'); //do this only once
 
@@ -111,7 +111,7 @@ class App extends Component {
   }
 }
 
-export default createContainer(params => {
+export default withTracker(params => {
   const handle = Meteor.subscribe('todos');
   Meteor.subscribe('settings');
 
@@ -119,14 +119,40 @@ export default createContainer(params => {
     todosReady: handle.ready(),
     settings: Meteor.collection('settings').findOne(),
   };
-}, App);
+})(App);
 ```
 
 # Connect your components
 
-[Since Meteor 1.3, createContainer is the recommended way to populate your React Components](http://guide.meteor.com/v1.3/react.html#using-createContainer).
+The `withTracker` function now replaces the previous function `createContainer`, however it remains as part of the package for backwards compatibility.
 
-## createContainer
+## withTracker
+
+A HOC function, which allows you to create a container component which provides data to your presentational components.
+
+### Example
+
+```javascript
+import Meteor, { withTracker } from 'react-native-meteor';
+
+
+class Orders extends Component {
+  render() {
+    const { pendingOrders } = this.props;
+
+    //...
+    );
+  }
+}
+
+export default withTracker(params => {
+  return {
+    pendingOrders: Meteor.collection('orders').find({ status: "pending" }),
+  };
+})(Orders);
+```
+
+## createContainer (Deprecated)
 
 Very similar to getMeteorData but your separate container components from presentational components.
 
@@ -145,14 +171,14 @@ class Orders extends Component {
   }
 }
 
-export default createContainer(params=>{
+export default createContainer(params => {
   return {
-    pendingOrders: Meteor.collection('orders').find({status: "pending"}),
+    pendingOrders: Meteor.collection('orders').find({ status: "pending" }),
   };
-}, Orders)
+}, Orders);
 ```
 
-## connectMeteor && getMeteorData
+## connectMeteor && getMeteorData (Deprecated)
 
 connectMeteor is a React Mixin which enables getMeteorData (the old way of populating meteor data into your components).
 
