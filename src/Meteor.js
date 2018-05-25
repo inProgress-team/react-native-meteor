@@ -14,6 +14,7 @@ import Mixin from './components/Mixin';
 import MeteorListView from './components/ListView';
 import MeteorComplexListView from './components/ComplexListView';
 import createContainer from './components/createContainer';
+import withTracker from './components/ReactMeteorData';
 import composeWithTracker from './components/composeWithTracker';
 
 import FSCollection from './CollectionFS/FSCollection';
@@ -40,6 +41,7 @@ module.exports = {
   },
   FSCollection,
   createContainer,
+  withTracker,
   getData() {
     return Data;
   },
