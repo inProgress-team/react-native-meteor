@@ -21,8 +21,7 @@ export default class ReactiveDict {
       }
     }
   }
-   clear() {
-    var oldKeys = this.keys;
+  clear() {
     this.keys = {};
     Data.notify('change');
   }
