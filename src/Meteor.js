@@ -153,11 +153,19 @@ module.exports = {
     });
 
     Data.ddp.on('changed', message => {
-      Data.db[message.collection] &&
-        Data.db[message.collection].upsert({
-          _id: message.id,
-          ...message.fields,
-        });
+		const unset = {};
+		if (message.cleared) {
+		  message.cleared.forEach(field => {
+			unset[field] = null;
+		  });
+		}
+
+		Data.db[message.collection] &&
+		  Data.db[message.collection].upsert({
+			_id: message.id,
+			...message.fields,
+			...unset,
+		  });
     });
 
     Data.ddp.on('removed', message => {
