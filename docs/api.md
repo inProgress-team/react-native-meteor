@@ -75,7 +75,7 @@ Same as [ListView](https://facebook.github.io/react-native/docs/listview.html) C
 
 You need pass the `cursoredFind` option when you get your collection if you want to use cursor-like method:
 
-```‍‍‍javascript
+```javascript
 Meteor.collection("collectionName", { cursoredFind: true })
 ```
 
@@ -110,7 +110,7 @@ Disconnect from the DDP server.
 
 ### Convenience packages
 
-Example `import { composeWithTracker } from 'react-native-meteor';``
+Example `import { composeWithTracker } from 'react-native-meteor';`
 
 * EJSON
 * Tracker
@@ -123,7 +123,7 @@ See [documentation](https://atmospherejs.com/meteor/reactive-dict).
 
 ### Meteor.Accounts
 
-`import { Accounts } from 'react-native-meteor';``
+`import { Accounts } from 'react-native-meteor';`
 
 * [Accounts.createUser](http://docs.meteor.com/#/full/accounts_createuser)
 * [Accounts.changePassword](http://docs.meteor.com/#/full/accounts_forgotpassword)
