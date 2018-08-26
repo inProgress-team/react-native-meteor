@@ -1,8 +1,8 @@
 import Meteor, {withTracker} from 'react-native-meteor';
 import React from 'react';
-import MeteorListViewComponent from '../routes/meteorListView';
+import MeteorListViewComponent from '../routes/MeteorListViewComponent';
 
-export default MeteorListViewContainer = withTracker(ownProps => {
+export default withTracker(ownProps => {
     const itemsHandle = Meteor.subscribe('items');
     return {
         itemsReady: itemsHandle.ready()

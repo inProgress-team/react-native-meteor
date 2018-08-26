@@ -5,11 +5,11 @@ import {Scene, Router} from 'react-native-router-flux';
 import connect from './connect';
 
 import RouteList from './routes/routeList';
-import ConnectionContainer from './containers/connection';
-import AccountsContainer from './containers/accounts';
-import MeteorListViewContainer from './containers/meteorListView';
-import MeteorComplexListViewContainer from './containers/meteorComplexListView';
-import EditItemContainer from './containers/editItem';
+import ConnectionContainer from './containers/ConnectionContainer';
+import AccountsContainer from './containers/AccountsContainer';
+import MeteorListViewContainer from './containers/MeteorListViewContainer';
+import MeteorComplexListViewContainer from './containers/MeteorComplexListViewContainer';
+import EditItemContainer from './containers/EditItemContainer';
 
 export default class RNApp extends Component {
 

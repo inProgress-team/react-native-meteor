@@ -13,7 +13,7 @@ import call from './Call';
 import Mixin from './components/Mixin';
 import MeteorListView from './components/ListView';
 import MeteorComplexListView from './components/ComplexListView';
-import createContainer from './components/createContainer';
+// import createContainer from './components/createContainer';
 import withTracker from './components/ReactMeteorData';
 import composeWithTracker from './components/composeWithTracker';
 
@@ -40,7 +40,7 @@ module.exports = {
     return new Collection(name, options);
   },
   FSCollection,
-  createContainer,
+  //   createContainer,
   withTracker,
   getData() {
     return Data;

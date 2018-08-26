@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Meteor, { withTracker } from 'react-native-meteor';
-import AccountsComponent from '../routes/accounts';
+import AccountsComponent from '../routes/AccountsComponent';
 
-export default AccountContainer = withTracker((ownProps) => {
+export default withTracker((ownProps) => {
   return {
     loggingIn: Meteor.loggingIn(),
     user: Meteor.user(),
