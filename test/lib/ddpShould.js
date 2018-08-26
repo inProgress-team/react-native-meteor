@@ -1,8 +1,7 @@
-"use strict";
+'use strict';
 import DDP from '../../lib/ddp';
 
 describe('ddp', function() {
-
   let validOptions;
   const endpoint = 'ws://localhost:3000/websocket';
   let server;
@@ -12,26 +11,26 @@ describe('ddp', function() {
   });
 
   beforeEach(function() {
-      validOptions = {
-        SocketConstructor: WebSocket,
-        endpoint
-      };
+    validOptions = {
+      SocketConstructor: WebSocket,
+      endpoint,
+    };
   });
 
   it('should throw an error if not passed a socketConstructor', function() {
     (function() {
       let ddp = new DDP({});
-    }).should.throw(Error);
+    }.should.throw(Error));
   });
-  
+
   it('should throw an error given no endpoint', function() {
     (function() {
       let ddp = new DDP({
-        SocketConstructor: WebSocket
-      }); 
-    }).should.throw(Error);
+        SocketConstructor: WebSocket,
+      });
+    }.should.throw(Error));
   });
-  
+
   it('should start in the disconnected state', function() {
     let ddp = new DDP(validOptions);
     ddp.status.should.equal('disconnected');
@@ -58,7 +57,4 @@ describe('ddp', function() {
     let ddp = new DDP(validOptions);
     ddp.autoConnect.should.equal(false);
   });
-
-
-
 });

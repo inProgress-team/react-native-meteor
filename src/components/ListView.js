@@ -6,25 +6,24 @@ import { ListView } from 'react-native';
 
 import Data from '../Data';
 
-
 export default class MeteorListView extends Component {
   static propTypes = {
     collection: PropTypes.string.isRequired,
-    selector: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
-    options: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]),
+    selector: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    options: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     renderRow: PropTypes.func.isRequired,
-    listViewRef: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ])
+    listViewRef: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   };
   static defaultProps = {
-    selector: {}
+    selector: {},
   };
   constructor(props) {
     super(props);
 
     this.state = {
       ds: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1!==row2,
-      })
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
     };
   }
   componentWillReceiveProps(props) {
@@ -35,16 +34,14 @@ export default class MeteorListView extends Component {
   componentWillMount() {
     const { collection, selector, options } = this.props;
 
-
-    this.update = results=>{
+    this.update = results => {
       this.setState({
-        ds: this.state.ds.cloneWithRows(results)
+        ds: this.state.ds.cloneWithRows(results),
       });
     };
 
-
-    if(!Data.db[collection]) {
-      Data.db.addCollection(collection)
+    if (!Data.db[collection]) {
+      Data.db.addCollection(collection);
     }
 
     this.items = Data.db.observe(() => {
@@ -60,12 +57,6 @@ export default class MeteorListView extends Component {
     const { ds } = this.state;
     const { listViewRef, ...props } = this.props;
 
-    return (
-      <ListView
-        {...props}
-        ref={listViewRef}
-        dataSource={ds}
-      />
-    );
+    return <ListView {...props} ref={listViewRef} dataSource={ds} />;
   }
 }
