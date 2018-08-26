@@ -30,6 +30,9 @@
 - [x] `MeteorListView`
 - [x] `MeteorComplexListView`
 
+- [x] `Migrate from createContainer to withTracker`
+- [x] `Upgrade RN 0.54`
+
 - [ ] `Meteor.FSCollection(collectionName)`
 - [ ] `Meteor.FSCollection('avatars').findOne()`
 - [ ] `Meteor.user().profile.avatar.getFileRecord()`
