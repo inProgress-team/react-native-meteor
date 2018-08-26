@@ -1,10 +1,10 @@
 import React from 'react';
-import Meteor, {createContainer} from 'react-native-meteor';
+import Meteor, {withTracker} from 'react-native-meteor';
 import MetorComplexListViewComponent from '../routes/meteorComplexListView';
 
-export default ComplexListViewContainer = createContainer((ownProps) => {
+export default ComplexListViewContainer = withTracker((ownProps) => {
     const itemsHandle = Meteor.subscribe('items');
     return {
         itemsReady: itemsHandle.ready()
     };
-}, MetorComplexListViewComponent);
+})(MetorComplexListViewComponent);
