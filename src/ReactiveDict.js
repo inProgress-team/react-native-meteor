@@ -21,6 +21,16 @@ export default class ReactiveDict {
       }
     }
   }
+  clear() {
+    this.keys = {};
+    Data.notify('change');
+  }
+  delete(key) {
+    if (this.keys[key]) {
+      delete this.keys[key];
+      Data.notify('change');
+    }
+  }
   set(keyOrObject, value) {
     if (typeof keyOrObject === 'object' && value === undefined) {
       this._setObject(keyOrObject);
