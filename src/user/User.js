@@ -95,7 +95,8 @@ module.exports = {
       Data.notify('onLogin');
     } else {
       Data.notify('onLoginFailure');
-      this.handleLogout();
+      console.warn('login failed, make sure the server you are accessing is correct');
+      //this.handleLogout();
     }
     Data.notify('change');
   },
