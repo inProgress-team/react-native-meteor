@@ -40,6 +40,8 @@ It is recommended to always use the latest version of react-native-meteor compat
 * For RN = 0.45, use `react-native-meteor@1.0.6`
 * For RN < 0.45, you can use version `react-native-meteor@1.0.3` in case or problems.
 
+`Meteor.Collection().find()` (for backwards compatibility) returns documents. If you are used to the usual Meteor find usage (`find().fetch()`), and want `Meteor.Collection().find()` to return a cursor instead, please see the [cursoredFind option](https://github.com/inProgress-team/react-native-meteor/blob/master/docs/api.md#meteorcollectioncollectionname-options)
+
 ## Example usage
 
 ```javascript
