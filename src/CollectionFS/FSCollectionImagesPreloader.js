@@ -4,38 +4,36 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Image, StyleSheet } from 'react-native';
 
-
 import Data from '../Data';
 import setProperties from './setProperties';
 
 export default class FSCollectionImagesPreloader extends Component {
   static propTypes = {
     collection: PropTypes.string.isRequired,
-    selector: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ])
+    selector: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   };
   static defaultProps = {
-    selector: {}
+    selector: {},
   };
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
     };
   }
   componentWillMount() {
     const { collection, selector } = this.props;
 
-
-    this.update = results=>{
+    this.update = results => {
       this.setState({
-        items: results.map(elem=>setProperties(collection, elem))
+        items: results.map(elem => setProperties(collection, elem)),
       });
     };
 
-    const collectionName = 'cfs.'+collection+'.filerecord';
+    const collectionName = 'cfs.' + collection + '.filerecord';
 
-    if(!Data.db[collectionName]) {
-      Data.db.addCollection(collectionName)
+    if (!Data.db[collectionName]) {
+      Data.db.addCollection(collectionName);
     }
 
     this.items = Data.db.observe(() => {
@@ -52,11 +50,16 @@ export default class FSCollectionImagesPreloader extends Component {
 
     return (
       <View style={styles.hidden}>
-        {items && items.map(item=>{
-          return (
-            <Image style={styles.hidden} key={item._id} source={{uri: item.url()}} />
-          );
-        })}
+        {items &&
+          items.map(item => {
+            return (
+              <Image
+                style={styles.hidden}
+                key={item._id}
+                source={{ uri: item.url() }}
+              />
+            );
+          })}
       </View>
     );
   }
@@ -69,6 +72,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -100000,
     left: -10000,
-    opacity: 0
-  }
-})
+    opacity: 0,
+  },
+});

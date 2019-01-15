@@ -2,15 +2,13 @@ import EJSON from 'ejson';
 
 import Data from './Data';
 
-const stringify = function (value) {
-  if (value === undefined)
-    return 'undefined';
+const stringify = function(value) {
+  if (value === undefined) return 'undefined';
   return EJSON.stringify(value);
 };
 
-const parse = function (serialized) {
-  if (serialized === undefined || serialized === 'undefined')
-    return undefined;
+const parse = function(serialized) {
+  if (serialized === undefined || serialized === 'undefined') return undefined;
   return EJSON.parse(serialized);
 };
 
@@ -18,13 +16,13 @@ export default class ReactiveDict {
   constructor(dictName) {
     this.keys = {};
     if (typeof dictName === 'object') {
-      for(var i in dictName) {
-        this.keys[i] = stringify(dictName[i])
+      for (var i in dictName) {
+        this.keys[i] = stringify(dictName[i]);
       }
     }
   }
   set(keyOrObject, value) {
-    if ((typeof keyOrObject === 'object') && (value === undefined)) {
+    if (typeof keyOrObject === 'object' && value === undefined) {
       this._setObject(keyOrObject);
       return;
     }
@@ -35,11 +33,10 @@ export default class ReactiveDict {
     value = stringify(value);
 
     let oldSerializedValue = 'undefined';
-    if(Object.keys(this.keys).indexOf(key) != -1) {
+    if (Object.keys(this.keys).indexOf(key) != -1) {
       oldSerializedValue = this.keys[key];
     }
-    if (value === oldSerializedValue)
-      return;
+    if (value === oldSerializedValue) return;
 
     this.keys[key] = value;
 
@@ -66,28 +63,29 @@ export default class ReactiveDict {
     //
     // XXX we could allow arrays as long as we recursively check that there
     // are no objects
-    if (typeof value !== 'string' &&
-        typeof value !== 'number' &&
-        typeof value !== 'boolean' &&
-        typeof value !== 'undefined' &&
-        !(value instanceof Date) &&
-        !(ObjectID && value instanceof ObjectID) &&
-        value !== null)
-      throw new Error("ReactiveDict.equals: value must be scalar");
+    if (
+      typeof value !== 'string' &&
+      typeof value !== 'number' &&
+      typeof value !== 'boolean' &&
+      typeof value !== 'undefined' &&
+      !(value instanceof Date) &&
+      !(ObjectID && value instanceof ObjectID) &&
+      value !== null
+    )
+      throw new Error('ReactiveDict.equals: value must be scalar');
 
     const serializedValue = stringify(value);
 
     let oldValue = undefined;
-    if(Object.keys(this.keys).indexOf(key) != -1) {
-      oldValue = parse(this.keys[key])
+    if (Object.keys(this.keys).indexOf(key) != -1) {
+      oldValue = parse(this.keys[key]);
     }
     return EJSON.equals(oldValue, value);
   }
   _setObject(object) {
-
     const keys = Object.keys(object);
 
-    for(let i in keys) {
+    for (let i in keys) {
       this.set(i, keys[i]);
     }
   }
