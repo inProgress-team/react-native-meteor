@@ -40,6 +40,11 @@ It is recommended to always use the latest version of react-native-meteor compat
 * For RN = 0.45, use `react-native-meteor@1.0.6`
 * For RN < 0.45, you can use version `react-native-meteor@1.0.3` in case or problems.
 
+### Warning < RN 0.57.8 Android bug
+
+There was a [bug in the react native websocket android implementation](https://github.com/react-native-community/react-native-releases/blob/master/CHANGELOG.md#android-specific) that meant the close event wasn't being received from the server. Therefore RN versions prior to React-native 0.57.8 will not detect users being logged out from the server side. There could also be other bugs resulting from this.
+
+
 ## Example usage
 
 ```javascript
