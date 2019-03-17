@@ -96,7 +96,15 @@ module.exports = {
 
     Data.ddp.on('connected', () => {
       // Clear the collections of any stale data in case this is a reconnect
-      if (Data.db && Data.db.collections) {
+      console.log(
+        'connected with options.clearOnReconnect : ',
+        options.clearOnReconnect
+      );
+      if (
+        Data.db &&
+        Data.db.collections &&
+        options.clearOnReconnect !== false
+      ) {
         for (var collection in Data.db.collections) {
           Data.db[collection].remove({});
         }
