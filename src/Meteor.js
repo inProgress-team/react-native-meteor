@@ -24,7 +24,7 @@ import ReactiveDict from './ReactiveDict';
 
 import User from './user/User';
 import Accounts from './user/Accounts';
-import Netinfo from '@react-native-community/netinfo'
+import NetInfo from "@react-native-community/netinfo";
 module.exports = {
   composeWithTracker,
   Accounts,
