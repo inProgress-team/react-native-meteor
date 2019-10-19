@@ -1,4 +1,4 @@
-import { NetInfo, Platform, View } from 'react-native';
+import { Platform, View } from 'react-native';
 
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
@@ -24,7 +24,7 @@ import ReactiveDict from './ReactiveDict';
 
 import User from './user/User';
 import Accounts from './user/Accounts';
-
+import Netinfo from '@react-native-community/netinfo'
 module.exports = {
   composeWithTracker,
   Accounts,
