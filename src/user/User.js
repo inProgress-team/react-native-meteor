@@ -53,7 +53,7 @@ module.exports = {
 
         this._handleLoginCallback(err, result);
 
-        typeof callback == 'function' && callback(err);
+        typeof callback == 'function' && callback(err, result);
       }
     );
   },
