@@ -31,6 +31,8 @@ npm i --save react-native-meteor
 
 ## Compatibility notes
 
+Upgraded packages to working in RN >= 0.57
+
 Since RN 0.26.0 you have to use ws or wss protocol to connect to your meteor server. http is not working on Android.
 
 It is recommended to always use the latest version of react-native-meteor compatible with your RN version:
