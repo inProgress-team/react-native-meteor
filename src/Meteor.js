@@ -107,7 +107,7 @@ module.exports = {
       console.info('Connected to DDP server.');
       this._loadInitialUser().then(() => {
         this._subscriptionsRestart();
-        typeof callback == 'function' && callback(err);
+        typeof callback == 'function' && callback();
       });
     });
 
