@@ -75,7 +75,7 @@ module.exports = {
   reconnect() {
     Data.ddp && Data.ddp.connect();
   },
-  connect(endpoint, options) {
+  connect(endpoint, options, callback) {
     if (!endpoint) endpoint = Data._endpoint;
     if (!options) options = Data._options;
 
@@ -107,6 +107,7 @@ module.exports = {
       console.info('Connected to DDP server.');
       this._loadInitialUser().then(() => {
         this._subscriptionsRestart();
+        typeof callback == 'function' && callback(err);
       });
     });
 
