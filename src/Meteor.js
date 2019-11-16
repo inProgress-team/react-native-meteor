@@ -1,5 +1,5 @@
-import { NetInfo, Platform, View } from 'react-native';
-
+import { Platform, View } from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
 import reactMixin from 'react-mixin';
 import Trackr from 'trackr';
 import EJSON from 'ejson';
@@ -75,7 +75,7 @@ module.exports = {
   reconnect() {
     Data.ddp && Data.ddp.connect();
   },
-  connect(endpoint, options) {
+  connect(endpoint, options, callback) {
     if (!endpoint) endpoint = Data._endpoint;
     if (!options) options = Data._options;
 
@@ -107,6 +107,7 @@ module.exports = {
       console.info('Connected to DDP server.');
       this._loadInitialUser().then(() => {
         this._subscriptionsRestart();
+        typeof callback == 'function' && callback();
       });
     });
 
