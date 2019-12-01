@@ -5,7 +5,7 @@ import Data from '../Data';
 import MeteorDataManager from './MeteorDataManager';
 
 const ReactMeteorData = {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     Data.waitDdpReady(() => {
       if (this.getMeteorData) {
         this.data = {};
@@ -16,7 +16,7 @@ const ReactMeteorData = {
     });
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     if (this.startMeteorSubscriptions) {
       if (
         !EJSON.equals(this.state, nextState) ||
@@ -80,12 +80,12 @@ export default function connect(options) {
 
   const BaseComponent = pure ? ReactPureComponent : ReactComponent;
   return WrappedComponent =>
-    class ReactMeteorDataComponent extends BaseComponent {
+    (class ReactMeteorDataComponent extends BaseComponent {
       getMeteorData() {
         return getMeteorData(this.props);
       }
       render() {
         return <WrappedComponent {...this.props} {...this.data} />;
       }
-    };
+    });
 }
