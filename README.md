@@ -18,7 +18,7 @@ The purpose of this library is :
 ## Install
 
 ```
-yarn add react-native-meteor
+yarn add react-native-meteor @react-native-community/async-storage
 ```
 
 or
