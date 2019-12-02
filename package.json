@@ -57,6 +57,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": ">= 0.49.0"
+    "react-native": ">= 0.49.0",
+    "@react-native-community/async-storage": "*"
   }
 }
