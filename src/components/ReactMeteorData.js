@@ -5,22 +5,13 @@ import Data from '../Data';
 import MeteorDataManager from './MeteorDataManager';
 
 const ReactMeteorData = {
-  componentWillMount() {
-    Data.waitDdpReady(() => {
-      if (this.getMeteorData) {
-        this.data = {};
-        this._meteorDataManager = new MeteorDataManager(this);
-        const newData = this._meteorDataManager.calculateData();
-        this._meteorDataManager.updateData(newData);
-      }
-    });
-  },
+  componentDidMount() {},
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.startMeteorSubscriptions) {
       if (
-        !EJSON.equals(this.state, nextState) ||
-        !EJSON.equals(this.props, nextProps)
+        !EJSON.equals(this.state, prevState) ||
+        !EJSON.equals(this.props, prevProps)
       ) {
         this._meteorSubscriptionsManager._meteorDataChangedCallback();
       }
@@ -38,8 +29,8 @@ const ReactMeteorData = {
         // componentWillUpdate and after props and state are
         // updated, but before render() is called.
         // See https://github.com/facebook/react/issues/3398.
-        this.props = nextProps;
-        this.state = nextState;
+        this.props = prevProps;
+        this.state = prevState;
         newData = this._meteorDataManager.calculateData();
       } finally {
         this.props = saveProps;
@@ -81,6 +72,18 @@ export default function connect(options) {
   const BaseComponent = pure ? ReactPureComponent : ReactComponent;
   return WrappedComponent =>
     class ReactMeteorDataComponent extends BaseComponent {
+      constructor(props) {
+        super(props);
+        Data.waitDdpReady(() => {
+          if (this.getMeteorData) {
+            this.data = {};
+            this._meteorDataManager = new MeteorDataManager(this);
+            const newData = this._meteorDataManager.calculateData();
+            this._meteorDataManager.updateData(newData);
+          }
+        });
+      }
+
       getMeteorData() {
         return getMeteorData(this.props);
       }
