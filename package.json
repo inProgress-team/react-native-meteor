@@ -1,6 +1,6 @@
 {
   "name": "react-native-meteor",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Full Meteor Client for React Native",
   "main": "src/Meteor.js",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/inProgress-team/react-native-meteor.git"
+    "url": "git+https://github.com/lc3t35/react-native-meteor.git"
   },
   "keywords": [
     "react-component",
@@ -26,13 +26,14 @@
     "ios",
     "android"
   ],
-  "author": "Théo Mathieu",
+  "author": "Théo Mathieu / L.Roger",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/inProgress-team/react-native-meteor/issues"
+    "url": "https://github.com/lc3t35/react-native-meteor/issues"
   },
-  "homepage": "https://github.com/inProgress-team/react-native-meteor#readme",
+  "homepage": "https://github.com/lc3t35/react-native-meteor#readme",
   "dependencies": {
+    "@react-native-community/netinfo": "4.6.0",
     "base-64": "^0.1.0",
     "create-react-class": "^15.6.2",
     "crypto-js": "^3.1.6",
