@@ -53,6 +53,16 @@ export default {
     this.off('loggingIn', cb);
     this.off('change', cb);
   },
+  once(eventName, cb) {
+    if (this._cbs.findIndex(
+      _cb => _cb.callback == cb && _cb.eventName == eventName
+    ) == -1) {
+      this._cbs.push({
+        eventName: eventName,
+        callback: cb,
+      });
+    }
+  },
   on(eventName, cb) {
     this._cbs.push({
       eventName: eventName,
