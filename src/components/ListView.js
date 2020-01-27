@@ -26,12 +26,12 @@ export default class MeteorListView extends Component {
       }),
     };
   }
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     const { collection, selector, options } = props;
 
     this.update(Data.db[collection].find(selector, options));
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { collection, selector, options } = this.props;
 
     this.update = results => {
