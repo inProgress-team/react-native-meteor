@@ -35,7 +35,8 @@ Since RN 0.26.0 you have to use ws or wss protocol to connect to your meteor ser
 
 It is recommended to always use the latest version of react-native-meteor compatible with your RN version:
 
-* For RN > 0.49, use `react-native-meteor@latest`
+* For RN > 0.60 use `react-native-meteor@latest`
+* For RN > 0.49 & < 0.60, use `react-native-meteor@1.4.x`
 * For RN > 0.45, use `react-native-meteor@1.1.x`
 * For RN = 0.45, use `react-native-meteor@1.0.6`
 * For RN < 0.45, you can use version `react-native-meteor@1.0.3` in case or problems.
