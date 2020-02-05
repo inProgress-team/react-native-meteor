@@ -43,7 +43,7 @@
     "trackr": "^2.0.2",
     "underscore": "^1.8.3",
     "wolfy87-eventemitter": "^4.3.0",
-    "@react-native-community/netinfo":"^4.6.1"
+    "@react-native-community/netinfo":"^5.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.7.2",
