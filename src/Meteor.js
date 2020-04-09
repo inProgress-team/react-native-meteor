@@ -38,6 +38,9 @@ module.exports = {
       status: Data.ddp ? Data.ddp.status : 'disconnected',
     };
   },
+  collection(name, options) {
+    return new Collection(name, options);
+  },
   call,
   disconnect() {
     if (Data.ddp) {
