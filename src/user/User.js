@@ -1,8 +1,8 @@
-import { AsyncStorage } from 'react-native';
-
 import Data from '../Data';
 import { hashPassword } from '../../lib/utils';
 import call from '../Call';
+import { Collection } from '../Collection';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const TOKEN_KEY = 'reactnativemeteor_usertoken';
 
@@ -10,12 +10,13 @@ module.exports = {
   user() {
     if (!this._userIdSaved) return null;
 
-    return this.collection('users').findOne(this._userIdSaved);
+    return this.users.findOne(this._userIdSaved);
   },
+  users: new Collection('users'),
   userId() {
     if (!this._userIdSaved) return null;
 
-    const user = this.collection('users').findOne(this._userIdSaved);
+    const user = this.users.findOne(this._userIdSaved);
     return user && user._id;
   },
   _isLoggingIn: true,
@@ -23,22 +24,25 @@ module.exports = {
     return this._isLoggingIn;
   },
   logout(callback) {
-    call('logout', err => {
+    call('logout', (err) => {
       this.handleLogout();
       this.connect();
 
-      typeof callback == 'function' && callback(err);
+      typeof callback === 'function' && callback(err);
     });
   },
-  handleLogout() {
-    AsyncStorage.removeItem(TOKEN_KEY);
+  async handleLogout() {
+    await AsyncStorage.removeItem(TOKEN_KEY);
     Data._tokenIdSaved = null;
     this._userIdSaved = null;
   },
   loginWithPassword(selector, password, callback) {
     if (typeof selector === 'string') {
-      if (selector.indexOf('@') === -1) selector = { username: selector };
-      else selector = { email: selector };
+      if (selector.indexOf('@') === -1) {
+        selector = { username: selector };
+      } else {
+        selector = { email: selector };
+      }
     }
 
     this._startLoggingIn();
@@ -53,7 +57,7 @@ module.exports = {
 
         this._handleLoginCallback(err, result);
 
-        typeof callback == 'function' && callback(err);
+        typeof callback === 'function' && callback(err);
       }
     );
   },
@@ -63,7 +67,7 @@ module.exports = {
 
       this._handleLoginCallback(err, res);
 
-      call('removeOtherTokens', err => {
+      call('removeOtherTokens', (err) => {
         callback(err);
       });
     });
@@ -75,7 +79,7 @@ module.exports = {
 
       this._handleLoginCallback(err, result);
 
-      typeof callback == 'function' && callback(err);
+      typeof callback === 'function' && callback(err);
     });
   },
   _startLoggingIn() {
@@ -86,10 +90,10 @@ module.exports = {
     this._isLoggingIn = false;
     Data.notify('loggingIn');
   },
-  _handleLoginCallback(err, result) {
+  async _handleLoginCallback(err, result) {
     if (!err) {
-      //save user id and token
-      AsyncStorage.setItem(TOKEN_KEY, result.token);
+      // save user id and token
+      await AsyncStorage.setItem(TOKEN_KEY, result.token);
       Data._tokenIdSaved = result.token;
       this._userIdSaved = result.id;
       Data.notify('onLogin');
@@ -114,12 +118,15 @@ module.exports = {
   getAuthToken() {
     return Data._tokenIdSaved;
   },
+  async getAuthTokenFromStorage() {
+    return AsyncStorage.getItem(TOKEN_KEY);
+  },
   async _loadInitialUser() {
-    var value = null;
+    let value = null;
     try {
-      value = await AsyncStorage.getItem(TOKEN_KEY);
+      value = await this.getAuthTokenFromStorage();
     } catch (error) {
-      console.warn('AsyncStorage error: ' + error.message);
+      console && console.warn(`Error Loading User: ${error.message}`);
     } finally {
       this._loginWithToken(value);
     }
