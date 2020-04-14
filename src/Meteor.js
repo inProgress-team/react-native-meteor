@@ -89,9 +89,9 @@ module.exports = {
       ...options,
     });
 
-    NetInfo.addEventListener('connectionChange', isConnected => {
-      if (isConnected && Data.ddp.autoReconnect) {
-        Data.ddp.connect();
+    NetInfo.addEventListener(state => {
+      if (state.isConnected && Data.ddp.autoReconnect) {
+        Data.ddp.connect(0)
       }
     });
 
