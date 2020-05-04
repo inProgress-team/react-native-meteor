@@ -54,8 +54,6 @@ module.exports = {
       },
       (err, result) => {
         this._handleLoginCallback(err, result);
-        this._endLoggingIn();
-
         typeof callback === 'function' && callback(err);
       }
     );
@@ -63,9 +61,7 @@ module.exports = {
   logoutOtherClients(callback = () => {}) {
     call('getNewToken', (err, res) => {
       if (err) return callback(err);
-
       this._handleLoginCallback(err, res);
-
       call('removeOtherTokens', (err) => {
         callback(err);
       });
@@ -75,8 +71,6 @@ module.exports = {
     this._startLoggingIn();
     this.call('login', user, (err, result) => {
       this._handleLoginCallback(err, result);
-      this._endLoggingIn();
-
       typeof callback === 'function' && callback(err);
     });
   },
@@ -95,6 +89,7 @@ module.exports = {
       Data._tokenIdSaved = result.token;
       this._userIdSaved = result.id;
       Data.notify('onLogin');
+      this._endLoggingIn();
     } else {
       Data.notify('onLoginFailure');
       this.handleLogout();
@@ -107,7 +102,6 @@ module.exports = {
       this._startLoggingIn();
       call('login', { resume: value }, (err, result) => {
         this._handleLoginCallback(err, result);
-        this._endLoggingIn();
       });
     } else {
       this._endLoggingIn();
