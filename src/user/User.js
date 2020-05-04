@@ -53,9 +53,8 @@ module.exports = {
         password: hashPassword(password),
       },
       (err, result) => {
-        this._endLoggingIn();
-
         this._handleLoginCallback(err, result);
+        this._endLoggingIn();
 
         typeof callback === 'function' && callback(err);
       }
