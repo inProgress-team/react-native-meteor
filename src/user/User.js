@@ -74,9 +74,8 @@ module.exports = {
   _login(user, callback) {
     this._startLoggingIn();
     this.call('login', user, (err, result) => {
-      this._endLoggingIn();
-
       this._handleLoginCallback(err, result);
+      this._endLoggingIn();
 
       typeof callback === 'function' && callback(err);
     });
