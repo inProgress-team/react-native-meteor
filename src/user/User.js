@@ -106,8 +106,8 @@ module.exports = {
     if (value !== null) {
       this._startLoggingIn();
       call('login', { resume: value }, (err, result) => {
-        this._endLoggingIn();
         this._handleLoginCallback(err, result);
+        this._endLoggingIn();
       });
     } else {
       this._endLoggingIn();
