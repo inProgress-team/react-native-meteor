@@ -1,6 +1,6 @@
+/* eslint-disable */
 import Tracker from 'trackr';
 import EJSON from 'ejson';
-import _ from 'underscore';
 
 import Data from './Data';
 import Random from '../lib/Random';
@@ -74,12 +74,18 @@ export class Collection {
   }
 
   findOne(selector, options) {
-    let result = this.find(selector, options);
+    let result;
 
-    if (result) {
-      if (this._cursoredFind) result = result.fetch();
+    if (selector._id && !options) {
+      result = this._collection.get(selector._id);
+      if (result && this._transform) result = this._transform(result);
+    } else {
+      result = this.find(selector, options);
+      if (result) {
+        if (this._cursoredFind) result = result.fetch();
 
-      result = result[0];
+        result = result[0];
+      }
     }
 
     return result;
@@ -107,7 +113,7 @@ export class Collection {
 
     this._collection.upsert(item);
     Data.waitDdpConnected(() => {
-      call(`/${this._name}/insert`, item, err => {
+      call(`/${this._name}/insert`, item, (err) => {
         if (err) {
           this._collection.del(id);
           return callback(err);
@@ -126,17 +132,19 @@ export class Collection {
       options = {};
     }
 
-    if (!this._collection.get(id))
+    const element = this.findOne(id);
+
+    if (!element)
       return callback({
         error: 409,
         reason: `Item not found in collection ${this._name} with id ${id}`,
       });
 
     // change mini mongo for optimize UI changes
-    this._collection.upsert({ _id: id, ...modifier.$set });
+    this._collection.upsert({ _id: element._id, ...modifier.$set });
 
     Data.waitDdpConnected(() => {
-      call(`/${this._name}/update`, { _id: id }, modifier, err => {
+      call(`/${this._name}/update`, { _id: element._id }, modifier, (err) => {
         if (err) {
           return callback(err);
         }
@@ -153,7 +161,7 @@ export class Collection {
       this._collection.del(element._id);
 
       Data.waitDdpConnected(() => {
-        call(`/${this._name}/remove`, { _id: id }, (err, res) => {
+        call(`/${this._name}/remove`, { _id: element._id }, (err, res) => {
           if (err) {
             this._collection.upsert(element);
             return callback(err);
@@ -164,29 +172,6 @@ export class Collection {
     } else {
       callback(`No document with _id : ${id}`);
     }
-  }
-
-  helpers(helpers) {
-    var self = this;
-    let _transform;
-
-    if (this._transform && !this._helpers) _transform = this._transform;
-
-    if (!this._helpers) {
-      this._helpers = function Document(doc) {
-        return _.extend(this, doc);
-      };
-      this._transform = doc => {
-        if (_transform) {
-          doc = _transform(doc);
-        }
-        return new this._helpers(doc);
-      };
-    }
-
-    _.each(helpers, (helper, key) => {
-      this._helpers.prototype[key] = helper;
-    });
   }
 }
 
@@ -207,8 +192,8 @@ function wrapTransform(transform) {
   // No need to doubly-wrap transforms.
   if (transform.__wrappedTransform__) return transform;
 
-  var wrapped = function(doc) {
-    if (!_.has(doc, '_id')) {
+  var wrapped = function (doc) {
+    if (!doc.hasOwnProperty('_id')) {
       // XXX do we ever have a transform on the oplog's collection? because that
       // collection has no _id.
       throw new Error('can only transform documents with _id');
@@ -216,7 +201,7 @@ function wrapTransform(transform) {
 
     var id = doc._id;
     // XXX consider making tracker a weak dependency and checking Package.tracker here
-    var transformed = Tracker.nonreactive(function() {
+    var transformed = Tracker.nonreactive(function () {
       return transform(doc);
     });
 
@@ -224,7 +209,7 @@ function wrapTransform(transform) {
       throw new Error('transform must return object');
     }
 
-    if (_.has(transformed, '_id')) {
+    if (transformed._id) {
       if (!EJSON.equals(transformed._id, id)) {
         throw new Error("transformed document can't have different _id");
       }
