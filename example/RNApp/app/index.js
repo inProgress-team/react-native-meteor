@@ -13,7 +13,7 @@ import EditItemContainer from './containers/editItem';
 
 export default class RNApp extends Component {
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     connect();
   }
 

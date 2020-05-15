@@ -29,7 +29,7 @@ export default class MeteorListView extends Component {
       ds: this.state.ds.cloneWithRows(elems),
     });
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { elements } = this.props;
 
     this.onChange = () => {

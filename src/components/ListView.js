@@ -31,7 +31,7 @@ export default class MeteorListView extends Component {
 
     this.update(Data.db[collection].find(selector, options));
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { collection, selector, options } = this.props;
 
     this.update = results => {

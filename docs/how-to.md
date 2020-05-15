@@ -5,7 +5,7 @@
 * You can use Switch with createContainer. Example :
 
 ```javascript
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.scenes = Actions.create(
         <Scene key="root" component={createContainer(this.composer, Switch)} selector={this.selector} tabs={true}>
             <Scene key="loading" hideNavBar={true} component={Loading} />
