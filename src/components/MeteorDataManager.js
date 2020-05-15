@@ -55,7 +55,7 @@ class MeteorDataManager {
                 "Can't call `setState` inside `getMeteorData` as this could cause an endless" +
                   ' loop. To respond to Meteor data changing, consider making this component' +
                   ' a "wrapper component" that only fetches data and passes it in as props to' +
-                  ' a child component. Then you can use `componentWillReceiveProps` in that' +
+                  ' a child component. Then you can use `UNSAFE_componentWillReceiveProps` in that' +
                   ' child component.'
               );
             };
