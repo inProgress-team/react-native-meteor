@@ -21,7 +21,7 @@ export default class MeteorListView extends Component {
       }),
     };
   }
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     const { elements } = props;
 
     const elems = elements();
