@@ -1,6 +1,6 @@
 {
   "name": "react-native-meteor",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Full Meteor Client for React Native",
   "main": "src/Meteor.js",
   "scripts": {
@@ -32,12 +32,13 @@
   },
   "homepage": "https://github.com/lc3t35/react-native-meteor#readme",
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/netinfo": "5.5.1",
+    "@xvonabur/minimongo-cache": "^0.1.2",
     "base-64": "^0.1.0",
     "create-react-class": "^15.6.2",
     "crypto-js": "^3.1.6",
     "ejson": "^2.1.2",
-    "@xvonabur/minimongo-cache": "^0.1.2",
     "trackr": "^2.0.2",
     "wolfy87-eventemitter": "^5.2.4"
   },
