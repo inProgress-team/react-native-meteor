@@ -1,19 +1,26 @@
-import ReactNative from 'react-native/Libraries/Renderer/shims/ReactNative';
-import minimongo from 'minimongo-cache';
+import Minimongo from '@xvonabur/minimongo-cache';
 import Trackr from 'trackr';
 import { InteractionManager } from 'react-native';
+import ReactNative from 'react-native/Libraries/Renderer/shims/ReactNative';
+
 process.nextTick = setImmediate;
 
-const db = new minimongo();
+const db = new Minimongo();
 db.debug = false;
-db.batchedUpdates = ReactNative.unstable_batchedUpdates;
+db.batchedUpdates = ReactNative
+  ? ReactNative.unstable_batchedUpdates
+  : undefined;
 
 function runAfterOtherComputations(fn) {
-  InteractionManager.runAfterInteractions(() => {
-    Trackr.afterFlush(() => {
-      fn();
-    });
-  });
+  InteractionManager
+    ? InteractionManager.runAfterInteractions(() => {
+        Trackr.afterFlush(() => {
+          fn();
+        });
+      })
+    : Trackr.afterFlush(() => {
+        fn();
+      });
 }
 
 export default {
@@ -21,7 +28,7 @@ export default {
   _options: null,
   ddp: null,
   subscriptions: {},
-  db: db,
+  db,
   calls: [],
 
   getUrl() {
@@ -55,27 +62,27 @@ export default {
   },
   on(eventName, cb) {
     this._cbs.push({
-      eventName: eventName,
+      eventName,
       callback: cb,
     });
   },
   off(eventName, cb) {
     this._cbs.splice(
       this._cbs.findIndex(
-        _cb => _cb.callback == cb && _cb.eventName == eventName
+        (_cb) => _cb.callback === cb && _cb.eventName === eventName
       ),
       1
     );
   },
   notify(eventName) {
-    this._cbs.map(cb => {
-      if (cb.eventName == eventName && typeof cb.callback == 'function') {
+    this._cbs.forEach((cb) => {
+      if (cb.eventName === eventName && typeof cb.callback === 'function') {
         cb.callback();
       }
     });
   },
   waitDdpConnected(cb) {
-    if (this.ddp && this.ddp.status == 'connected') {
+    if (this.ddp && this.ddp.status === 'connected') {
       cb();
     } else if (this.ddp) {
       this.ddp.once('connected', cb);
